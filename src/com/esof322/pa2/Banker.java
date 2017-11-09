@@ -1,7 +1,5 @@
-package model;
+package com.esof322.pa2;
 
-import java.util.Set;
-import java.util.HashSet;
 
 /**
 * @generated
@@ -12,12 +10,12 @@ public class Banker {
     /**
     * @generated
     */
-    private Set<Player> players;
+    protected Player[] players;
     
     /**
     * @generated
     */
-    private Board board;
+    protected Board board;
     
     
 
@@ -33,7 +31,7 @@ public class Banker {
     /**
     * @generated
     */
-    public void setUpBoard() {
+    public void setUpBoard(int numberOfPlayers) {
         //TODO
     }
     
@@ -44,5 +42,8 @@ public class Banker {
         //TODO
     }
     
+    public Player getPlayer(int num){
+    		return players[num];
+    }
     
 }

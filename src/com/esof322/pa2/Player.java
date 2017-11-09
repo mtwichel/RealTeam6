@@ -1,180 +1,125 @@
-package model;
+package com.esof322.pa2;
 
 import java.util.Set;
 import java.util.HashSet;
 
-/**
-* @generated
-*/
 public class Player {
     
-    /**
-    * @generated
-    */
+    
     private Integer piece;
     
-    /**
-    * @generated
-    */
+    
     private Integer balance;
     
-    /**
-    * @generated
-    */
+    
     private Integer goCounter;
     
-    /**
-    * @generated
-    */
+    
     private Integer position;
     
-    /**
-    * @generated
-    */
+    
     private Integer doublesCounter;
     
     
-    /**
-    * @generated
-    */
+    
     private Set<PropertySpace> propertySpaces;
     
-    /**
-    * @generated
-    */
+    
     private Set<Die> die;
     
-    /**
-    * @generated
-    */
+    
     private Space currentSpace;
     
-    /**
-    * @generated
-    */
+    
     private Banker bank;
     
     
-    /**
-    * @generated
-    */
+    
     private Integer getPiece() {
         return this.piece;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setPiece(Integer piece) {
+    
+    private void setPiece(Integer piece) {
         this.piece = piece;
     }
     
-    /**
-    * @generated
-    */
-    private Integer getBalance() {
+    
+    protected int getBalance() {
         return this.balance;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setBalance(Integer balance) {
+    
+    private void setBalance(Integer balance) {
         this.balance = balance;
     }
     
-    /**
-    * @generated
-    */
+    
     private Integer getGoCounter() {
         return this.goCounter;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setGoCounter(Integer goCounter) {
+    
+    private void setGoCounter(Integer goCounter) {
         this.goCounter = goCounter;
     }
     
-    /**
-    * @generated
-    */
+    
     private Integer getPosition() {
         return this.position;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setPosition(Integer position) {
+    
+    private void setPosition(Integer position) {
         this.position = position;
     }
     
-    /**
-    * @generated
-    */
+    
     private Integer getDoublesCounter() {
         return this.doublesCounter;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setDoublesCounter(Integer doublesCounter) {
+    
+    private void setDoublesCounter(Integer doublesCounter) {
         this.doublesCounter = doublesCounter;
     }
     
 
     //                          Operations                                  
     
-    /**
-    * @generated
-    */
+    
     public void mortgage() {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    
     public void unMortgage() {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    
     public void takeTurn() {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    
     private int rollDice() {
         //TODO
         return 0;
     }
     
-    /**
-    * @generated
-    */
-    private void movePlayer() {
+    
+    protected void movePlayer(int spaces) {
         //TODO
     }
     
-    /**
-    * @generated
-    */
-    public void upgrade() {
+    
+    public void upgrade(PropertySpace space) {
         //TODO
     }
     
-    /**
-    * @generated
-    */
-    public void purchase() {
+    
+    public void purchase(PropertySpace space) {
         //TODO
     }
     

@@ -1,23 +1,15 @@
-package model;
+package com.esof322.pa2;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
 
-/**
-* @generated
-*/
 public class Board {
     
-    
-    /**
-    * @generated
-    */
-    private Set<Space> spaces;
-    
-    /**
-    * @generated
-    */
+    private List<Space> spaces;
     private Banker banker;
+    
+    protected Space getSpace(int pos) {
+    		return spaces.get(pos);
+    }
     
     
 }

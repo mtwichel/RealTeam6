@@ -1,46 +1,24 @@
-package model;
+package com.esof322.pa2;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
 
-/**
-* @generated
-*/
 public class Space {
-    
-    /**
-    * @generated
-    */
+ 
     private String name;
+    private List<Player> occupyingSpaces;
     
     
-    /**
-    * @generated
-    */
-    private Set<Player> occupyingSpaces;
-    
-    
-    /**
-    * @generated
-    */
     private String getName() {
         return this.name;
     }
     
-    /**
-    * @generated
-    */
-    private String setName(String name) {
+
+    private void setName(String name) {
         this.name = name;
     }
-    
-
-    //                          Operations                                  
-    
-    /**
-    * @generated
-    */
-    public void takeAction() {
+        
+   
+    public void takeAction(Player callingPlayer) {
         //TODO
     }
     
