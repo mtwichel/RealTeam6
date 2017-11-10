@@ -70,8 +70,6 @@ public class Player {
     	
     }
     
-    
-    
     protected void movePlayer(int spaces) {
     		this.currentSpace.removePlayer(this);
     		this.currentIndex = ((currentIndex + spaces) % 40);
