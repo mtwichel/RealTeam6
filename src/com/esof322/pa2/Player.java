@@ -2,45 +2,32 @@ package com.esof322.pa2;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 public class Player {
     
     
-    private Integer piece;
-    
-    
-    private Integer balance;
-    
-    
-    private Integer goCounter;
-    
-    
-    private Integer position;
-    
-    
-    private Integer doublesCounter;
+    private int piece;    
+    private int balance;  
+    private int goCounter;
+    private int position;
+    private int doublesCounter;
     
     
     
-    private Set<PropertySpace> propertySpaces;
-    
-    
-    private Set<Die> die;
-    
-    
+    private List<PropertySpace> ownedPropertySpaces; 
+    private List<Die> dice; 
     private Space currentSpace;
-    
-    
     private Banker bank;
     
     
     
-    private Integer getPiece() {
+    private int getPiece() {
         return this.piece;
     }
     
     
-    private void setPiece(Integer piece) {
+    private void setPiece(int piece) {
         this.piece = piece;
     }
     
@@ -50,37 +37,37 @@ public class Player {
     }
     
     
-    private void setBalance(Integer balance) {
+    private void setBalance(int balance) {
         this.balance = balance;
     }
     
     
-    private Integer getGoCounter() {
+    private int getGoCounter() {
         return this.goCounter;
     }
     
     
-    private void setGoCounter(Integer goCounter) {
+    private void setGoCounter(int goCounter) {
         this.goCounter = goCounter;
     }
     
     
-    private Integer getPosition() {
+    private int getPosition() {
         return this.position;
     }
     
     
-    private void setPosition(Integer position) {
+    private void setPosition(int position) {
         this.position = position;
     }
     
     
-    private Integer getDoublesCounter() {
+    private int getDoublesCounter() {
         return this.doublesCounter;
     }
     
     
-    private void setDoublesCounter(Integer doublesCounter) {
+    private void setDoublesCounter(int doublesCounter) {
         this.doublesCounter = doublesCounter;
     }
     
