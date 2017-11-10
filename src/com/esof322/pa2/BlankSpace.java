@@ -15,7 +15,7 @@ public class BlankSpace extends Space {
 		
 	}
     
-	public String getBlankName() {
+	public String getNameSpace() {
 		return getName();
 	}
     

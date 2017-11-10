@@ -18,8 +18,13 @@ public class PropertySpace extends Space {
     private Player owner;
 	private int upgradeAmount;
 
+    public PropertySpace(String name) {
+    	setName(name);
+    }
     
-    
+    public String getNameSpace() {
+		return getName();
+	}
     
     private int getRentAmount() {
         return this.rentAmount;

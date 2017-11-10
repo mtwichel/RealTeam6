@@ -6,15 +6,14 @@ package com.esof322.pa2;
 */
 public class Utility extends PropertySpace {
     
+	public Utility(String name) {
+    	super(name);
+    }
     
-    
-
-    //                          Operations                                  
-    
-    /**
-    * @return 
-     * @generated
-    */
+	public String getNameSpace() {
+		return getName();
+	}
+	
     public int calculateRent() {
 		return 0;
         //TODO

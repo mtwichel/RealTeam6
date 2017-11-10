@@ -6,17 +6,16 @@ package com.esof322.pa2;
 */
 public class Railroad extends PropertySpace {
     
+    public Railroad(String name) {
+    	super(name);
+    }
+  
+    public String getNameSpace() {
+		return getName();
+	}
     
-    
-
-    //                          Operations                                  
-    
-    /**
-    * @generated
-    */
     public int calculateRent() {
 		return 0;
-        //TODO
     }
     
     
