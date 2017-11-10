@@ -21,14 +21,12 @@ public class Player {
     private Banker bank;
     
     
+    public Player(int piece) {
+    	
+    }
     
     private int getPiece() {
         return this.piece;
-    }
-    
-    
-    private void setPiece(int piece) {
-        this.piece = piece;
     }
     
     
@@ -37,51 +35,38 @@ public class Player {
     }
     
     
-    private void setBalance(int balance) {
-        this.balance = balance;
+    public void addMoney(int amount) {
+    		this.balance += amount;
     }
     
-    
-    private int getGoCounter() {
-        return this.goCounter;
+    private void subMoney(int amount) throws NotEnoughFundsException {
+		this.balance -= amount;
+		if((this.balance - amount) < 0) {
+			throw new NotEnoughFundsException(this);
+		}
     }
-    
-    
-    private void setGoCounter(int goCounter) {
-        this.goCounter = goCounter;
-    }
+   
     
     
     private int getPosition() {
         return this.position;
     }
+        
     
-    
-    private void setPosition(int position) {
-        this.position = position;
+    public void mortgage(PropertySpace space) {
+        addMoney(space.getMortgageValue());
+        space.setMortgaged();
     }
     
     
-    private int getDoublesCounter() {
-        return this.doublesCounter;
-    }
-    
-    
-    private void setDoublesCounter(int doublesCounter) {
-        this.doublesCounter = doublesCounter;
-    }
-    
-
-    //                          Operations                                  
-    
-    
-    public void mortgage() {
-        //TODO
-    }
-    
-    
-    public void unMortgage() {
-        //TODO
+    public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
+    		try {
+    			subMoney(space.getUnmortgageValue());
+		} catch (NotEnoughFundsException e) {
+			throw new NotEnoughFundsException(this);
+		}
+        space.setUnmortgaged();
+    	
     }
     
     

@@ -6,134 +6,85 @@ package com.esof322.pa2;
 */
 public class PropertySpace extends Space {
     
-    /**
-    * @generated
-    */
-    private Integer rentAmount;
     
-    /**
-    * @generated
-    */
-    private Integer mortgageValue;
-    
-    /**
-    * @generated
-    */
+    private int rentAmount;
+    private int mortgageValue;  
+	private int unmortgageValue;
     private Boolean isMortgaged;
-    
-    /**
-    * @generated
-    */
-    private Integer houseLevel;
-    
-    /**
-    * @generated
-    */
+    private int houseLevel; 
     private Boolean isMonopoly;
-    
-    
-    /**
-    * @generated
-    */
     private PropertyGroup propertyGroup;
-    
-    /**
-    * @generated
-    */
     private Player owner;
+
     
     
-    /**
-    * @generated
-    */
-    private Integer getRentAmount() {
+    
+    private int getRentAmount() {
         return this.rentAmount;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setRentAmount(Integer rentAmount) {
+    
+    private void setRentAmount(int rentAmount) {
         this.rentAmount = rentAmount;
     }
     
-    /**
-    * @generated
-    */
-    private Integer getMortgageValue() {
+    
+    public int getMortgageValue() {
         return this.mortgageValue;
     }
-    
-    /**
-    * @generated
-    */
-    private Integer setMortgageValue(Integer mortgageValue) {
-        this.mortgageValue = mortgageValue;
+    public int getUnmortgageValue() {
+        return this.unmortgageValue;
     }
     
-    /**
-    * @generated
-    */
-    private Boolean getIsMortgaged() {
+    
+    private boolean isMortgaged() {
         return this.isMortgaged;
     }
     
-    /**
-    * @generated
-    */
-    private Boolean setIsMortgaged(Boolean isMortgaged) {
-        this.isMortgaged = isMortgaged;
+    
+    public void setMortgaged() {
+        this.isMortgaged = true;
     }
     
-    /**
-    * @generated
-    */
-    private Integer getHouseLevel() {
+    public void setUnmortgaged() {
+    		this.isMortgaged = true;
+    }
+    
+    
+    private int getHouseLevel() {
         return this.houseLevel;
     }
     
-    /**
-    * @generated
-    */
-    private Integer setHouseLevel(Integer houseLevel) {
+    
+    private void setHouseLevel(int houseLevel) {
         this.houseLevel = houseLevel;
     }
     
-    /**
-    * @generated
-    */
+    
     private Boolean getIsMonopoly() {
         return this.isMonopoly;
     }
     
-    /**
-    * @generated
-    */
-    private Boolean setIsMonopoly(Boolean isMonopoly) {
+    
+    private void setIsMonopoly(Boolean isMonopoly) {
         this.isMonopoly = isMonopoly;
     }
     
 
     //                          Operations                                  
     
-    /**
-    * @generated
-    */
+    
     public void takeAction() {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    
     public int calculateRent() {
         //TODO
         return 0;
     }
     
-    /**
-    * @generated
-    */
+    
     public void checkMonopoly() {
         //TODO
     }
