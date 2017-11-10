@@ -108,6 +108,18 @@ public class Player {
     		space.setOwner(this);
     }
     
+    public int rollDice() {
+		Die die1 = new Die();
+		Die die2 = new Die();
+		
+		die1.rollDie();
+		die2.rollDie();
+		
+		if(die1.getValue()==die2.getValue()) {
+			doublesCounter++;
+		}else{ doublesCounter = 0;}
+		return(die1.getValue()+die2.getValue());
+	}
     
     public void takeTurn() {
         movePlayer(bank.rollDice());
