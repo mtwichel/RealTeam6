@@ -30,7 +30,7 @@ public class PropertyGroup {
     /**
     * @generated
     */
-    private Integer setColor(Integer color) {
+    private void setColor(Integer color) {
         this.color = color;
     }
     

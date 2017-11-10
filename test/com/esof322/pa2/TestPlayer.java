@@ -15,7 +15,7 @@ public class TestPlayer {
 		Player player1 = banker.getPlayer(0);
 		int balance = player1.getBalance();
 		
-		player1.mortgage();
+		player1.mortgage(null);
 		
 	}
 	

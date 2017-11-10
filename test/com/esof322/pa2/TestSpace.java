@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestSpace {
 
 	@Test
-	public void testCalculateRent() {
+	public void testCalculateRent() throws NotEnoughFundsException, PropertyMaxUpgratedException {
 		Banker banker = setUpGame();	
 		
 		assertEquals(0, ((PropertySpace) banker.board.getSpace(0)).calculateRent());

@@ -14,7 +14,8 @@ public class Railroad extends PropertySpace {
     /**
     * @generated
     */
-    public void calculateRent() {
+    public int calculateRent() {
+		return 0;
         //TODO
     }
     
