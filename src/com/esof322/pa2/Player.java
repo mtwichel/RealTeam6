@@ -43,13 +43,6 @@ public class Player {
 		}
     }
    
-    
-    
-    private int getPosition() {
-        return this.position;
-    }
-        
-    
     public void mortgage(PropertySpace space) {
         addMoney(space.getMortgageValue());
         space.setMortgaged();
@@ -113,10 +106,7 @@ public class Player {
 		return(die1.getValue()+die2.getValue());
 	}
     
-    private Space getCurrentSpace(int i) {
-		return null;///fetch Space from board in the spot i
-    }
-    
+
     public void takeTurn() {
     	movePlayer(rollDice()); //switch to other dice method
     	currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
