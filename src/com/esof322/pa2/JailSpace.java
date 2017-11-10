@@ -17,6 +17,12 @@ public class JailSpace extends Space {
     public void takeAction() {
         //TODO
     }
+
+	@Override
+	void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

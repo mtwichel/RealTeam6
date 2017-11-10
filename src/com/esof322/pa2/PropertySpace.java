@@ -123,5 +123,12 @@ public class PropertySpace extends Space {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

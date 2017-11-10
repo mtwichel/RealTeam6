@@ -1,4 +1,4 @@
-package model;
+package com.esof322.pa2;
 
 
 /**
@@ -17,6 +17,12 @@ public class TaxSpace extends Space {
     public void takeAction() {
         //TODO
     }
+
+	@Override
+	void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

@@ -17,6 +17,12 @@ public class BlankSpace extends Space {
     public void TakeAction() {
         //TODO
     }
+
+	@Override
+	void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

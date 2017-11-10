@@ -1,4 +1,4 @@
-package model;
+package com.esof322.pa2;
 
 import java.util.Set;
 import java.util.HashSet;
