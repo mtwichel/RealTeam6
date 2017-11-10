@@ -18,6 +18,7 @@ public class Board {
     	BlankSpace blankSpace;
     	TaxSpace tax;
     	JailSpace jail;
+    	GotoJailSpace goToJail;
     	PropertySpace prop;
     	Railroad rail;
     	Utility util;
@@ -41,6 +42,7 @@ public class Board {
     	spaces[17] = new BlankSpace("Community Chest");
     	spaces[18] = new PropertySpace("Tennessee Avenue");
     	spaces[19] = new PropertySpace("New York Avenue");
+    	spaces[20] = new BlankSpace("Free Parking");
     	spaces[21] = new PropertySpace("Kentucky Avenue");
     	spaces[22] = new BlankSpace("Chance");
     	spaces[23] = new PropertySpace("Indiana Avenue");
@@ -50,11 +52,13 @@ public class Board {
     	spaces[27] = new PropertySpace("Ventnor Avenue");
     	spaces[28] = new Utility("Water Works");
     	spaces[29] = new PropertySpace("Marvin Gardens");
+    	spaces[30] = new GotoJailSpace("Go to Jail");
     	spaces[31] = new PropertySpace("Pacific Avenue");
     	spaces[32] = new PropertySpace("North Carolina Avenue");
     	spaces[33] = new BlankSpace("Community Chest");
     	spaces[34] = new PropertySpace("Pennsylvania Avenue");
-    	spaces[36] = new Railroad("Short Line");
+    	spaces[35] = new Railroad("Short Line");
+    	spaces[36] = new BlankSpace("Chance");
     	spaces[37] = new PropertySpace("Park Place");
     	spaces[38] = new TaxSpace("Luxury Tax");
     	spaces[39] = new PropertySpace("Boardwalk");
