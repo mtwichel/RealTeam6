@@ -71,33 +71,23 @@ public class Player {
     }
     
     
-    public void takeTurn() {
-        //TODO
-    }
-    
-    
-    private int rollDice() {
-    		int ans =0;
-        for(Die d : dice) {
-        		ans += d.rollDie();
-        }
-        return ans;
-    }
-    
-    
     
     protected void movePlayer(int spaces) {
+    		this.currentSpace.removePlayer(this);
     		this.currentIndex = ((currentIndex + spaces) % 40);
         this.currentSpace = bank.board.getSpace(currentIndex);
         goCounter += spaces;
+        this.currentSpace.addPlayer(this);
         if(goCounter >=40) { //pass go
         		goCounter = currentIndex;
         		addMoney(200); //200 for passing go
         }
+        
+        notifyMovementListeners();
     }
     
-    
-    public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
+
+	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
     	space.upgrade();	
     	try {
 			subMoney(space.getUpgradeAmount());
@@ -118,5 +108,25 @@ public class Player {
     		space.setOwner(this);
     }
     
+    
+    public void takeTurn() {
+        movePlayer(bank.rollDice());
+        currentSpace.takeAction(this);
+        
+        notifyPlayerChoice();
+        
+        //TODO finish
+    }
+    
+    
+    private void notifyPlayerChoice() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	//listener methods
+    private void notifyMovementListeners() {
+    		//TODO
+	}
     
 }

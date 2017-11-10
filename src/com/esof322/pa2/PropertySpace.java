@@ -46,10 +46,13 @@ public class PropertySpace extends Space {
     
     public void setMortgaged() {
         this.isMortgaged = true;
+        notifyPropertySpaceListeners();
     }
-    
-    public void setUnmortgaged() {
+
+
+	public void setUnmortgaged() {
     		this.isMortgaged = true;
+    		notifyPropertySpaceListeners();
     }
     
     
@@ -63,10 +66,15 @@ public class PropertySpace extends Space {
     			throw new PropertyMaxUpgratedException();
     		}
         this.houseLevel += 1;
+        notifyPropertySpaceListeners();
     }
     
-    public void downgrade() {
+    public void downgrade() throws PropertyMinUpgratedException {
+		if((this.houseLevel - 1) < 0) {
+			throw new PropertyMinUpgratedException();
+		}
     		this.houseLevel -= 1;
+    		notifyPropertySpaceListeners();
     }
     
     public int getUpgradeAmount() {
@@ -81,6 +89,7 @@ public class PropertySpace extends Space {
     
     private void setIsMonopoly(Boolean isMonopoly) {
         this.isMonopoly = isMonopoly;
+        notifyPropertySpaceListeners();
     }
     
 
@@ -110,5 +119,9 @@ public class PropertySpace extends Space {
     		this.owner = owner;
     }
     
+    private void notifyPropertySpaceListeners() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

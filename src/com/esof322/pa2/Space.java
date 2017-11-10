@@ -2,10 +2,10 @@ package com.esof322.pa2;
 
 import java.util.List;
 
-public class Space {
+public abstract class Space {
  
     private String name;
-    private List<Player> occupyingSpaces;
+    private List<Player> occupyingPlayers;
     
     
     private String getName() {
@@ -16,11 +16,17 @@ public class Space {
     private void setName(String name) {
         this.name = name;
     }
+    
+    public void addPlayer(Player p) {
+    		this.occupyingPlayers.add(p);
+    }
+    
+    public void removePlayer(Player p) {
+    		this.occupyingPlayers.remove(p);
+    }
         
    
-    public void takeAction(Player callingPlayer) {
-        //TODO
-    }
+    abstract void takeAction(Player callingPlayer);
     
     
 }

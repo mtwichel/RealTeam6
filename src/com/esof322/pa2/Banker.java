@@ -7,37 +7,37 @@ package com.esof322.pa2;
 public class Banker {
     
     
-    /**
-    * @generated
-    */
+    
     protected Player[] players;
     
-    /**
-    * @generated
-    */
+    
     protected Board board;
+
+	private Die[] dice = {new Die(), new Die()};
     
     
 
     //                          Operations                                  
     
-    /**
-    * @generated
-    */
+    
     public void tranferFunds() {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    public int rollDice() {
+		int ans =0;
+    for(Die d : dice ) {
+    		ans += d.rollDie();
+    }
+    return ans;
+}
+    
+    
     public void setUpBoard(int numberOfPlayers) {
         //TODO
     }
     
-    /**
-    * @generated
-    */
+    
     public void startGame() {
         //TODO
     }
