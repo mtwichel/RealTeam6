@@ -114,7 +114,7 @@ public class Player {
 	}
     
     private Space getCurrentSpace(int i) {
-		return null;//fetch Space from board in the spot i
+		return null;///fetch Space from board in the spot i
     }
     
     public void takeTurn() {

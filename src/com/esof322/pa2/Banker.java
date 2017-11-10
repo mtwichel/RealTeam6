@@ -14,7 +14,7 @@ public class Banker {
     protected Board board;   
     
 
-    ///                          Operations                                  
+    //                          Operations                                  
     
     
     public void tranferFunds() {
