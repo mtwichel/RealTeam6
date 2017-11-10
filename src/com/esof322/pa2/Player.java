@@ -16,13 +16,14 @@ public class Player {
     
     
     private List<PropertySpace> ownedPropertySpaces; 
-    private List<Die> dice; 
+    private Die[] dice = {new Die(), new Die()}; 
+    private int currentIndex;
     private Space currentSpace;
     private Banker bank;
     
     
     public Player(int piece) {
-    	
+    		this.piece = piece;
     }
     
     private int getPiece() {
@@ -76,23 +77,45 @@ public class Player {
     
     
     private int rollDice() {
-        //TODO
-        return 0;
+    		int ans =0;
+        for(Die d : dice) {
+        		ans += d.rollDie();
+        }
+        return ans;
     }
+    
     
     
     protected void movePlayer(int spaces) {
-        //TODO
+    		this.currentIndex = ((currentIndex + spaces) % 40);
+        this.currentSpace = bank.board.getSpace(currentIndex);
+        goCounter += spaces;
+        if(goCounter >=40) { //pass go
+        		goCounter = currentIndex;
+        		addMoney(200); //200 for passing go
+        }
     }
     
     
-    public void upgrade(PropertySpace space) {
-        //TODO
+    public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
+    	space.upgrade();	
+    	try {
+			subMoney(space.getUpgradeAmount());
+		} catch (NotEnoughFundsException e) {
+			throw new NotEnoughFundsException(this);
+		}
+        
     }
     
     
-    public void purchase(PropertySpace space) {
-        //TODO
+    public void purchase(PropertySpace space) throws NotEnoughFundsException {
+    		try {
+    			subMoney(space.getPurchaseAmount());
+    		} catch (NotEnoughFundsException e) {
+    			throw new NotEnoughFundsException(this);
+		}
+    		this.ownedPropertySpaces.add(space);
+    		space.setOwner(this);
     }
     
     

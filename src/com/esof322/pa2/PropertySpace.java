@@ -8,6 +8,7 @@ public class PropertySpace extends Space {
     
     
     private int rentAmount;
+    private int purchaseAmount;
     private int mortgageValue;  
 	private int unmortgageValue;
     private Boolean isMortgaged;
@@ -15,6 +16,7 @@ public class PropertySpace extends Space {
     private Boolean isMonopoly;
     private PropertyGroup propertyGroup;
     private Player owner;
+	private int upgradeAmount;
 
     
     
@@ -56,8 +58,19 @@ public class PropertySpace extends Space {
     }
     
     
-    private void setHouseLevel(int houseLevel) {
-        this.houseLevel = houseLevel;
+    public void upgrade() throws PropertyMaxUpgratedException {
+    		if((this.houseLevel + 1) > 5) {
+    			throw new PropertyMaxUpgratedException();
+    		}
+        this.houseLevel += 1;
+    }
+    
+    public void downgrade() {
+    		this.houseLevel -= 1;
+    }
+    
+    public int getUpgradeAmount() {
+    		return this.upgradeAmount;
     }
     
     
@@ -87,6 +100,14 @@ public class PropertySpace extends Space {
     
     public void checkMonopoly() {
         //TODO
+    }
+    
+    public int getPurchaseAmount() {
+    		return this.purchaseAmount;
+    }
+    
+    public void setOwner(Player owner) {
+    		this.owner = owner;
     }
     
     
