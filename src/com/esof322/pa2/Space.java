@@ -8,12 +8,12 @@ public abstract class Space {
     private List<Player> occupyingPlayers;
     
     
-    private String getName() {
+    protected String getName() {
         return this.name;
     }
     
 
-    private void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
     

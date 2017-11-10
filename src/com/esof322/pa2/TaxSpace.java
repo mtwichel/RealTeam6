@@ -1,23 +1,8 @@
 package com.esof322.pa2;
 
-
-/**
-* @generated
-*/
 public class TaxSpace extends Space {
     
-    
-    
-
-    //                          Operations                                  
-    
-    /**
-    * @generated
-    */
-    public void takeAction() {
-        //TODO
-    }
-
+	private String name;
 	@Override
 	void takeAction(Player callingPlayer) {
 		// TODO Auto-generated method stub

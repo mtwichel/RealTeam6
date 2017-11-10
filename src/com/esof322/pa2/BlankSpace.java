@@ -6,23 +6,17 @@ package com.esof322.pa2;
 */
 public class BlankSpace extends Space {
     
-    
-    
-
-    //                          Operations                                  
-    
-    /**
-    * @generated
-    */
-    public void TakeAction() {
-        //TODO
-    }
-
+	public BlankSpace(String name) {
+		setName(name);
+	}
 	@Override
 	void takeAction(Player callingPlayer) {
 		// TODO Auto-generated method stub
 		
 	}
     
+	public String getBlankName() {
+		return getName();
+	}
     
 }
