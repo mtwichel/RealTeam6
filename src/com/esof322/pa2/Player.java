@@ -8,18 +8,14 @@ public class Player {
     
     
     private int piece;    
-    private int balance;  
-    private int goCounter;
-    private int position;
-    private int doublesCounter;
+    private int balance = 1500;  
+    private int position = 0;
+    private int doublesCounter = 0;
     
     
     
     private List<PropertySpace> ownedPropertySpaces; 
-    private Die[] dice = {new Die(), new Die()}; 
-    private int currentIndex;
     private Space currentSpace;
-    private Banker bank;
     
     
     public Player(int piece) {
@@ -70,18 +66,16 @@ public class Player {
     	
     }
     
-    protected void movePlayer(int spaces) {
-    		this.currentSpace.removePlayer(this);
-    		this.currentIndex = ((currentIndex + spaces) % 40);
-        this.currentSpace = bank.board.getSpace(currentIndex);
-        goCounter += spaces;
-        this.currentSpace.addPlayer(this);
-        if(goCounter >=40) { //pass go
-        		goCounter = currentIndex;
-        		addMoney(200); //200 for passing go
-        }
-        
-        notifyMovementListeners();
+    protected void movePlayer(int move) {
+
+    	position += move;
+    	if(position >= 40) {
+    		position -= 40;
+    		//Add money for passing Go Here, and reset position to int below 40.
+    		balance += 200;
+    		
+    	}
+
     }
     
 
@@ -119,13 +113,18 @@ public class Player {
 		return(die1.getValue()+die2.getValue());
 	}
     
+    private Space getCurrentSpace(int i) {
+		return null;//fetch Space from board in the spot i
+    }
+    
     public void takeTurn() {
-        movePlayer(bank.rollDice());
-        currentSpace.takeAction(this);
+    	movePlayer(rollDice()); //switch to other dice method
+    	currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
+        currentSpace.takeAction(this);//do what ever that space does
         
         notifyPlayerChoice();
         
-        //TODO finish
+        ///TODO finish
     }
     
     

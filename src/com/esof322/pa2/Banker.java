@@ -6,32 +6,20 @@ package com.esof322.pa2;
 */
 public class Banker {
     
-    
+    private static Banker bank;
     
     protected Player[] players;
     
     
-    protected Board board;
-
-	private Die[] dice = {new Die(), new Die()};
-    
+    protected Board board;   
     
 
-    //                          Operations                                  
+    ///                          Operations                                  
     
     
     public void tranferFunds() {
         //TODO
     }
-    
-    public int rollDice() {
-		int ans =0;
-    for(Die d : dice ) {
-    		ans += d.rollDie();
-    }
-    return ans;
-}
-    
     
     public void setUpBoard(int numberOfPlayers) {
         //TODO
@@ -39,7 +27,16 @@ public class Banker {
     
     
     public void startGame() {
+    	bank = new Banker();
         //TODO
+    }
+    
+    public static Banker getBanker() {
+    	return bank;
+    }
+    
+    public Board getBoard() {
+    	return board;
     }
     
     public Player getPlayer(int num){
