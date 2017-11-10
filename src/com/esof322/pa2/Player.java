@@ -43,13 +43,6 @@ public class Player {
 		}
     }
    
-    
-    
-    private int getPosition() {
-        return this.position;
-    }
-        
-    
     public void mortgage(PropertySpace space) {
         addMoney(space.getMortgageValue());
         space.setMortgaged();
@@ -113,6 +106,10 @@ public class Player {
 		return(die1.getValue()+die2.getValue());
 	}
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/mtwichel/RealTeam6.git
     public void takeTurn() {
     	movePlayer(rollDice()); //switch to other dice method
     	currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
