@@ -19,7 +19,7 @@ public class Die {
 		return currentValue;
 	}
 	
-	///returns the last Roll from this die for comparisons [may need to replace with safer method]
+	//returns the last Roll from this die for comparisons [may need to replace with safer method]
 	public int getValue() {
 		return currentValue;
 	}
