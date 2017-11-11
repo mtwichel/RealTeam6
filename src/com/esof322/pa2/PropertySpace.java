@@ -1,5 +1,7 @@
 package com.esof322.pa2;
 
+import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
+import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 
 /**
 * @generated

@@ -1,4 +1,6 @@
-package com.esof322.pa2;
+package com.esof322.pa2.exceptions;
+
+import com.esof322.pa2.Player;
 
 public class NotEnoughFundsException extends Exception {
 	

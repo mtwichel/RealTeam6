@@ -2,6 +2,9 @@ package com.esof322.pa2;
 
 import java.util.List;
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
+
 public class Player {
     
     

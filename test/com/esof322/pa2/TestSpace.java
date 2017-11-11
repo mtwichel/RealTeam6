@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
+
 public class TestSpace {
 
 	@Test
