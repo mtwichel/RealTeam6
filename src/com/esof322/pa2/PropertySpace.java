@@ -26,12 +26,12 @@ public class PropertySpace extends Space {
 		return getName();
 	}
     
-    private int getRentAmount() {
+    protected int getRentAmount() {
         return this.rentAmount;
     }
     
     
-    private void setRentAmount(int rentAmount) {
+    protected void setRentAmount(int rentAmount) {
         this.rentAmount = rentAmount;
     }
     
