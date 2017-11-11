@@ -20,7 +20,7 @@ public class Player {
     		this.piece = piece;
     }
     
-    private int getPiece() {
+    public int getPiece() {
         return this.piece;
     }
     

@@ -22,6 +22,7 @@ public class Board {
     	PropertySpace prop;
     	Railroad rail;
     	Utility util;
+    	int[] temp;
     	spaces[0] = new BlankSpace("Go");
     	spaces[1] = new PropertySpace("Mediterranean Avenue");
     	spaces[2] = new BlankSpace("Community Chest");

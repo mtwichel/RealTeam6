@@ -15,32 +15,31 @@ public class PropertySpace extends Space {
     private int houseLevel; 
     private Boolean isMonopoly;
     private PropertyGroup propertyGroup;
-    private Player owner;
+    private int owner = 0;
 	private int upgradeAmount;
+	private int[] rentRates;
 
-    public PropertySpace(String name) {
+	//int[] i's first index contains the cost to buy the property and the remaining 
+	//values contain the rent value according to houses/hotels owned.
+    public PropertySpace(String name,int[] i) {
     	setName(name);
+    	rentRates = i;
     }
     
     public String getNameSpace() {
 		return getName();
 	}
     
-    protected int getRentAmount() {
-        return this.rentAmount;
+    //getRentAmount should get rentRates[houses]; 
+    protected int getRentAmount(int i) {
+        return rentRates[i];
     }
-    
-    
-    protected void setRentAmount(int rentAmount) {
-        this.rentAmount = rentAmount;
-    }
-    
     
     public int getMortgageValue() {
-        return this.mortgageValue;
+        return (rentRates[0]/2);//When you mortgage a property, you get back halve the properties cost
     }
     public int getUnmortgageValue() {
-        return this.unmortgageValue;
+        return rentRates[0];//Essentially repurchasing the property
     }
     
     
@@ -51,13 +50,13 @@ public class PropertySpace extends Space {
     
     public void setMortgaged() {
         this.isMortgaged = true;
-        notifyPropertySpaceListeners();
+        notifyPropertySpaceListeners();//For GUI? 
     }
 
 
 	public void setUnmortgaged() {
-    		this.isMortgaged = true;
-    		notifyPropertySpaceListeners();
+    		this.isMortgaged = false;
+    		notifyPropertySpaceListeners();//update GUI
     }
     
     
@@ -113,7 +112,7 @@ public class PropertySpace extends Space {
     
     
     public void checkMonopoly() {
-        //TODO
+        //TODO		should be in Property Group?
     }
     
     public int getPurchaseAmount() {
@@ -121,7 +120,11 @@ public class PropertySpace extends Space {
     }
     
     public void setOwner(Player owner) {
-    		this.owner = owner;
+    		this.owner = owner.getPiece();
+    }
+    
+    public int checkOwner() {
+    	return owner;
     }
     
     private void notifyPropertySpaceListeners() {
