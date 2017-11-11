@@ -11,7 +11,7 @@ public class Player {
     private int balance = 1500;  
     private int position = 0;
     private int doublesCounter = 0;
-    
+    private boolean jailed;
     
     
     private List<PropertySpace> ownedPropertySpaces; 
@@ -59,6 +59,10 @@ public class Player {
     	
     }
     
+    public boolean getJailed() {
+    	return jailed; 
+    }
+    
     protected void movePlayer(int move) {
 
     	position += move;
@@ -71,6 +75,13 @@ public class Player {
 
     }
     
+    public void toJail() {
+    	position = 10;
+    	jailed = true; 
+    }
+    public void removeJailedStatus() {
+    	jailed = false; 
+    }
 
 	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
     	space.upgrade();	
