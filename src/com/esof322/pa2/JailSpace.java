@@ -41,5 +41,5 @@ public class JailSpace extends Space {
 			}
 		}
 
-	}
+
 }
