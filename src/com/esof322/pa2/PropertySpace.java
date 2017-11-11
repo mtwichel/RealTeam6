@@ -32,7 +32,7 @@ public class PropertySpace extends Space {
 		return getName();
 	}
     
-    //getRentAmount should get rentRates[houses]; 
+    ///getRentAmount should get rentRates[houses]; 
     protected int getRentAmount(int i) {
         return rentRates[i];
     }

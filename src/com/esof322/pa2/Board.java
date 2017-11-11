@@ -13,7 +13,7 @@ public class Board {
     protected Space getSpace(int pos) {
     		return spaces[pos];
     }
-    
+    //
     private void init() {
     	BlankSpace blankSpace;
     	TaxSpace tax;

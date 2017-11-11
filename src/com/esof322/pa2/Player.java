@@ -26,7 +26,7 @@ public class Player {
     public int getPiece() {
         return this.piece;
     }
-    
+    //
     
     protected int getBalance() {
         return this.balance;

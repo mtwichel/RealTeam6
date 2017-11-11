@@ -14,7 +14,7 @@ public class TaxSpace extends Space {
 	
 	@Override
 	void takeAction(Player callingPlayer) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		
 	}
     

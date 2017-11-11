@@ -19,7 +19,7 @@ public class PropertyGroup {
 	public void populateProperties(Space[] s) {
 		
 	}
-    //private Integer color;
+    ///private Integer color;
     
     //private Set<PropertySpace> propertySpaces;
     
