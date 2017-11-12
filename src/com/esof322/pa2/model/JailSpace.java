@@ -42,6 +42,8 @@ public class JailSpace extends Space {
 			}else {
 				callingPlayer.charge(null, 50);
 			}
+		}else {
+			//Just visiting message/pop up goes here
 		}
 	}
 

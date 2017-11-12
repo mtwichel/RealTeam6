@@ -50,23 +50,21 @@ public class PropertySpace extends Space {
     public boolean isMortgaged() {
         return this.isMortgaged;
     }
-    
+
     public void setMortgaged() {
-        this.isMortgaged = true;
-        notifyPropertySpaceListeners();//For GUI? 
+    	if(!isMonopoly) {
+    		this.isMortgaged = true;
+    		notifyPropertySpaceListeners();//For GUI? 
+    	}
     }
 
 
-	public void setUnmortgaged() {
-		if(!isMonopoly) {
-    		this.isMortgaged = false;
-    		notifyPropertySpaceListeners();//update GUI
-		}else {
-			
-		}
+    public void setUnmortgaged() {
+    	this.isMortgaged = false;
+    	notifyPropertySpaceListeners();//update GUI
     }
-    
-    
+
+
     private int getHouseLevel() {
         return this.houseLevel;
     }
