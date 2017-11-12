@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.esof322.pa2.model.Die;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;

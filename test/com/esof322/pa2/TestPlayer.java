@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.esof322.pa2.model.Banker;
+import com.esof322.pa2.model.Player;
+
 public class TestPlayer {
 	
 	private Banker banker;

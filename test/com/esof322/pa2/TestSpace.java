@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
+import com.esof322.pa2.model.Banker;
+import com.esof322.pa2.model.PropertySpace;
 
 public class TestSpace {
 
