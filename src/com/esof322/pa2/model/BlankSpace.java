@@ -1,9 +1,5 @@
 package com.esof322.pa2.model;
 
-
-/**
-* @generated
-*/
 public class BlankSpace extends Space {
     
 	public BlankSpace(String name) {

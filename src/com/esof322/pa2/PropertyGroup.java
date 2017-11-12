@@ -1,4 +1,4 @@
-package com.esof322.pa2.model;
+package com.esof322.pa2;
 
 import java.util.Set;
 

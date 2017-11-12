@@ -138,6 +138,11 @@ public class PropertySpace extends Space {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Object calculateRent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
 

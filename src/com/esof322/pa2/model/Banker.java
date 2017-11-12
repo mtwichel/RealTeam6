@@ -9,37 +9,23 @@ public class Banker {
     private static Banker bank;
     private static ModelListener GUI;
     
-    protected Player[] players;
-    
-    private Player currentPlayer;
+    public Player[] players;
     
     
-    protected Board board;   
+    public Board board;   
        
-    public Banker(ModelListener gui) {
-    		this.GUI = gui;
-    }
     
     public void tranferFunds() {
         //TODO
     }
     
     public void setUpBoard(int numberOfPlayers) {
-    		players = new Player[numberOfPlayers];
-    		
-        //TODO finish with acutal content
-    		for(int i=0; i<numberOfPlayers; i++) {
-    			players[i] = new Player(i, "#" + i);
-    		}
-    		this.currentPlayer = players[0];
-    		Banker.getGUI().updateCurrentPlayer();
-    		Banker.getGUI().updateCurrentPlayerMoney();
+        //TODO
     }
     
     
     public void startGame() {
-    		bank = this;
-    		
+    	bank = new Banker();
         //TODO
     }
     
@@ -51,15 +37,11 @@ public class Banker {
     }
     
     public Board getBoard() {
-    		return board;
+    	return board;
     }
     
     public Player getPlayer(int num){
     		return players[num];
-    }
-    
-    public Player getCurrentPlayer() {
-    		return this.currentPlayer;
     }
     
 }

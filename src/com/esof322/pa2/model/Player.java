@@ -8,43 +8,37 @@ import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 public class Player {
     
     
-    private int piece;  
-    private String name;
-    private int balance;  
-    private int position;
-    private int doublesCounter;
+    private int piece;    
+    private int balance = 1500;  
+    private int position = 0;
+    private int doublesCounter = 0;
     private boolean jailed;
     
     
     private List<PropertySpace> ownedPropertySpaces; 
     private Space currentSpace;
-	
     
     
-    public Player(int piece, String name) {
+    public Player(int piece) {
     		this.piece = piece;
-    		this.name = name;
-    		this.balance = 1500;
-    		this.position = 0;
-    		this.doublesCounter = 0;
     }
     
     public int getPiece() {
         return this.piece;
     }
     
-    public String getName() {
-    		return this.name;
-    }
     
-    
-    public int getBalance() {
+    protected int getBalance() {
         return this.balance;
     }
     
     
     public void addMoney(int amount) {
     		this.balance += amount;
+    }
+    
+    public void charge(int amount) {
+    	this.balance -= amount;
     }
     
     private void subMoney(int amount) throws NotEnoughFundsException {
