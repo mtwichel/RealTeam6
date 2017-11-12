@@ -16,7 +16,7 @@ public class Utility extends PropertySpace {
 	
     public int calculateRent() {
 		return 0;
-        //TODO
+        ///TODO
     }
     
     
