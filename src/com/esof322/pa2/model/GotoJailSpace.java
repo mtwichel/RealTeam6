@@ -16,9 +16,7 @@ public class GotoJailSpace extends Space {
 	
 	@Override
 	void takeAction(Player callingPlayer) {
-		callingPlayer.toJail();
-		// TODO Auto-generated method stub
-		
+		callingPlayer.toJail();	
 	}
     
     

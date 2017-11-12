@@ -43,7 +43,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker(this);
+		banker = new Banker();
 		
 		currentPlayer = new Label();
 		currentPlayerMoney = new Label();

@@ -139,9 +139,9 @@ public class PropertySpace extends Space {
 		
 	}
 
-	public Object calculateRent() {
-		// TODO Auto-generated method stub
-		return null;
+	public int calculateRent() {
+		
+		return getRentAmount(houseLevel);
 	}
     
 }
