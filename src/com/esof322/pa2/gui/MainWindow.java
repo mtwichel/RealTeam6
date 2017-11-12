@@ -5,6 +5,7 @@ import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class MainWindow extends Application implements ModelListener{
 	
 	VBox propertyList;
 	HBox currentPlayerHeading;
+	HBox actionBar;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -48,10 +50,17 @@ public class MainWindow extends Application implements ModelListener{
 		propertyList.getChildren().add(new Label("Properties Owned: "));
 		propertyList.setStyle("-fx-border-color: black");
 		
+		actionBar = new HBox();
+		actionBar.setAlignment(Pos.CENTER_RIGHT);
+		currentAction = new Button();
+		currentAction.setStyle("-fx-padding: 20");
+		actionBar.getChildren().add(currentAction);
+		
 		
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(propertyList);
+		mainLayout.setBottom(actionBar);
 		Scene scene = new Scene(mainLayout, 600, 500);
 		
 		primaryStage.setTitle("Monopoly");
