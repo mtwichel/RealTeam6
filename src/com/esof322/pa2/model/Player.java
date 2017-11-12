@@ -2,6 +2,7 @@ package com.esof322.pa2.model;
 
 import java.util.List;
 
+import com.esof322.pa2.exceptions.HousesOnPropertiesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
@@ -180,10 +181,14 @@ public class Player {
 		}
     }
    
-    public void mortgage(PropertySpace space) {
-        addMoney(space.getMortgageValue());
-        this.netWorth -= space.getMortgageValue();
-        space.setMortgaged();
+    public void mortgage(PropertySpace space) throws HousesOnPropertiesException {
+    	if(space.setMortgaged()) {
+    		addMoney(space.getMortgageValue());
+            this.netWorth -= space.getMortgageValue();
+    	}else {
+    		throw new HousesOnPropertiesException(space);
+    	}
+    
     }
     
     

@@ -6,7 +6,7 @@ import com.esof322.pa2.exceptions.MonopolyContainsHousesException;
 import com.esof322.pa2.exceptions.NotEnoughHousesOnOtherPropertiesException;
 
 public class PropertyGroup {
-    
+	
 	//have method in propertySpace that updates this double array each time 
 	private PropertySpace[][] properties = {
 		{null,null}, 		//Brown Properties
@@ -18,6 +18,10 @@ public class PropertyGroup {
 		{null,null,null},	//Green Properties
 		{null,null}		//Dark Blue
 		};	
+	
+	public PropertyGroup() {
+		initGroups();
+	}
 	
 	//Fills Property space double array with spaces that have a certain color for purpose of checking monopolies.
 	public void populateProperties() {
@@ -108,7 +112,7 @@ public class PropertyGroup {
 				try {
 					throw new MonopolyContainsHousesException(color);
 				} catch (MonopolyContainsHousesException e) {
-					// this is wherevthe pop up would show up and tell you to sell houses
+					// this is where the pop up would show up and tell you to sell houses
 					//before trying to mortgage a property of a monopoly
 					e.printStackTrace();
 				}
@@ -117,16 +121,4 @@ public class PropertyGroup {
 		}
 		return true;
 	}
-	/*public boolean checkHouses(int color) {
-		//go through monopoly and get houses, should all be within 1 of each other
-		if(properties[color].length == 2) {
-			if((Math.abs((properties[color][0].getHouseLevel() - properties[color][1].getHouseLevel()))<=1));
-				return true;
-		}else if(properties[color].length == 3) {
-			if((Math.abs((properties[color][0].getHouseLevel() - properties[color][1].getHouseLevel()))<=1)&&(Math.abs((properties[color][2].getHouseLevel() - properties[color][1].getHouseLevel()))<=1));
-				return true;
-		};
-		
-		return false;//houses are un even
-	}*/
 }

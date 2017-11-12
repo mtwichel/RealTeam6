@@ -5,6 +5,7 @@ import java.util.List;
 public class Board {
 	
 	private Space[] spaces = new Space[40];
+	private PropertyGroup colors;
 	
 	public Board() {
 		init();
@@ -13,7 +14,11 @@ public class Board {
     public Space getSpace(int pos) {
     		return spaces[pos];
     }
-    //
+    
+    public PropertyGroup getGroups() {
+    	return colors;
+    }
+
     private int[] temp;
     public int[] tempReplace(int a, int b, int c, int d, int e, int f, int g) {
     	temp = new int[] {a, b, c, d, e, f, g}; 
@@ -106,7 +111,7 @@ public class Board {
     	tempReplace(400,50,200,600,1400,1700,2000);
     	spaces[39] = new PropertySpace("Boardwalk", temp);
     	
-    	
+    	colors = new PropertyGroup();
     }
     
 }

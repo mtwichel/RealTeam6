@@ -49,12 +49,21 @@ public class PropertySpace extends Space {
         return this.isMortgaged;
     }
 
-    public void setMortgaged() {
+    public boolean setMortgaged() {
+
     	if(!isMonopoly) {
     		this.isMortgaged = true;
     		notifyPropertySpaceListeners();//For GUI? 
+    		return true;
+    	}else if(Banker.getBanker().getBoard().getGroups().checkForHouses(this.color)){
+
+    		this.isMortgaged = true;
+    		notifyPropertySpaceListeners();//For GUI? 
+    		return true;
+
+
     	}else {
-    		
+    		return false;//Houses exist on monopolies property player is trying to mortgage. Don't let them.
     	}
     }
 
