@@ -1,13 +1,9 @@
 package com.esof322.pa2.model;
 
-
-/**
-* @generated
-*/
-public class Utility extends PropertySpace {
+public class Utility extends Space {
     
 	public Utility(String name, int[] i) {
-    	super(name, i);
+    	super(name);
     }
     
 	public String getNameSpace() {

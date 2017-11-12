@@ -7,6 +7,7 @@ package com.esof322.pa2.model;
 public class GotoJailSpace extends Space {
     
 	public GotoJailSpace(String name) {
+		super(name);
     	setName(name);
     }
 	

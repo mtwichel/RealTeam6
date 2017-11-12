@@ -15,15 +15,15 @@ public class TestSpace {
 	public void testCalculateRent() throws NotEnoughFundsException, PropertyMaxUpgratedException {
 		Banker banker = setUpGame();	
 		
-		assertEquals(0, ((PropertySpace) banker.board.getSpace(0)).calculateRent());
+		assertEquals(0, ((PropertySpace) banker.getBoard().getSpace(0)).calculateRent());
 		
-		banker.players[0].purchase((PropertySpace) banker.board.getSpace(0));
+		banker.players[0].purchase((PropertySpace) banker.getBoard().getSpace(0));
 		
-		assertEquals(2, ((PropertySpace) banker.board.getSpace(0)).calculateRent());
+		assertEquals(2, ((PropertySpace) banker.getBoard().getSpace(0)).calculateRent());
 		
-		banker.players[0].upgrade((PropertySpace) banker.board.getSpace(0));
+		banker.players[0].upgrade((PropertySpace) banker.getBoard().getSpace(0));
 		
-		assertEquals(10, ((PropertySpace) banker.board.getSpace(0)).calculateRent());
+		assertEquals(10, ((PropertySpace) banker.getBoard().getSpace(0)).calculateRent());
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class TestSpace {
 		//never inits player, so is null. Should be fixed once Arjan does stuff in Banker Class
 		assertEquals(1500, banker.players[0].getBalance());
 		
-		banker.board.getSpace(0).takeAction(banker.players[0]);;
+		banker.getBoard().getSpace(0).takeAction(banker.players[0]);;
 		
 		assertEquals(1440, banker.players[0].getBalance());
 		

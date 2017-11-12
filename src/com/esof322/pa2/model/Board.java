@@ -4,19 +4,22 @@ import java.util.List;
 
 public class Board {
 	
-	private Space[] spaces = new Space[40];
+	private Board b;
+	private Space[] spaces;
 	private PropertyGroup colors;
 	
 	public Board() {
+		this.spaces = new Space[40];
+		this.b = this;
 		init();
 	}
     
     public Space getSpace(int pos) {
-    		return spaces[pos];
+    		return this.spaces[pos];
     }
     
     public PropertyGroup getGroups() {
-    	return colors;
+    	return this.colors;
     }
 
     private int[] temp;
@@ -110,8 +113,7 @@ public class Board {
     	spaces[38] = new TaxSpace("Luxury Tax",false);
     	tempReplace(400,50,200,600,1400,1700,2000);
     	spaces[39] = new PropertySpace("Boardwalk", temp);
-    	
-    	colors = new PropertyGroup();
+    	this.colors = new PropertyGroup(spaces);
     }
     
 }

@@ -1,9 +1,9 @@
 package com.esof322.pa2.model;
 
-public class Railroad extends PropertySpace {
+public class Railroad extends Space {
     
     public Railroad(String name,int[] i) {
-    	super(name, i);
+    	super(name);
     }
   
     public String getNameSpace() {

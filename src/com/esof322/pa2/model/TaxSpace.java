@@ -6,6 +6,7 @@ public class TaxSpace extends Space {
 	private boolean taxType;
 	
 	public TaxSpace(String name,boolean b) {
+		super(name);
     	setName(name);
     	taxType = b;
     }

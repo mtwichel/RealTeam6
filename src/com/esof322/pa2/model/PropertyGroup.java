@@ -19,34 +19,41 @@ public class PropertyGroup {
 		{null,null}		//Dark Blue
 		};	
 	
-	public PropertyGroup() {
-		initGroups();
+	public PropertyGroup(Space[] s) {
+		initGroups(s);
 	}
 	
 	//Fills Property space double array with spaces that have a certain color for purpose of checking monopolies.
-	public void populateProperties() {
-		properties[0][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(1);
-		properties[0][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(3);
-		properties[1][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(6);
-		properties[1][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(8);
-		properties[1][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(9);
-		properties[2][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(11);
-		properties[2][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(13);
-		properties[2][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(14);
-		properties[3][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(16);
-		properties[3][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(18);
-		properties[3][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(19);
-		properties[4][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(21);
-		properties[4][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(23);
-		properties[4][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(24);
-		properties[5][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(26);
-		properties[5][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(27);
-		properties[5][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(29);
-		properties[6][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(31);
-		properties[6][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(32);
-		properties[6][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(34);
-		properties[7][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(37);
-		properties[7][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(39);
+	public void populateProperties (Space[] s) {
+		int[] arry = {1,2,3,4,5,6,7};
+		//Space s = new PropertySpace("NameHere",arry);
+		//PropertySpace p = (PropertySpace) s;
+		//Banker.getBanker().getBoard();
+		//Space s = new PropertySpace();
+		//PropertySpace p = (PropertySpace) s
+		//b.getSpace(1);
+		properties[0][0] = (PropertySpace) s[1];
+		properties[0][1] = (PropertySpace) s[3];
+		properties[1][0] = (PropertySpace) s[6];
+		properties[1][1] = (PropertySpace) s[8];
+		properties[1][2] = (PropertySpace) s[9];
+		properties[2][0] = (PropertySpace) s[11];
+		properties[2][1] = (PropertySpace) s[13];
+		properties[2][2] = (PropertySpace) s[14];
+		properties[3][0] = (PropertySpace) s[16];
+		properties[3][1] = (PropertySpace) s[18];
+		properties[3][2] = (PropertySpace) s[19];
+		properties[4][0] = (PropertySpace) s[21];
+		properties[4][1] = (PropertySpace) s[23];
+		properties[4][2] = (PropertySpace) s[24];
+		properties[5][0] = (PropertySpace) s[26];
+		properties[5][1] = (PropertySpace) s[27];
+		properties[5][2] = (PropertySpace) s[29];
+		properties[6][0] = (PropertySpace) s[31];
+		properties[6][1] = (PropertySpace) s[32];
+		properties[6][2] = (PropertySpace) s[34];
+		properties[7][0] = (PropertySpace) s[37];
+		properties[7][1] = (PropertySpace) s[39];
 		
 		assignUpgradCost();
 	}
@@ -62,8 +69,8 @@ public class PropertyGroup {
 
 	//gets house cost based off PropertySpace's position on board.//
 
-	public void initGroups() {
-		populateProperties();
+	public void initGroups(Space[] s) {
+		populateProperties(s);
 	}
 
 	//Check for monopoly every time a property is bought, sold, or mortgaged
@@ -121,4 +128,5 @@ public class PropertyGroup {
 		}
 		return true;
 	}
+
 }

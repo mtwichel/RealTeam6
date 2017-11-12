@@ -9,11 +9,15 @@ public class Banker {
     private static Banker bank;
     private static ModelListener GUI;
     private Player current;
+    private Board board;  
+    
+    public Banker() {
+    	board = new Board();
+    }
     
     public Player[] players;
     
-    
-    public Board board;   
+
        
     
     public void tranferFunds() {

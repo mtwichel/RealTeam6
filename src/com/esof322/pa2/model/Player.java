@@ -259,7 +259,7 @@ public class Player {
     }
     
     public void aquireProperty(PropertySpace space) {
-    	this.ownedPropertySpaces.add(space);
+    	this.ownedPropertySpaces.add(space);//problem child
     	if(!space.isMortgaged()) {
     		netWorth += space.getMortgageValue();
     	}

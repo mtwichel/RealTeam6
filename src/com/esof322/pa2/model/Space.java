@@ -2,13 +2,18 @@ package com.esof322.pa2.model;
 
 import java.util.List;
 
-public abstract class Space {
+public class Space {
  
     private String name;
     private List<Player> occupyingPlayers;
     
     
-    protected String getName() {
+    public Space(String name) {
+		this.name = name;
+	}
+
+
+	protected String getName() {
         return this.name;
     }
     
@@ -26,7 +31,9 @@ public abstract class Space {
     }
         
    
-    public abstract void takeAction(Player callingPlayer);
+    public void takeAction(Player callingPlayer) {
+    	
+    }
     
     
 }

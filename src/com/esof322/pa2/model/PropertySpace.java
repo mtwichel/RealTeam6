@@ -9,9 +9,9 @@ public class PropertySpace extends Space {
     
     private int mortgageValue;  
 	private int unmortgageValue;
-    private Boolean isMortgaged;
+    private Boolean isMortgaged = false;
     private int houseLevel = 0; 
-    private Boolean isMonopoly;
+    private Boolean isMonopoly = false;
     private PropertyGroup propertyGroup;
     private int owner = 0;
 	private int upgradeAmount;
@@ -21,6 +21,7 @@ public class PropertySpace extends Space {
 	//int[] i's first index contains the cost to buy the property and the remaining 
 	//values contain the rent value according to houses/hotels owned.
     public PropertySpace(String name,int[] i) {
+    	super(name);
     	setName(name);
     	rentRates = i;
     }
