@@ -62,7 +62,7 @@ public class MainWindow extends Application implements ModelListener{
 		
 		board = new GridPane();
 		int i =0;
-		spacesGUIs = new PropertySpaceGui[41];
+		spacesGUIs = new PropertySpaceGui[40];
 		fillOutGUIs();
 		for(int y=0; y<10; y++) { //fist row
 			board.add(spacesGUIs[i], y, 0);;
@@ -76,7 +76,7 @@ public class MainWindow extends Application implements ModelListener{
 			board.add(spacesGUIs[i], y, 10);;
 			i++;
 		}
-		for(int x=10; x>0; x--) {
+		for(int x=9; x>0; x--) {
 			board.add(spacesGUIs[i], 0, x);;
 			i++;
 		}
@@ -97,7 +97,7 @@ public class MainWindow extends Application implements ModelListener{
 	
 	private void fillOutGUIs() {
 		// TODO Auto-generated method stub
-		for(int i=0; i<41; i++) {
+		for(int i=0; i<40; i++) {
 			spacesGUIs[i] = new PropertySpaceGui("395840", "#" + i);
 			spacesGUIs[i].setStyle("-fx-border-color: black");
 		}
