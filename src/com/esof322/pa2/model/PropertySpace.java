@@ -78,7 +78,7 @@ public class PropertySpace extends Space {
     			throw new PropertyMaxUpgratedException();
     		}
         this.houseLevel += 1;
-        //remove from pool in bank
+        //remove from pool in bank//
         notifyPropertySpaceListeners();
     }
     

@@ -32,7 +32,7 @@ public class JailSpace extends Space {
 			}else if(callingPlayer.getTurnsInJail() < 3){
 				callingPlayer.addTurnInJail();//dosen't get to roll
 			}else {
-				callingPlayer.
+				//callingPlayer.
 			}
 		}
 	}

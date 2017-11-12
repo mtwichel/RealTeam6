@@ -52,7 +52,7 @@ public class PropertyGroup {
 		}
 	}
 
-	//gets house cost based off PropertySpace's position on board.
+	//gets house cost based off PropertySpace's position on board.//
 
 	public void initGroups() {
 		populateProperties();

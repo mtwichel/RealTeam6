@@ -62,7 +62,7 @@ public class Player {
     	this.balance -= amount;
     	this.netWorth -= amount;
     	if(this.balance <= 0) {
-    		//Cry internally
+    		//Cry internally//
     		if(runBankruptcyCheck(p, amount)) {
     			Bankrupt(p);
     		}else {
