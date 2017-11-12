@@ -5,6 +5,7 @@ import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +26,8 @@ public class MainWindow extends Application implements ModelListener{
 	
 	Label currentPlayer, currentPlayerMoney;
 	
+	Button currentAction;
+	
 	VBox propertyList;
 	HBox currentPlayerHeading;
 
@@ -32,9 +35,10 @@ public class MainWindow extends Application implements ModelListener{
 	public void start(Stage primaryStage) throws Exception {
 		banker = new Banker();
 		
-		currentPlayer = new Label("Current Player: Marcus");
-		currentPlayerMoney = new Label("$1,500");
-		currentPlayerHeading = new HBox(2);
+		currentPlayer = new Label();
+		currentPlayerMoney = new Label();
+		currentPlayerHeading = new HBox(14);
+		currentPlayerHeading.setAlignment(Pos.CENTER);
 		currentPlayerHeading.getChildren().add(currentPlayer);
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");;
