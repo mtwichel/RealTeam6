@@ -27,6 +27,9 @@ public class Player {
         return this.piece;
     }
     
+    public int getPosition() {
+    	return position;
+    }
     
     protected int getBalance() {
         return this.balance;
@@ -107,6 +110,11 @@ public class Player {
 		}
     		this.ownedPropertySpaces.add(space);
     		space.setOwner(this);
+    }
+    
+    public void payPlayer(Player p, int amount) {
+    	this.charge(amount);
+    	p.addMoney(amount);
     }
     
     public int rollDice() {
