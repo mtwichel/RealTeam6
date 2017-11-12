@@ -186,7 +186,7 @@ public class Player {
     		addMoney(space.getMortgageValue());
             this.netWorth -= space.getMortgageValue();
     	}else {
-    		throw new HousesOnPropertiesException(space);
+    		throw new HousesOnPropertiesException(space);//Will need to try to mortgage again
     	}
     
     }
