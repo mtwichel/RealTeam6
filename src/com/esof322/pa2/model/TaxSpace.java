@@ -18,11 +18,11 @@ public class TaxSpace extends Space {
 	void takeAction(Player callingPlayer) {
 		
 		if(taxType) { //true is luxury tax
-			callingPlayer.charge(75);
+			callingPlayer.charge(null,75);
 		}else if(callingPlayer.getBalance() < 2000) {//false is income tax
-			callingPlayer.charge((int)(callingPlayer.getBalance()*.1));
+			callingPlayer.charge(null,(int)(callingPlayer.getBalance()*.1));
 		}else {
-			callingPlayer.charge(200);
+			callingPlayer.charge(null,200);
 		}
 		
 	}

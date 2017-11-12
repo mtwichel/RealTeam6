@@ -1,5 +1,6 @@
 package com.esof322.pa2.model;
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 
@@ -9,8 +10,6 @@ import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 public class PropertySpace extends Space {
     
     
-    private int rentAmount;
-    private int purchaseAmount;
     private int mortgageValue;  
 	private int unmortgageValue;
     private Boolean isMortgaged;
@@ -48,11 +47,9 @@ public class PropertySpace extends Space {
         return (int)((rentRates[0]/2)*1.1);//Essentially repurchasing the property
     }
     
-    
     public boolean isMortgaged() {
         return this.isMortgaged;
     }
-    
     
     public void setMortgaged() {
         this.isMortgaged = true;
@@ -70,41 +67,53 @@ public class PropertySpace extends Space {
         return this.houseLevel;
     }
     
+    public void resetHouseLevel() {
+    	//Re add houses/hotels to pool. if houseLevel <= 4, pool += houseLevel, else Hotel += 1
+    	this.houseLevel = 0;
+    }
     
+    //check if player has necessary balance to be able to upgrade first
     public void upgrade() throws PropertyMaxUpgratedException {
     		if((this.houseLevel + 1) > 5) {
     			throw new PropertyMaxUpgratedException();
     		}
         this.houseLevel += 1;
+        //remove from pool in bank
         notifyPropertySpaceListeners();
     }
     
+    //Give them half the cost of a house as well
     public void downgrade() throws PropertyMinUpgratedException {
-		if((this.houseLevel - 1) < 0) {
-			throw new PropertyMinUpgratedException();
-		}
-    		this.houseLevel -= 1;
+    	if((this.houseLevel - 1) < 0) {	
+    		throw new PropertyMinUpgratedException();
+    	}else if(this.houseLevel >= 5) {//If it is a hotel, down grading goes back to an empty lot.
+    		this.houseLevel = 0;
     		notifyPropertySpaceListeners();
+    	}else {
+    		this.houseLevel -= 1;
+    		//add house to pool in Bank
+        	notifyPropertySpaceListeners();
+    	}
     }
-    
+
     public int getUpgradeAmount() {
-    		return this.upgradeAmount;
+    	return this.upgradeAmount;
+    }
+    
+    public void setUpgradeAmount(int ua) {
+    	upgradeAmount = ua;
     }
     
     
-    private Boolean getIsMonopoly() {
+    public Boolean getIsMonopoly() {
         return this.isMonopoly;
     }
     
     
-    private void setIsMonopoly(Boolean isMonopoly) {
+    public void setIsMonopoly(Boolean isMonopoly) {
         this.isMonopoly = isMonopoly;
         notifyPropertySpaceListeners();
     }
-    
-
-    //                          Operations                                  
-    
     
     public void takeAction() {
         //TODO
@@ -116,7 +125,7 @@ public class PropertySpace extends Space {
     }
     
     public int getPurchaseAmount() {
-    		return this.purchaseAmount;
+    		return this.rentRates[0];
     }
     
     public void setOwner(Player owner) {
@@ -135,8 +144,21 @@ public class PropertySpace extends Space {
 
 	@Override
 	void takeAction(Player callingPlayer) {
-		// TODO Auto-generated method stub
-		
+		if(owner == 0) {//Allow Player to buy; need method for prompting user if they would like to buy property
+			//if response:yes, make new owner and subtract purchaseAmount
+			try {
+				callingPlayer.purchase(this);
+			} catch (NotEnoughFundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//if response:no, end turn.
+		}else {
+			//subtract Rent amount from player, and add it to other player (Call player pay method)
+			//in subtracting the rent, check if the player goes bankrupt, or is about to go bankrupt
+			//if they do go bankrupt, give them the option to mortgage a propety/sell a house/hotel
+			//if they own any, or are able to own a mortgagable property
+		}
 	}
 
 	public int calculateRent() {

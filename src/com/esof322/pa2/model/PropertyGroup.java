@@ -40,30 +40,42 @@ public class PropertyGroup {
 		properties[6][2] = (PropertySpace) Banker.getBanker().getBoard().getSpace(34);
 		properties[7][0] = (PropertySpace) Banker.getBanker().getBoard().getSpace(37);
 		properties[7][1] = (PropertySpace) Banker.getBanker().getBoard().getSpace(39);
+		
+		assignUpgradCost();
 	}
-    
+
+	public void assignUpgradCost() {
+		for(int i = 0; i < 8; i++) {
+			for(int k = 0; k < properties[i].length; k++) {
+				properties[i][k].setUpgradeAmount(50*((i/2)+1));
+			}
+		}
+	}
+
+	//gets house cost based off PropertySpace's position on board.
+
 	public void initGroups() {
 		populateProperties();
 	}
-	
+
 	//Check for monopoly every time a property is bought, sold, or mortgaged
-    public void checkMonopoly(int i, int c) {//int i represents the player's piece number, int c represents property color
-    	int k = properties[c].length;
-    	int owned = 0;
-        for(int j = 0; j <  properties[c].length; j++) {
-        	if((i == properties[c][j].checkOwner())&&(properties[c][j].isMortgaged())) {//If property is mortgaged, it won't count as a monopoly
-        		owned++;
-        	}
-        }
-        if(k <= owned) {
-        	for(int j = 0; j <  properties[c].length; j++) {
-        		properties[c][j].setMonopoly(true);
-        	}	
-        }else {
-        	for(int j = 0; j <  properties[c].length; j++) {
-        		properties[c][j].setMonopoly(false);
-        	}
-        }
-    }
-    
+	public void checkMonopoly(int i, int c) {//int i represents the player's piece number, int c represents property color
+		int k = properties[c].length;
+		int owned = 0;
+		for(int j = 0; j <  properties[c].length; j++) {
+			if((i == properties[c][j].checkOwner())&&(properties[c][j].isMortgaged())) {//If property is mortgaged, it won't count as a monopoly
+				owned++;
+			}
+		}
+		if(k <= owned) {
+			for(int j = 0; j <  properties[c].length; j++) {
+				properties[c][j].setMonopoly(true);
+			}	
+		}else {
+			for(int j = 0; j <  properties[c].length; j++) {
+				properties[c][j].setMonopoly(false);
+			}
+		}
+	}
+
 }
