@@ -2,6 +2,7 @@ package com.esof322.pa2.model;
 
 import java.util.Set;
 
+import com.esof322.pa2.exceptions.MonopolyContainsHousesException;
 import com.esof322.pa2.exceptions.NotEnoughHousesOnOtherPropertiesException;
 
 public class PropertyGroup {
@@ -98,6 +99,22 @@ public class PropertyGroup {
 				return false;//unable to add another house to this property, due to other 
 							 //properties not having enough houses.
 			}
+		return true;
+	}
+	
+	public boolean checkForHouses(int color) {//To be sure no properties have houses on them when mortgaging
+		for(int i = 0; i < properties[color].length;i++) {
+			if(properties[color][i].getHouseLevel()>0) {
+				try {
+					throw new MonopolyContainsHousesException(color);
+				} catch (MonopolyContainsHousesException e) {
+					// this is wherevthe pop up would show up and tell you to sell houses
+					//before trying to mortgage a property of a monopoly
+					e.printStackTrace();
+				}
+				return false;
+			}
+		}
 		return true;
 	}
 	/*public boolean checkHouses(int color) {
