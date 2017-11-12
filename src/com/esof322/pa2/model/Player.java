@@ -118,7 +118,7 @@ public class Player {
     //Allows the player to mortgage properties from a selection/sell houses/hotels
     public void avoidBankruptcy(int amount) {
     	//Organise Properties based on their net Value (Mortgage price + total houses price if sold)?
-    	//OR give the player the option to sell their houses if they have a monopoly/mortgage properties
+    	//OR give the player the option to sell their houses if they have a /mortgage properties
     	/*for(int i = 0; i < ownedPropertySpaces.size();i++) {
     		if(this.ownedPropertySpaces.get(i).checkIsMonopoly()) {
     			//check if houses cover debt
@@ -163,6 +163,13 @@ public class Player {
     		this.ownedPropertySpaces.get(i).setIsMonopoly(false);
     		this.ownedPropertySpaces.get(i).resetHouseLevel();
     	}
+    }
+    
+    public boolean checkIfHousesEven() {
+    	for(int i = 0; i < getOwnedProperties().size(); i++) {
+    		
+    	}
+    	return true;
     }
     
     private void subMoney(int amount) throws NotEnoughFundsException {

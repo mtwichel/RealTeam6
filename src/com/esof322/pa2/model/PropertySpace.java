@@ -4,9 +4,6 @@ import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 
-/**
-* @generated
-*/
 public class PropertySpace extends Space {
     
     
@@ -19,6 +16,7 @@ public class PropertySpace extends Space {
     private int owner = 0;
 	private int upgradeAmount;
 	private int[] rentRates;
+	private int color;
 
 	//int[] i's first index contains the cost to buy the property and the remaining 
 	//values contain the rent value according to houses/hotels owned.
@@ -55,6 +53,8 @@ public class PropertySpace extends Space {
     	if(!isMonopoly) {
     		this.isMortgaged = true;
     		notifyPropertySpaceListeners();//For GUI? 
+    	}else {
+    		
     	}
     }
 
@@ -65,9 +65,13 @@ public class PropertySpace extends Space {
     }
 
 
-    private int getHouseLevel() {
+     public int getHouseLevel() {
         return this.houseLevel;
     }
+     
+     public int getColor() {
+    	 return color;
+     }
     
     public void resetHouseLevel() {
     	//Re add houses/hotels to pool. if houseLevel <= 4, pool += houseLevel, else Hotel += 1
@@ -106,6 +110,9 @@ public class PropertySpace extends Space {
     	upgradeAmount = ua;
     }
     
+    public void setColor(int c) {
+    	color = c;
+    }
     
     public Boolean getIsMonopoly() {
         return this.isMonopoly;
@@ -120,11 +127,6 @@ public class PropertySpace extends Space {
     //this one is useless?
     public void takeAction() {
         //TODO
-    }
-    
-    
-    public boolean checkIsMonopoly() {
-        return isMonopoly;
     }
     
     public int getPurchaseAmount() {

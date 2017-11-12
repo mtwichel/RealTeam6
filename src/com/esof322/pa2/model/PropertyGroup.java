@@ -2,6 +2,8 @@ package com.esof322.pa2.model;
 
 import java.util.Set;
 
+import com.esof322.pa2.exceptions.NotEnoughHousesOnOtherPropertiesException;
+
 public class PropertyGroup {
     
 	//have method in propertySpace that updates this double array each time 
@@ -48,6 +50,7 @@ public class PropertyGroup {
 		for(int i = 0; i < 8; i++) {
 			for(int k = 0; k < properties[i].length; k++) {
 				properties[i][k].setUpgradeAmount(50*((i/2)+1));
+				properties[i][k].setColor(i);
 			}
 		}
 	}
@@ -77,5 +80,36 @@ public class PropertyGroup {
 			}
 		}
 	}
-
+	
+	public boolean checkIfAbleToAddHouse(PropertySpace space) {
+		int lowest = properties[space.getColor()][0].getHouseLevel();
+		for(int i = 0; i < properties[space.getColor()].length;i++) {
+			if(properties[space.getColor()][i].getHouseLevel()<lowest) {
+				lowest = properties[space.getColor()][i].getHouseLevel();
+			}
+		}
+			if((space.getHouseLevel()-lowest)>0) {
+				try {
+					throw new NotEnoughHousesOnOtherPropertiesException(space);
+				} catch (NotEnoughHousesOnOtherPropertiesException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;//unable to add another house to this property, due to other 
+							 //properties not having enough houses.
+			}
+		return true;
+	}
+	/*public boolean checkHouses(int color) {
+		//go through monopoly and get houses, should all be within 1 of each other
+		if(properties[color].length == 2) {
+			if((Math.abs((properties[color][0].getHouseLevel() - properties[color][1].getHouseLevel()))<=1));
+				return true;
+		}else if(properties[color].length == 3) {
+			if((Math.abs((properties[color][0].getHouseLevel() - properties[color][1].getHouseLevel()))<=1)&&(Math.abs((properties[color][2].getHouseLevel() - properties[color][1].getHouseLevel()))<=1));
+				return true;
+		};
+		
+		return false;//houses are un even
+	}*/
 }
