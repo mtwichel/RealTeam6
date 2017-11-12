@@ -8,27 +8,37 @@ import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 public class Player {
     
     
-    private int piece;    
-    private int balance = 1500;  
-    private int position = 0;
-    private int doublesCounter = 0;
+    private int piece;  
+    private String name;
+    private int balance;  
+    private int position;
+    private int doublesCounter;
     private boolean jailed;
     
     
     private List<PropertySpace> ownedPropertySpaces; 
     private Space currentSpace;
+	
     
     
-    public Player(int piece) {
+    public Player(int piece, String name) {
     		this.piece = piece;
+    		this.name = name;
+    		this.balance = 1500;
+    		this.position = 0;
+    		this.doublesCounter = 0;
     }
     
     public int getPiece() {
         return this.piece;
     }
     
+    public String getName() {
+    		return this.name;
+    }
     
-    protected int getBalance() {
+    
+    public int getBalance() {
         return this.balance;
     }
     

@@ -1,10 +1,14 @@
 package com.esof322.pa2.gui;
 
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
+import com.esof322.pa2.model.PropertySpace;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,7 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-public class MainWindow extends Application implements ModelListener{
+public class MainWindow extends Application implements ModelListener, EventHandler<ActionEvent>{
 	
 	Banker banker;
 	
@@ -39,7 +43,7 @@ public class MainWindow extends Application implements ModelListener{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker();
+		banker = new Banker(this);
 		
 		currentPlayer = new Label();
 		currentPlayerMoney = new Label();
@@ -57,6 +61,7 @@ public class MainWindow extends Application implements ModelListener{
 		actionBar = new HBox();
 		actionBar.setAlignment(Pos.CENTER_RIGHT);
 		currentAction = new Button();
+		currentAction.setOnAction(this);
 		currentAction.setStyle("-fx-padding: 20");
 		actionBar.getChildren().add(currentAction);
 		
@@ -107,6 +112,48 @@ public class MainWindow extends Application implements ModelListener{
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+
+	@Override
+	public void updateCurrentPlayer() {
+		currentPlayer.setText(banker.getCurrentPlayer().getName());
+		
+	}
+
+
+	@Override
+	public void updatePropertiesOwned() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateActionButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updatePlayerPositions() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateCurrentPlayerMoney() {
+		currentPlayerMoney.setText("$" + banker.getCurrentPlayer().getBalance());
+	}
+
+
+	@Override
+	public void handle(ActionEvent event) {
+		// TODO Auto-generated method stub
+		banker.setUpBoard(4);
+
 	}
 
 }
