@@ -1,4 +1,4 @@
-package com.esof322.pa2.model;
+package com.esof322.pa2;
 
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
@@ -17,49 +17,52 @@ public class PropertySpace extends Space {
     private int houseLevel; 
     private Boolean isMonopoly;
     private PropertyGroup propertyGroup;
-    private Player owner;
+    private int owner = 0;
 	private int upgradeAmount;
+	private int[] rentRates;
 
-    public PropertySpace(String name) {
+	//int[] i's first index contains the cost to buy the property and the remaining 
+	//values contain the rent value according to houses/hotels owned.
+    public PropertySpace(String name,int[] i) {
     	setName(name);
+    	rentRates = i;
+    }
+    
+    public void setMonopoly(boolean b) {
+    	isMonopoly = b;
     }
     
     public String getNameSpace() {
 		return getName();
 	}
     
-    protected int getRentAmount() {
-        return this.rentAmount;
+    ///getRentAmount should get rentRates[houses]; 
+    protected int getRentAmount(int i) {
+        return rentRates[i];
     }
-    
-    
-    protected void setRentAmount(int rentAmount) {
-        this.rentAmount = rentAmount;
-    }
-    
     
     public int getMortgageValue() {
-        return this.mortgageValue;
+        return (rentRates[0]/2);//When you mortgage a property, you get back halve the properties cost
     }
     public int getUnmortgageValue() {
-        return this.unmortgageValue;
+        return (int)((rentRates[0]/2)*1.1);//Essentially repurchasing the property
     }
     
     
-    private boolean isMortgaged() {
+    public boolean isMortgaged() {
         return this.isMortgaged;
     }
     
     
     public void setMortgaged() {
         this.isMortgaged = true;
-        notifyPropertySpaceListeners();
+        notifyPropertySpaceListeners();//For GUI? 
     }
 
 
 	public void setUnmortgaged() {
-    		this.isMortgaged = true;
-    		notifyPropertySpaceListeners();
+    		this.isMortgaged = false;
+    		notifyPropertySpaceListeners();//update GUI
     }
     
     
@@ -109,13 +112,12 @@ public class PropertySpace extends Space {
     
     
     public int calculateRent() {
-        //TODO
-        return 0;
+        rentRates[]
     }
     
     
     public void checkMonopoly() {
-        //TODO
+        //TODO		should be in Property Group?
     }
     
     public int getPurchaseAmount() {
@@ -123,7 +125,11 @@ public class PropertySpace extends Space {
     }
     
     public void setOwner(Player owner) {
-    		this.owner = owner;
+    		this.owner = owner.getPiece();
+    }
+    
+    public int checkOwner() {
+    	return owner;
     }
     
     private void notifyPropertySpaceListeners() {
@@ -139,3 +145,4 @@ public class PropertySpace extends Space {
 	}
     
 }
+
