@@ -24,7 +24,7 @@ public class Board {
     	Utility util;
     	int[] temp;
     	spaces[0] = new BlankSpace("Go");
-    	spaces[1] = new PropertySpace("Mediterranean Avenue",temp);
+    	spaces[1] = new PropertySpace("Mediterranean Avenue");
     	spaces[2] = new BlankSpace("Community Chest");
     	spaces[3] = new PropertySpace("Baltic Avenue");
     	spaces[4] = new TaxSpace("Income Tax");
