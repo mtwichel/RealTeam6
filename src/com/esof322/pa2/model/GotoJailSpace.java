@@ -15,7 +15,7 @@ public class GotoJailSpace extends Space {
 	}
 	
 	@Override
-	void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer) {
 		callingPlayer.toJail();	
 	}
     

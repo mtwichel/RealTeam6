@@ -15,7 +15,7 @@ public class JailSpace extends Space {
 	}
 
 	@Override
-	void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer) {
 		if (callingPlayer.getJailed() == true) {
 			System.out.println("Choose to roll doubles or pay $50"); //Eventually change this to prompt with buttons 		
 			//option to try and roll for doubles. If rolls doubles, turn still ends.
@@ -24,7 +24,7 @@ public class JailSpace extends Space {
 			Die die1 = new Die();
 			Die die2 = new Die();
 
-			boolean roll = true; //HERE TEMPORARILY UNTIL BUTTON IS IMPLIMENTED
+			boolean roll = false; //HERE TEMPORARILY UNTIL BUTTON IS IMPLIMENTED
 			if(roll) {
 				die1.rollDie();//surround by button the player must press to roll die
 				die2.rollDie();//VS. Paying instead of rolling

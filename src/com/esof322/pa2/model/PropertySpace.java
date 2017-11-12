@@ -157,7 +157,7 @@ public class PropertySpace extends Space {
 
 
 	@Override
-	void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer) {
 		if(owner == 0) {//Allow Player to buy; need method for prompting user if they would like to buy property
 			//if response:yes, make new owner and subtract purchaseAmount
 			try {

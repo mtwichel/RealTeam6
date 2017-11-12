@@ -1,5 +1,6 @@
 package com.esof322.pa2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.esof322.pa2.exceptions.HousesOnPropertiesException;
@@ -21,7 +22,7 @@ public class Player {
     private int netWorth = 1500;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
     
     
-    private List<PropertySpace> ownedPropertySpaces; 
+    private ArrayList<PropertySpace> ownedPropertySpaces = new ArrayList<PropertySpace>(); 
     private Space currentSpace;
     
     

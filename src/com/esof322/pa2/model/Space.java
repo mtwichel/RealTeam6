@@ -26,7 +26,7 @@ public abstract class Space {
     }
         
    
-    abstract void takeAction(Player callingPlayer);
+    public abstract void takeAction(Player callingPlayer);
     
     
 }

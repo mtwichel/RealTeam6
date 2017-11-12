@@ -15,7 +15,7 @@ public class TaxSpace extends Space {
 	}
 	
 	@Override
-	void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer) {
 		
 		if(taxType) { //true is luxury tax//
 			callingPlayer.charge(null,75);

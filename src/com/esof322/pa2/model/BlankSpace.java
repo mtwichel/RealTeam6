@@ -6,7 +6,7 @@ public class BlankSpace extends Space {
 		setName(name);
 	}
 	@Override
-	void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer) {
 		
 	}
     
