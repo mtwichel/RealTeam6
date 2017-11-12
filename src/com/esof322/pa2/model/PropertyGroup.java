@@ -47,19 +47,23 @@ public class PropertyGroup {
 	}
 	
 	//Check for monopoly every time a property is bought, sold, or mortgaged
-    public boolean checkMonopoly(int i, int c) {//int i represents the player's piece number, int c represents property color
+    public void checkMonopoly(int i, int c) {//int i represents the player's piece number, int c represents property color
     	int k = properties[c].length;
     	int owned = 0;
         for(int j = 0; j <  properties[c].length; j++) {
-        	if(i == properties[c][j].checkOwner()) {
+        	if((i == properties[c][j].checkOwner())&&(properties[c][j].isMortgaged())) {//If property is mortgaged, it won't count as a monopoly
         		owned++;
         	}
         }
         if(k <= owned) {
-        	return true;
+        	for(int j = 0; j <  properties[c].length; j++) {
+        		properties[c][j].setMonopoly(true);
+        	}	
+        }else {
+        	for(int j = 0; j <  properties[c].length; j++) {
+        		properties[c][j].setMonopoly(false);
+        	}
         }
-        return false;
     }
-    
     
 }
