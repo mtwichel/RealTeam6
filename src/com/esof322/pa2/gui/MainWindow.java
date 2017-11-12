@@ -14,6 +14,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,9 @@ public class MainWindow extends Application implements ModelListener{
 	VBox propertyList;
 	HBox currentPlayerHeading;
 	HBox actionBar;
+	GridPane board;
+	
+	PropertySpaceGui[] spacesGUIs;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -56,12 +60,34 @@ public class MainWindow extends Application implements ModelListener{
 		currentAction.setStyle("-fx-padding: 20");
 		actionBar.getChildren().add(currentAction);
 		
+		board = new GridPane();
+		int i =0;
+		spacesGUIs = new PropertySpaceGui[41];
+		fillOutGUIs();
+		for(int y=0; y<10; y++) { //fist row
+			board.add(spacesGUIs[i], y, 0);;
+			i++;
+		}
+		for(int x=0; x<10; x++) {
+			board.add(spacesGUIs[i], 10, x);;
+			i++;
+		}
+		for(int y=10; y>=0; y--) {
+			board.add(spacesGUIs[i], y, 10);;
+			i++;
+		}
+		for(int x=10; x>0; x--) {
+			board.add(spacesGUIs[i], 0, x);;
+			i++;
+		}
+		
 		
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(propertyList);
+		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 600, 500);
+		Scene scene = new Scene(mainLayout, 800, 600);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
@@ -69,6 +95,16 @@ public class MainWindow extends Application implements ModelListener{
 	}
 	
 	
+	private void fillOutGUIs() {
+		// TODO Auto-generated method stub
+		for(int i=0; i<41; i++) {
+			spacesGUIs[i] = new PropertySpaceGui("395840", "#" + i);
+			spacesGUIs[i].setStyle("-fx-border-color: black");
+		}
+		
+	}
+
+
 	public static void main(String[] args) {
 		launch(args);
 	}
