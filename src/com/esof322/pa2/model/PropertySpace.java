@@ -112,7 +112,7 @@ public class PropertySpace extends Space {
     
     
     public int calculateRent() {
-        rentRates[]
+        //rentRates[]
     }
     
     
