@@ -14,7 +14,7 @@ public class PropertySpace extends Space {
     private int mortgageValue;  
 	private int unmortgageValue;
     private Boolean isMortgaged;
-    private int houseLevel; 
+    private int houseLevel = 0; 
     private Boolean isMonopoly;
     private PropertyGroup propertyGroup;
     private int owner = 0;
@@ -38,7 +38,7 @@ public class PropertySpace extends Space {
     
     ///getRentAmount should get rentRates[houses]; 
     protected int getRentAmount(int i) {
-        return rentRates[i];
+        return rentRates[i+1];
     }
     
     public int getMortgageValue() {
@@ -111,13 +111,8 @@ public class PropertySpace extends Space {
     }
     
     
-    public int calculateRent() {
-        //rentRates[]
-    }
-    
-    
-    public void checkMonopoly() {
-        //TODO		should be in Property Group?
+    public boolean checkIsMonopoly() {
+        return isMonopoly;
     }
     
     public int getPurchaseAmount() {
