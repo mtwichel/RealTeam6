@@ -28,6 +28,10 @@ public class PropertySpace extends Space {
     	rentRates = i;
     }
     
+    public void setMonopoly(boolean b) {
+    	isMonopoly = b;
+    }
+    
     public String getNameSpace() {
 		return getName();
 	}
@@ -45,7 +49,7 @@ public class PropertySpace extends Space {
     }
     
     
-    private boolean isMortgaged() {
+    public boolean isMortgaged() {
         return this.isMortgaged;
     }
     
