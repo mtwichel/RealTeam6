@@ -10,6 +10,7 @@ public class Player {
     
     
     private int piece = -1;//default, players will pick at beginning of game    
+    private String name;
     private int balance = 1500;  
     private int position = 0;
     private int doublesCounter = 0;
@@ -25,6 +26,33 @@ public class Player {
     
     public Player(int piece) {
     		this.piece = piece;
+    		switch (piece) {
+			case 1:
+				name = "Car";
+				break;
+			case 2:
+				name = "Boot";
+				break;
+			case 3:
+				name = "Anvil";
+				break;
+			case 4:
+				name = "Hat";
+				break;
+			case 5:
+				name = "Thimble";
+				break;
+
+			default:
+				name = "Howitzer";
+			}
+    }
+    
+    public List getOwnedProperties() {
+    	return ownedPropertySpaces;
+    }
+    public String getName() {
+    	return name;
     }
     
     public int getPiece() {
@@ -47,7 +75,7 @@ public class Player {
     	return position;
     }
     
-    protected int getBalance() {
+    public int getBalance() {
         return this.balance;
     }
     
@@ -255,12 +283,32 @@ public class Player {
     		//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
     		//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
     	}
-        currentSpace.takeAction(this);//do what ever that space does
-        
-        notifyPlayerChoice();
+    	currentSpace.takeAction(this);//do what ever that space does
+
+    	notifyPlayerChoice();
     }
-    
-    
+
+    /*public enum TurnAction{
+    	MOVE, END_TURN, PROPERTY_ACTION;
+    }
+    public void performAction(TurnAction action) {
+    	switch (action) {
+    	case MOVE:
+
+    		break;
+
+    	case END_TURN:
+    		
+    		break;
+    	case PROPERTY_ACTION:
+    		
+    		break;
+    	default:
+    		break;
+    	}
+    }*/
+
+
     private void notifyPlayerChoice() {
 		// TODO Auto-generated method stub
 		

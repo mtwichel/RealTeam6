@@ -23,16 +23,24 @@ public class JailSpace extends Space {
 			//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
 			Die die1 = new Die();
 			Die die2 = new Die();
-			int iter = 0;
-			die1.rollDie();
-			die2.rollDie();
-			if(die1.getValue()==die2.getValue()) {
-				callingPlayer.removeJailedStatus(); 
-				callingPlayer.takeTurn();//gets to roll
-			}else if(callingPlayer.getTurnsInJail() < 3){
-				callingPlayer.addTurnInJail();//dosen't get to roll
+
+			boolean roll = true; //HERE TEMPORARILY UNTIL BUTTON IS IMPLIMENTED
+			if(roll) {
+				die1.rollDie();//surround by button the player must press to roll die
+				die2.rollDie();//VS. Paying instead of rolling
+
+				if(die1.getValue()==die2.getValue()) {
+					callingPlayer.removeJailedStatus(); 
+					callingPlayer.takeTurn();//gets to roll
+				}else if(callingPlayer.getTurnsInJail() < 3){
+					callingPlayer.addTurnInJail();//dosen't get to roll
+				}else {
+					callingPlayer.charge(null, 50);
+					callingPlayer.removeJailedStatus(); 
+					callingPlayer.takeTurn();//gets to roll
+				}
 			}else {
-				//callingPlayer.
+				callingPlayer.charge(null, 50);
 			}
 		}
 	}

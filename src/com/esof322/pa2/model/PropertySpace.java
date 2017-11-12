@@ -58,8 +58,12 @@ public class PropertySpace extends Space {
 
 
 	public void setUnmortgaged() {
+		if(!isMonopoly) {
     		this.isMortgaged = false;
     		notifyPropertySpaceListeners();//update GUI
+		}else {
+			
+		}
     }
     
     
@@ -115,6 +119,7 @@ public class PropertySpace extends Space {
         notifyPropertySpaceListeners();
     }
     
+    //this one is useless?
     public void takeAction() {
         //TODO
     }

@@ -8,6 +8,7 @@ public class Banker {
     
     private static Banker bank;
     private static ModelListener GUI;
+    private Player current;
     
     public Player[] players;
     
@@ -42,6 +43,10 @@ public class Banker {
     
     public Player getPlayer(int num){
     		return players[num];
+    }
+    
+    public Player getCurrentPlayer() {
+		return current;
     }
     
 }
