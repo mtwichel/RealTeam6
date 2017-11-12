@@ -7,15 +7,13 @@ package com.esof322.pa2.model;
 public class Banker {
     
     private static Banker bank;
+    private static ModelListener GUI;
     
     protected Player[] players;
     
     
     protected Board board;   
-    
-
-    //                          Operations                                  
-    
+       
     
     public void tranferFunds() {
         //TODO
@@ -32,7 +30,10 @@ public class Banker {
     }
     
     public static Banker getBanker() {
-    	return bank;
+    		return bank;
+    }
+    public static ModelListener getGUI() {
+    		return GUI;
     }
     
     public Board getBoard() {

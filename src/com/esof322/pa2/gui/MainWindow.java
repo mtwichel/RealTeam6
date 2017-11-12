@@ -2,6 +2,7 @@ package com.esof322.pa2.gui;
 
 
 import com.esof322.pa2.model.Banker;
+import com.esof322.pa2.model.ModelListener;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-public class MainWindow extends Application{
+public class MainWindow extends Application implements ModelListener{
 	
 	Banker banker;
 	
