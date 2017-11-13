@@ -54,7 +54,6 @@ public class PropertyGroup {
 		properties[6][2] = (PropertySpace) s[34];
 		properties[7][0] = (PropertySpace) s[37];
 		properties[7][1] = (PropertySpace) s[39];
-		
 		assignUpgradCost();
 	}
 
@@ -74,11 +73,12 @@ public class PropertyGroup {
 	}
 
 	//Check for monopoly every time a property is bought, sold, or mortgaged
-	public void checkMonopoly(int i, int c) {//int i represents the player's piece number, int c represents property color
+	public void checkMonopoly(Player p, int c) {//int i represents the player's piece number, int c represents property color
+		int i = p.getPiece();
 		int k = properties[c].length;
 		int owned = 0;
 		for(int j = 0; j <  properties[c].length; j++) {
-			if((i == properties[c][j].checkOwner())&&(properties[c][j].isMortgaged())) {//If property is mortgaged, it won't count as a monopoly
+			if((i == properties[c][j].checkOwner())&&(!properties[c][j].isMortgaged())) {//If property is mortgaged, it won't count as a monopoly
 				owned++;
 			}
 		}
@@ -86,12 +86,25 @@ public class PropertyGroup {
 			for(int j = 0; j <  properties[c].length; j++) {
 				properties[c][j].setMonopoly(true);
 			}	
+			p.setHasMonopoly(true);
 		}else {
 			for(int j = 0; j <  properties[c].length; j++) {
 				properties[c][j].setMonopoly(false);
 			}
+			p.setHasMonopoly(false);
 		}
+		
+		
 	}
+	
+	/*public int[] getPlayerOwned(Player p) {
+		int i = p.getPiece();
+		for(int j = 0; j <  p.getOwnedProperties().size(); j++) {
+			if((i == properties[c][j].checkOwner())) {//If property is mortgaged, it won't count as a monopoly
+				
+			}
+		}
+	}*/
 	
 	public boolean checkIfAbleToAddHouse(PropertySpace space) {
 		int lowest = properties[space.getColor()][0].getHouseLevel();

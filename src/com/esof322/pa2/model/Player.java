@@ -13,13 +13,13 @@ public class Player {
     
     private int piece = -1;//default, players will pick at beginning of game    
     private String name;
-    private int balance = 1500;  
-    private int position = 0;
-    private int doublesCounter = 0;
-    private boolean jailed = false;
-    private boolean hasMonopoly = false;
-    private int turnsInJail = 1500;
-    private int netWorth = 1500;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
+    private int balance;  
+    private int position;
+    private int doublesCounter;
+    private boolean jailed;
+    private boolean hasMonopoly;
+    private int turnsInJail;
+    private int netWorth;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
     
     
     private ArrayList<PropertySpace> ownedPropertySpaces = new ArrayList<PropertySpace>(); 
@@ -27,6 +27,13 @@ public class Player {
     
     
     public Player(int piece) {
+    	jailed = false;
+    	hasMonopoly = false;
+    	turnsInJail = 0;
+    	netWorth = 1500;
+    	balance = 1500;
+    	doublesCounter = 0;
+    	position = 0;
     		this.piece = piece;
     		switch (piece) {
 			case 1:
@@ -53,6 +60,33 @@ public class Player {
     public List getOwnedProperties() {
     	return ownedPropertySpaces;
     }
+    
+    public void setHasMonopoly(boolean b) {
+    	hasMonopoly = b;
+    }
+    
+    public boolean getHasMonopoly() {
+		return hasMonopoly;
+    }
+    
+    /*public ArrayList<Integer> getColorGroups() {//returns array of color groups owned
+    	ArrayList<Integer> colors = new ArrayList<Integer>();
+    	ArrayList<Integer> added = new ArrayList<Integer>();
+    	colors.add(ownedPropertySpaces.get(0).getColor());
+    	for(int i = 0; i < ownedPropertySpaces.size(); i++) {
+    		for(int k = 0; k<added.size();k++) {
+    			if(ownedPropertySpaces.get(i).getColor()==added.get(k)){
+        			
+        		}
+    		}
+    	}
+    	return colors;
+    }*/
+    
+    public PropertySpace getProperty(int i) {
+		return (PropertySpace)ownedPropertySpaces.get(i);
+    }
+    
     public String getName() {
     	return name;
     }
@@ -141,6 +175,10 @@ public class Player {
     		this.handOverProperties(p);
     	}
     	//Delete Player from list in bank (once Arjan adds it)
+    }
+    
+    public int getNetWorth() {
+    	return netWorth;
     }
     
     public void handOverProperties(Player p) {
@@ -254,14 +292,14 @@ public class Player {
     			throw new NotEnoughFundsException(this);
 		}
     		this.ownedPropertySpaces.add(space);
-    		netWorth += space.getMortgageValue();
+    		this.netWorth += space.getMortgageValue();
     		space.setOwner(this);
     }
     
     public void aquireProperty(PropertySpace space) {
-    	this.ownedPropertySpaces.add(space);//problem child
+    	this.ownedPropertySpaces.add(space);
     	if(!space.isMortgaged()) {
-    		netWorth += space.getMortgageValue();
+    		this.netWorth += space.getMortgageValue();
     	}
 		space.setOwner(this);
     }

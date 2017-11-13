@@ -24,14 +24,15 @@ public class Banker {
         //TODO
     }
     
-    public void setUpBoard(int numberOfPlayers) {
-        //TODO
+    public void setUpPlayers(int numberOfPlayers) {
+        players = new Player[numberOfPlayers];
+        //Roll off per player, highest roll gets highest position
+        
     }
     
     
     public void startGame() {
     	bank = new Banker();
-        //TODO
     }
     
     public static Banker getBanker() {
