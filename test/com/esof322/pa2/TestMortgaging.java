@@ -26,8 +26,6 @@ public class TestMortgaging {
 		//board.getGroups().populateProperties(board);
 		p1.aquireProperty(prop);
 		p1.aquireProperty((PropertySpace)board.getSpace(32));
-		p1.aquireProperty(prop);
-		p1.aquireProperty((PropertySpace)board.getSpace(32));
 		//For checking that they all made it in the list
 		System.out.println(p1.getOwnedProperties().size());
 	}

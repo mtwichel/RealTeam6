@@ -30,7 +30,7 @@ public class TestPlayer {
 	
 	public void setUpGame() {
 		banker = new Banker();
-		banker.setUpBoard(4);
+		banker.setUpPlayers(4);
 		banker.startGame();
 	}
 	

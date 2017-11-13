@@ -33,7 +33,7 @@ public class TestSpace {
 		//never inits player, so is null. Should be fixed once Arjan does stuff in Banker Class
 		assertEquals(1500, banker.players[0].getBalance());
 		
-		banker.getBoard().getSpace(0).takeAction(banker.players[0]);;
+		banker.getBoard().getSpace(0).takeAction(banker.players[0]);
 		
 		assertEquals(1440, banker.players[0].getBalance());
 		
@@ -42,8 +42,7 @@ public class TestSpace {
 	
 	public Banker setUpGame() {
 		Banker banker = new  Banker();
-		banker = new Banker();
-		banker.setUpBoard(4);
+		banker.setUpPlayers(4);
 		banker.startGame();
 		
 		return banker;
