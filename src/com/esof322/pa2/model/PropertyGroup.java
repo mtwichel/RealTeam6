@@ -20,7 +20,7 @@ public class PropertyGroup {
 		};	
 	
 	public PropertyGroup(Space[] s) {
-		initGroups(s);
+		populateProperties(s);
 	}
 	
 	//Fills Property space double array with spaces that have a certain color for purpose of checking monopolies.
@@ -64,12 +64,6 @@ public class PropertyGroup {
 				properties[i][k].setColor(i);
 			}
 		}
-	}
-
-	//gets house cost based off PropertySpace's position on board.//
-
-	public void initGroups(Space[] s) {
-		populateProperties(s);
 	}
 
 	//Check for monopoly every time a property is bought, sold, or mortgaged
