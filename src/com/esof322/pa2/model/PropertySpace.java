@@ -13,7 +13,7 @@ public class PropertySpace extends Space {
     private int houseLevel = 0; 
     private Boolean isMonopoly = false;
     private PropertyGroup propertyGroup;
-    private int owner = 0;
+    private Player owner;
 	private int upgradeAmount;
 	private int[] rentRates;
 	private int color;
@@ -144,11 +144,11 @@ public class PropertySpace extends Space {
     }
     
     public void setOwner(Player owner) {
-    		this.owner = owner.getPiece();
+    		this.owner = owner;
     }
     
-    public int checkOwner() {
-    	return owner;
+    public Player getOwner() {
+    		return owner;
     }
     
     private void notifyPropertySpaceListeners() {
@@ -159,7 +159,7 @@ public class PropertySpace extends Space {
 
 	@Override
 	public void takeAction(Player callingPlayer) {
-		if(owner == 0) {//Allow Player to buy; need method for prompting user if they would like to buy property
+		if(owner == null) {//Allow Player to buy; need method for prompting user if they would like to buy property
 			//if response:yes, make new owner and subtract purchaseAmount
 			try {
 				callingPlayer.purchase(this);

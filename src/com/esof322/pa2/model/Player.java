@@ -20,13 +20,15 @@ public class Player {
     private boolean hasMonopoly;
     private int turnsInJail;
     private int netWorth;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
+    private String color;
     
     
     private ArrayList<PropertySpace> ownedPropertySpaces = new ArrayList<PropertySpace>(); 
     private Space currentSpace;
     
     
-    public Player(int piece) {
+    public Player(int piece, String color) {
+    	this.color = color;
     	jailed = false;
     	hasMonopoly = false;
     	turnsInJail = 0;
@@ -198,7 +200,7 @@ public class Player {
     
     public void resetProperties() {
     	for(int i = 0; i < ownedPropertySpaces.size();i++) {
-    		Player empty = new Player(0);
+    		Player empty = new Player(0, "649394");
     		this.ownedPropertySpaces.get(i).setOwner(empty);//makes it so other players can buy the property now
     		this.ownedPropertySpaces.get(i).setIsMonopoly(false);
     		this.ownedPropertySpaces.get(i).resetHouseLevel();
@@ -326,17 +328,22 @@ public class Player {
     
 
     public void takeTurn() {
-    	if(!jailed) {
-    		movePlayer(rollDice());
-        	currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
-    	}else {
-    		//option to try and roll for doubles. If rolls doubles, turn still ends.
-    		//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
-    		//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
-    	}
-    	currentSpace.takeAction(this);//do what ever that space does
+    		if(!jailed) {
+    			movePlayer(rollDice());
+    			currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
+    		}else {
+    			//option to try and roll for doubles. If rolls doubles, turn still ends.
+    			//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
+    			//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
+    		}
+    	
+    		currentSpace.takeAction(this);//do what ever that space does
 
-    	notifyPlayerChoice();
+    		notifyPlayerChoice();
+    }
+    
+    public String getColor() {
+    		return this.color;
     }
 
     /*public enum TurnAction{
