@@ -5,6 +5,7 @@ import java.util.List;
 public class Space {
  
     private String name;
+    private String color;
     private List<Player> occupyingPlayers;
     
     

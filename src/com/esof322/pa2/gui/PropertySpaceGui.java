@@ -12,21 +12,31 @@ import javafx.scene.paint.Paint;
 
 public class PropertySpaceGui extends Pane {
 	
-	private String color;
-	private Label label;
+	private String groupColor;
+	private String ownerColor;
 	
-	public PropertySpaceGui(String color, String title) {
-		this.color = color;
+	private Label label;
+	private VBox layout;
+	private Pane colorPane;
+	
+	public PropertySpaceGui(String groupColor, String title) {
+		this.groupColor = groupColor;
 		this.label = new Label(title);
 		
-		VBox layout = new VBox(5);
+		layout = new VBox(5);
 		layout.setAlignment(Pos.CENTER);
-		Pane colorPane = new Pane();
+		colorPane = new Pane();
 		colorPane.setPrefSize(55,15);
-		colorPane.setStyle("-fx-background-color: #" + color);
+		colorPane.setStyle("-fx-background-color: #" + this.groupColor);
 		layout.getChildren().add(colorPane);
 		layout.getChildren().add(label);
 		this.getChildren().add(layout);
+		
+	}
+	
+	public void setOwnerColor(String color) {
+		this.ownerColor = color;
+		this.label.setStyle("-fx-background-color: #" + this.ownerColor);
 		
 	}
 

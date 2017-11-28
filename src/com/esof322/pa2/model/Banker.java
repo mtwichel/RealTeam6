@@ -1,9 +1,8 @@
 package com.esof322.pa2.model;
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.gui.MainWindow;
 
-/**
-* @generated
-*/
 public class Banker {
     
     private static Banker bank;
@@ -13,8 +12,9 @@ public class Banker {
     
     private Action currentAction;
     
-    public Banker() {
+    public Banker(MainWindow gui) {
     	board = new Board();
+    	this.GUI = gui;
     }
     
     public Player[] players;
@@ -33,9 +33,6 @@ public class Banker {
     }
     
     
-    public void startGame() {
-    	bank = new Banker();
-    }
     
     public static Banker getBanker() {
     		return bank;
@@ -45,7 +42,7 @@ public class Banker {
     }
     
     public Board getBoard() {
-    	return board;
+    		return board;
     }
     
     public Player getPlayer(int num){
@@ -57,7 +54,7 @@ public class Banker {
     }
 
 	public void takeAction() {
-		// TODO Auto-generated method stub
+//		 TODO add functionality as it comes in
 		switch(currentAction) {
 			case ROLL_DICE:
 				break;
@@ -65,6 +62,7 @@ public class Banker {
 				break;
 				
 		}
+		
 		
 	}
     

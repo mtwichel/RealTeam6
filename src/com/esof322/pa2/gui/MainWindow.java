@@ -1,6 +1,8 @@
 package com.esof322.pa2.gui;
 
 
+import org.hamcrest.core.IsInstanceOf;
+
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
@@ -43,7 +45,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker();
+		banker = new Banker(this);
 		
 		currentPlayer = new Label();
 		currentPlayerMoney = new Label();
@@ -125,7 +127,21 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	@Override
 	public void updatePropertiesOwned() {
 		// TODO Auto-generated method stub
-		
+		for(int i=0; i<spacesGUIs.length; i++) {
+			if(banker.getBoard().getSpace(i) instanceof PropertySpace) {
+				//if space is property space
+				if(((PropertySpace) banker.getBoard().getSpace(i)).getOwner() != null) {
+					//if property space has an owner
+					spacesGUIs[i].setOwnerColor(
+							((PropertySpace) banker.getBoard().getSpace(i))
+							.getOwner().getColor());
+				}else {
+					spacesGUIs[i].setOwnerColor("FFFFFF");
+				}
+				 
+
+			}
+		}
 	}
 
 
