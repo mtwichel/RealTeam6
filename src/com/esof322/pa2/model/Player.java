@@ -9,344 +9,344 @@ import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 
 public class Player {
-    
-    
-    private int piece = -1;//default, players will pick at beginning of game    
-    private String name;
-    private int balance;  
-    private int position;
-    private int doublesCounter;
-    private boolean jailed;
-    private boolean hasMonopoly;
-    private int turnsInJail;
-    private int netWorth;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
-    private String color;
-    
-    
-    private ArrayList<PropertySpace> ownedPropertySpaces = new ArrayList<PropertySpace>(); 
-    private Space currentSpace;
-    
-    
-    public Player(int piece, String color) {
-    	this.color = color;
-    	jailed = false;
-    	hasMonopoly = false;
-    	turnsInJail = 0;
-    	netWorth = 1500;
-    	balance = 1500;
-    	doublesCounter = 0;
-    	position = 0;
-    		this.piece = piece;
-    		switch (piece) {
-			case 1:
-				name = "Car";
-				break;
-			case 2:
-				name = "Boot";
-				break;
-			case 3:
-				name = "Anvil";
-				break;
-			case 4:
-				name = "Hat";
-				break;
-			case 5:
-				name = "Thimble";
-				break;
 
-			default:
-				name = "Howitzer";
-			}
-    }
-    
-    public List getOwnedProperties() {
-    	return ownedPropertySpaces;
-    }
-    
-    public void setHasMonopoly(boolean b) {
-    	hasMonopoly = b;
-    }
-    
-    public boolean getHasMonopoly() {
+
+	private int piece = -1;//default, players will pick at beginning of game    
+	private String name;
+	private int balance;  
+	private int position;
+	private int doublesCounter;
+	private boolean jailed;
+	private boolean hasMonopoly;
+	private int turnsInJail;
+	private int netWorth;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
+	private String color;
+
+
+	private ArrayList<PropertySpace> ownedPropertySpaces = new ArrayList<PropertySpace>(); 
+	private Space currentSpace;
+
+
+	public Player(int piece, String color) {
+		this.color = color;
+		jailed = false;
+		hasMonopoly = false;
+		turnsInJail = 0;
+		netWorth = 1500;
+		balance = 1500;
+		doublesCounter = 0;
+		position = 0;
+		this.piece = piece;
+		switch (piece) {
+		case 1:
+			name = "Car";
+			break;
+		case 2:
+			name = "Boot";
+			break;
+		case 3:
+			name = "Anvil";
+			break;
+		case 4:
+			name = "Hat";
+			break;
+		case 5:
+			name = "Thimble";
+			break;
+
+		default:
+			name = "Howitzer";
+		}
+	}
+
+	public List getOwnedProperties() {
+		return ownedPropertySpaces;
+	}
+
+	public void setHasMonopoly(boolean b) {
+		hasMonopoly = b;
+	}
+
+	public boolean getHasMonopoly() {
 		return hasMonopoly;
-    }
-    
-    /*public ArrayList<Integer> getColorGroups() {//returns array of color groups owned
+	}
+
+	/*public ArrayList<Integer> getColorGroups() {//returns array of color groups owned
     	ArrayList<Integer> colors = new ArrayList<Integer>();
     	ArrayList<Integer> added = new ArrayList<Integer>();
     	colors.add(ownedPropertySpaces.get(0).getColor());
     	for(int i = 0; i < ownedPropertySpaces.size(); i++) {
     		for(int k = 0; k<added.size();k++) {
     			if(ownedPropertySpaces.get(i).getColor()==added.get(k)){
-        			
+
         		}
     		}
     	}
     	return colors;
     }*/
-    
-    public PropertySpace getProperty(int i) {
+
+	public PropertySpace getProperty(int i) {
 		return (PropertySpace)ownedPropertySpaces.get(i);
-    }
-    
-    public String getName() {
-    	return name;
-    }
-    
-    public int getPiece() {
-        return this.piece;
-    }
-    
-    public void resetTurnsInJail() {
-    	turnsInJail = 0;
-    }
-    
-    public void addTurnInJail() {
-    	turnsInJail++;
-    }
-    
-    public int getTurnsInJail() {
-    	return turnsInJail;
-    }
-    
-    public int getPosition() {
-    	return position;
-    }
-    
-    public int getBalance() {
-        return this.balance;
-    }
-    
-    
-    public void addMoney(int amount) {
-    		this.netWorth += amount;
-    		this.balance += amount;
-    }
-    
-    //if Balance goes below 0, check for mortgagable properties/houses to sell if they have a monopoly
-    public void charge(Player p, int amount) {//Charge happens when player must pay(dosen't have an option)
-    	this.balance -= amount;
-    	this.netWorth -= amount;
-    	if(this.balance <= 0) {
-    		//Cry internally//
-    		if(runBankruptcyCheck(p, amount)) {
-    			Bankrupt(p);
-    		}else {
-    			//Give options to sell stuff here
-    			avoidBankruptcy(amount);
-    			payPlayer(p, amount);
-    		}
-    	}
-    }
-    
-    public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
-    	if(ownedPropertySpaces.isEmpty()) {
-    		//GameOver for player, remove them from list of players
-    		return true;
-    	}
-    	if(amount < this.netWorth) {
-    		
-    		return false; //Still need to sell some stuff though
-    	}else {
-    		return true;//You just lose. All your stuff goes to the person who you owed.
-    	}
-   
-    }
-    
-    //Allows the player to mortgage properties from a selection/sell houses/hotels
-    public void avoidBankruptcy(int amount) {
-    	//Organise Properties based on their net Value (Mortgage price + total houses price if sold)?
-    	//OR give the player the option to sell their houses if they have a /mortgage properties
-    	/*for(int i = 0; i < ownedPropertySpaces.size();i++) {
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getPiece() {
+		return this.piece;
+	}
+
+	public void resetTurnsInJail() {
+		turnsInJail = 0;
+	}
+
+	public void addTurnInJail() {
+		turnsInJail++;
+	}
+
+	public int getTurnsInJail() {
+		return turnsInJail;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public int getBalance() {
+		return this.balance;
+	}
+
+
+	public void addMoney(int amount) {
+		this.netWorth += amount;
+		this.balance += amount;
+	}
+
+	//if Balance goes below 0, check for mortgagable properties/houses to sell if they have a monopoly
+	public void charge(Player p, int amount) {//Charge happens when player must pay(dosen't have an option)
+		this.balance -= amount;
+		this.netWorth -= amount;
+		if(this.balance <= 0) {
+			//Cry internally//
+			if(runBankruptcyCheck(p, amount)) {
+				Bankrupt(p);
+			}else {
+				//Give options to sell stuff here
+				avoidBankruptcy(amount);
+				payPlayer(p, amount);
+			}
+		}
+	}
+
+	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
+		if(ownedPropertySpaces.isEmpty()) {
+			//GameOver for player, remove them from list of players
+			return true;
+		}
+		if(amount < this.netWorth) {
+
+			return false; //Still need to sell some stuff though
+		}else {
+			return true;//You just lose. All your stuff goes to the person who you owed.
+		}
+
+	}
+
+	//Allows the player to mortgage properties from a selection/sell houses/hotels
+	public void avoidBankruptcy(int amount) {
+		//Organise Properties based on their net Value (Mortgage price + total houses price if sold)?
+		//OR give the player the option to sell their houses if they have a /mortgage properties
+		/*for(int i = 0; i < ownedPropertySpaces.size();i++) {
     		if(this.ownedPropertySpaces.get(i).checkIsMonopoly()) {
     			//check if houses cover debt
     			this.ownedPropertySpaces.get(i).
-    			
+
     		}
 			this.ownedPropertySpaces.get(i).getMortgageValue();
-			
+
     	}*/
-    }
-    
-    public void Bankrupt(Player p) {//Player p is the player they go bankrupt to, null if to bank.
-    	if(p.equals(null)) {
-    		resetProperties();
-    		//return properties to unowned.
-    		//return houses/hotels to pool.***
-    	}else {
-    		this.handOverProperties(p);
-    	}
-    	//Delete Player from list in bank (once Arjan adds it)
-    }
-    
-    public int getNetWorth() {
-    	return netWorth;
-    }
-    
-    public void handOverProperties(Player p) {
-    	if(p.equals(null)) {
-    		resetProperties();
-    	}else {
-    		for(int i = 0; i < ownedPropertySpaces.size();i++) {
-    			//hand over money and properties
-    			p.aquireProperty(this.ownedPropertySpaces.get(i));
-    			this.ownedPropertySpaces.remove(i);
-    			if(balance > 0) {
-    				this.payPlayer(p, balance);
-    			}
-    		}
-    	}
-    }
-    
-    public void resetProperties() {
-    	for(int i = 0; i < ownedPropertySpaces.size();i++) {
-    		Player empty = new Player(0, "649394");
-    		this.ownedPropertySpaces.get(i).setOwner(empty);//makes it so other players can buy the property now
-    		this.ownedPropertySpaces.get(i).setIsMonopoly(false);
-    		this.ownedPropertySpaces.get(i).resetHouseLevel();
-    	}
-    }
-    
-    public boolean checkIfHousesEven() {
-    	for(int i = 0; i < getOwnedProperties().size(); i++) {
-    		
-    	}
-    	return true;
-    }
-    
-    private void subMoney(int amount) throws NotEnoughFundsException {
+	}
+
+	public void Bankrupt(Player p) {//Player p is the player they go bankrupt to, null if to bank.
+		if(p.equals(null)) {
+			resetProperties();
+			//return properties to unowned.
+			//return houses/hotels to pool.***
+		}else {
+			this.handOverProperties(p);
+		}
+		//Delete Player from list in bank (once Arjan adds it)
+	}
+
+	public int getNetWorth() {
+		return netWorth;
+	}
+
+	public void handOverProperties(Player p) {
+		if(p.equals(null)) {
+			resetProperties();
+		}else {
+			for(int i = 0; i < ownedPropertySpaces.size();i++) {
+				//hand over money and properties
+				p.aquireProperty(this.ownedPropertySpaces.get(i));
+				this.ownedPropertySpaces.remove(i);
+				if(balance > 0) {
+					this.payPlayer(p, balance);
+				}
+			}
+		}
+	}
+
+	public void resetProperties() {
+		for(int i = 0; i < ownedPropertySpaces.size();i++) {
+			Player empty = new Player(0, "649394");
+			this.ownedPropertySpaces.get(i).setOwner(empty);//makes it so other players can buy the property now
+			this.ownedPropertySpaces.get(i).setIsMonopoly(false);
+			this.ownedPropertySpaces.get(i).resetHouseLevel();
+		}
+	}
+
+	public boolean checkIfHousesEven() {
+		for(int i = 0; i < getOwnedProperties().size(); i++) {
+
+		}
+		return true;
+	}
+
+	private void subMoney(int amount) throws NotEnoughFundsException {
 		this.balance -= amount;
 		this.netWorth -= amount;
 		if((this.balance - amount) < 0) {
 			throw new NotEnoughFundsException(this);
 		}
-    }
-   
-    public void mortgage(PropertySpace space) throws HousesOnPropertiesException {
-    	if(space.setMortgaged()) {
-    		addMoney(space.getMortgageValue());
-            this.netWorth -= space.getMortgageValue();
-    	}else {
-    		throw new HousesOnPropertiesException(space);//Will need to try to mortgage again
-    	}
-    
-    }
-    
-    
-    public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
-    		try {
-    			subMoney(space.getUnmortgageValue());
+	}
+
+	public void mortgage(PropertySpace space) throws HousesOnPropertiesException {
+		if(space.setMortgaged()) {
+			addMoney(space.getMortgageValue());
+			this.netWorth -= space.getMortgageValue();
+		}else {
+			throw new HousesOnPropertiesException(space);//Will need to try to mortgage again
+		}
+
+	}
+
+
+	public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
+		try {
+			subMoney(space.getUnmortgageValue());
 		} catch (NotEnoughFundsException e) {
 			throw new NotEnoughFundsException(this);
 		}
-    	this.netWorth += space.getMortgageValue();
-        space.setUnmortgaged();
-    	
-    }
-    
-    public boolean getJailed() {
-    	return jailed; 
-    }
-    
-    protected void movePlayer(int move) {
+		this.netWorth += space.getMortgageValue();
+		space.setUnmortgaged();
 
-    	this.position += move;
-    	if(this.position >= 40) {
-    		this.position -= 40;
-    		//Add money for passing Go Here, and reset position to int below 40.
-    		this.balance += 200;
-    		this.netWorth += 200;
-    		
-    	}
+	}
 
-    }
-    
-    public void toJail() {
-    	this.position = 10;
-    	this.jailed = true; 
-    }
-    public void removeJailedStatus() {
-    	this.jailed = false; 
-    }
+	public boolean getJailed() {
+		return jailed; 
+	}
+
+	protected void movePlayer(int move) {
+
+		this.position += move;
+		if(this.position >= 40) {
+			this.position -= 40;
+			//Add money for passing Go Here, and reset position to int below 40.
+			this.balance += 200;
+			this.netWorth += 200;
+
+		}
+
+	}
+
+	public void toJail() {
+		this.position = 10;
+		this.jailed = true; 
+	}
+	public void removeJailedStatus() {
+		this.jailed = false; 
+	}
 
 	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
-    	space.upgrade();	
-    	try {
+		space.upgrade();	
+		try {
 			subMoney(space.getUpgradeAmount());
-	    	this.netWorth += space.getUpgradeAmount()/2;//add how much it could be sold for to netWorth
+			this.netWorth += space.getUpgradeAmount()/2;//add how much it could be sold for to netWorth
 		} catch (NotEnoughFundsException e) {
 			throw new NotEnoughFundsException(this);
 		}
-        
-    }
-	
+
+	}
+
 	public void downgrade(PropertySpace space) throws PropertyMinUpgratedException {
 		space.downgrade();//removes a house/entire hotel(no houses given)
 		this.addMoney(space.getUpgradeAmount()/2);
 		this.netWorth -= space.getUpgradeAmount()/2; //loses the potential to sell
 	}
-    
-    
-    public void purchase(PropertySpace space) throws NotEnoughFundsException {
-    		try {
-    			subMoney(space.getPurchaseAmount());
-    		} catch (NotEnoughFundsException e) {
-    			throw new NotEnoughFundsException(this);
+
+
+	public void purchase(PropertySpace space) throws NotEnoughFundsException {
+		try {
+			subMoney(space.getPurchaseAmount());
+		} catch (NotEnoughFundsException e) {
+			throw new NotEnoughFundsException(this);
 		}
-    		this.ownedPropertySpaces.add(space);
-    		this.netWorth += space.getMortgageValue();
-    		space.setOwner(this);
-    }
-    
-    public void aquireProperty(PropertySpace space) {
-    	this.ownedPropertySpaces.add(space);
-    	if(!space.isMortgaged()) {
-    		this.netWorth += space.getMortgageValue();
-    	}
+		this.ownedPropertySpaces.add(space);
+		this.netWorth += space.getMortgageValue();
 		space.setOwner(this);
-    }
-    
-    public void payPlayer(Player p, int amount) {
-    	this.charge(p,amount);
-    	if(!p.equals(null)) {
-    		p.addMoney(amount);
-    	}
-    }
-    
-    public int rollDice() {
+	}
+
+	public void aquireProperty(PropertySpace space) {
+		this.ownedPropertySpaces.add(space);
+		if(!space.isMortgaged()) {
+			this.netWorth += space.getMortgageValue();
+		}
+		space.setOwner(this);
+	}
+
+	public void payPlayer(Player p, int amount) {
+		this.charge(p,amount);
+		if(!p.equals(null)) {
+			p.addMoney(amount);
+		}
+	}
+
+	public int rollDice() {
 		Die die1 = new Die();
 		Die die2 = new Die();
-		
+
 		die1.rollDie();
 		die2.rollDie();
-		
+
 		if(die1.getValue()==die2.getValue()) {
 			doublesCounter++;
 		}else{ doublesCounter = 0;}
 		return(die1.getValue()+die2.getValue());
 	}
-    
 
-    public void takeTurn() {
-    		if(!jailed) {
-    			movePlayer(rollDice());
-    			currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
-    		}else {
-    			//option to try and roll for doubles. If rolls doubles, turn still ends.
-    			//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
-    			//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
-    		}
-    	
-    		currentSpace.takeAction(this);//do what ever that space does
 
-    		notifyPlayerChoice();
-    }
-    
-    public String getColor() {
-    		return this.color;
-    }
+	public void takeTurn() {
+		if(!jailed) {
+			movePlayer(rollDice());
+			currentSpace = Banker.getBanker().getBoard().getSpace(position);//updates position
+		}else {
+			//option to try and roll for doubles. If rolls doubles, turn still ends.
+			//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
+			//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
+		}
 
-    /*public enum TurnAction{
+		currentSpace.takeAction(this);//do what ever that space does
+
+		notifyPlayerChoice();
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	/*public enum TurnAction{
     	MOVE, END_TURN, PROPERTY_ACTION;
     }
     public void performAction(TurnAction action) {
@@ -356,10 +356,10 @@ public class Player {
     		break;
 
     	case END_TURN:
-    		
+
     		break;
     	case PROPERTY_ACTION:
-    		
+
     		break;
     	default:
     		break;
@@ -367,14 +367,14 @@ public class Player {
     }*/
 
 
-    private void notifyPlayerChoice() {
+	private void notifyPlayerChoice() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	//listener methods
-    private void notifyMovementListeners() {
-    		//TODO
+	private void notifyMovementListeners() {
+		//TODO
 	}
-    
+
 }
