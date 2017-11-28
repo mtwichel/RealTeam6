@@ -131,7 +131,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 			if(banker.getBoard().getSpace(i) instanceof PropertySpace) {
 				//if space is property space
 				if(((PropertySpace) banker.getBoard().getSpace(i)).getOwner() != null) {
-					//if propertyspace has an owner
+					//if property space has an owner
 					spacesGUIs[i].setOwnerColor(
 							((PropertySpace) banker.getBoard().getSpace(i))
 							.getOwner().getColor());
