@@ -34,9 +34,9 @@ public class Banker {
     
     
     
-    public static Banker getBanker() {
-    		return bank;
-    }
+//    public static Banker getBanker() {
+//    		return bank;
+//    }
     public static ModelListener getGUI() {
     		return GUI;
     }
