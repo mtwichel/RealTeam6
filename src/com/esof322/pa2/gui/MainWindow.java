@@ -151,9 +151,8 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void handle(ActionEvent event) {
-		// TODO Auto-generated method stub
-		banker.setUpPlayers(4);
-
+		//this is the controller for the entire normal game play
+		banker.takeAction();
 	}
 
 }

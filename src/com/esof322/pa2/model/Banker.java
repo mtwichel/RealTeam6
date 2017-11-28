@@ -11,6 +11,8 @@ public class Banker {
     private Player current;
     private Board board;  
     
+    private Action currentAction;
+    
     public Banker() {
     	board = new Board();
     }
@@ -53,5 +55,17 @@ public class Banker {
     public Player getCurrentPlayer() {
 		return current;
     }
+
+	public void takeAction() {
+		// TODO Auto-generated method stub
+		switch(currentAction) {
+			case ROLL_DICE:
+				break;
+			case END_TURN:
+				break;
+				
+		}
+		
+	}
     
 }
