@@ -65,7 +65,7 @@ public class PropertySpace extends Space {
 	public void setIsMonopoly(Boolean isMonopoly) {this.isInMonopoly = isMonopoly;}
 
 	public void setMortgaged() throws GroupUpgradedException {
-		if(propertyGroup.checkForHouses()){
+		if(propertyGroup.hasHouses()){
 			throw new GroupUpgradedException();
 		}else {
 			this.isMortgaged = true;
