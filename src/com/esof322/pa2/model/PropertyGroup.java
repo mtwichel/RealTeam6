@@ -19,6 +19,8 @@ public class PropertyGroup {
 		{null,null}		//Dark Blue
 		};	
 	
+	private String color;
+	
 	public PropertyGroup(Space[] s) {
 		populateProperties(s);
 	}
@@ -120,8 +122,8 @@ public class PropertyGroup {
 		return true;
 	}
 	
-	public boolean checkForHouses(int color) {//To be sure no properties have houses on them when mortgaging
-		for(int i = 0; i < properties[color].length;i++) {
+	public boolean checkForHouses() {//To be sure no properties have houses on them when mortgaging
+		for(int i = 0; i < properties[].length;i++) {
 			if(properties[color][i].getHouseLevel()>0) {
 				try {
 					throw new MonopolyContainsHousesException(color);
@@ -134,6 +136,10 @@ public class PropertyGroup {
 			}
 		}
 		return true;
+	}
+
+	public String getColor() {
+		return this.color;
 	}
 
 }
