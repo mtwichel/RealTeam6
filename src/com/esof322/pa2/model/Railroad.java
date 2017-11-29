@@ -2,7 +2,7 @@ package com.esof322.pa2.model;
 
 public class Railroad extends Space {
     
-    public Railroad(String name, Banker banker, int[] i) {
+    public Railroad(Banker banker, String name, int[] i) {
     	super(banker, name);
     }
   
@@ -13,6 +13,12 @@ public class Railroad extends Space {
     public int calculateRent() {
 		return 0;
     }
+
+	@Override
+	public void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

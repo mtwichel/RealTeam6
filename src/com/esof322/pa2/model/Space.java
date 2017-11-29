@@ -15,7 +15,7 @@ public abstract class Space {
 	}
 
 
-	protected String getName() {
+	public String getName() {
         return this.name;
     }
     

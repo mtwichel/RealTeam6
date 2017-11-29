@@ -41,7 +41,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	HBox actionBar;
 	GridPane board;
 	
-	PropertySpaceGui[] spacesGUIs;
+	SpaceGUI[] spacesGUIs;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -69,7 +69,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		
 		board = new GridPane();
 		int i =0;
-		spacesGUIs = new PropertySpaceGui[40];
+		spacesGUIs = new SpaceGUI[40];
 		fillOutGUIs();
 		for(int y=0; y<10; y++) { //fist row
 			board.add(spacesGUIs[i], y, 0);;
@@ -94,7 +94,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		mainLayout.setLeft(propertyList);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 800, 600);
+		Scene scene = new Scene(mainLayout, 1200, 800);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
@@ -103,10 +103,15 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	
 	
 	private void fillOutGUIs() {
-		// TODO Auto-generated method stub
 		for(int i=0; i<40; i++) {
-			spacesGUIs[i] = new PropertySpaceGui("395840", "#" + i);
-			spacesGUIs[i].setStyle("-fx-border-color: black");
+			if(banker.getBoard().getSpace(i) instanceof PropertySpace) {
+				spacesGUIs[i] = new PropertySpaceGui(
+						((PropertySpace) banker.getBoard().getSpace(i)).getColor(),
+						banker.getBoard().getSpace(i).getName());
+//				spacesGUIs[i].setStyle("-fx-border-color: black");
+			}else {
+				spacesGUIs[i] = new SpaceGUI(banker.getBoard().getSpace(i).getName());
+			}
 		}
 		
 	}

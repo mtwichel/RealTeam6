@@ -29,6 +29,8 @@ public class PropertySpace extends Space {
 		this.purchaseAmount = purchaseAmout;
 		this.propertyGroup = propertyGroup;
 		this.houseLevel = 0;
+		
+		propertyGroup.addProperty(this);
 	}
 
 

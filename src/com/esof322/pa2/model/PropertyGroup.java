@@ -1,5 +1,7 @@
 package com.esof322.pa2.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.esof322.pa2.exceptions.MonopolyContainsHousesException;
@@ -7,24 +9,27 @@ import com.esof322.pa2.exceptions.NotEnoughHousesOnOtherPropertiesException;
 
 public class PropertyGroup {
 	
-	private PropertySpace[] properties;
+	private List<PropertySpace> properties;
 	private String color;
 	
-	public PropertyGroup(PropertySpace[] properties, String color) {
-		this.properties = properties;
+	public PropertyGroup(String color) {
 		this.color = color;
+		this.properties = new ArrayList<PropertySpace>();
 	}
 	
+	public void addProperty(PropertySpace propertySpace) {
+		properties.add(propertySpace);
+	}
 
 
 	//This method checks to see if there is a monopoly on this group
 	public boolean checkMonopoly() {
-		Player current = properties[0].getOwner();
+		Player current = properties.get(0).getOwner();
 		if(current == null) {
 			return false;
 		}
-		for(int i=1; i<properties.length; i++) {
-			if(current != properties[i].getOwner()) {
+		for(int i=1; i<properties.size(); i++) {
+			if(current != properties.get(i).getOwner()) {
 				return false;
 			}
 		}
@@ -54,8 +59,8 @@ public class PropertyGroup {
 	
 	//this method checks if there are any houses in the entire group
 	public boolean hasHouses() {
-		for(int i = 0; i < properties.length; i++) {
-			if(properties[i].getHouseLevel()>0) {
+		for(int i = 0; i < properties.size(); i++) {
+			if(properties.get(i).getHouseLevel()>0) {
 				return true;
 			}
 		}
