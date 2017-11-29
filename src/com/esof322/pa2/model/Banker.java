@@ -1,33 +1,36 @@
 package com.esof322.pa2.model;
 
 import com.esof322.pa2.exceptions.DiceDoublesException;
-import com.esof322.pa2.exceptions.GoToJailException;
+import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.gui.MainWindow;
 
 public class Banker {
 
 	private static ModelListener GUI;
-	private Player current;
+	private int numPlayers;
+	private int currentPlayerIndex;
+	private Player currentPlayer;
+	private Player nextPlayer;
 	private Board board;  
 	private Die[] dice;
+	private Player[] players;
+
 
 	private Action currentAction;
 
-	public Banker(MainWindow gui) {
+	public Banker(MainWindow gui, int numPlayers) {
 		board = new Board(this);
 		this.GUI = gui;
+		this.numPlayers = numPlayers;
 
 		//create dice
 		this.dice = new Die[2]; //2 dice
 		this.dice[0] = new Die();
 		this.dice[1] = new Die();
+		
+		setUpPlayers(numPlayers);
 	}
-
-	public Player[] players;
-
-
-
 
 	public void tranferFunds() {
 		//TODO
@@ -35,6 +38,23 @@ public class Banker {
 
 	public void setUpPlayers(int numberOfPlayers) {
 		players = new Player[numberOfPlayers];
+		for(Player p : players) {
+			//TODO initialize players
+			p = new Player(this, 0, "FFFFFF");
+		}
+		
+		this.currentPlayerIndex = 0;
+		this.currentPlayer = players[currentPlayerIndex];
+		this.nextPlayer = players[currentPlayerIndex +1];
+	}
+	
+	public void setNextPlayer(Player player) {
+		this.nextPlayer = player;
+	}
+	
+	public void setCurrentAction(Action action) {
+		this.currentAction = action;
+		GUI.updateActionButton();
 	}
 
 	public void rollDice() throws DiceDoublesException {
@@ -49,10 +69,50 @@ public class Banker {
 		//TODO add functionality as it comes in
 		switch(currentAction) {
 		case ROLL_DICE:
-			getCurrentPlayer().rollDice();
-			
+			if(!currentPlayer.isJailed()) {
+				//current player can play
+				try {
+					rollDice();
+				} catch (DiceDoublesException e) {
+					try {
+						currentPlayer.addDoublesCounter();
+						setNextPlayer(currentPlayer);
+					} catch (ThreeDoublesException e1) {
+						currentPlayer.toJail();
+					}
+				}
+				currentPlayer.movePlayer(getDiceValue());
+				currentPlayer.doSpaceAction();
+				
+				setCurrentAction(Action.END_TURN);
+			}else {
+				try {
+					rollDice();
+					currentPlayer.addDoublesCounter();
+				} catch (DiceDoublesException e) {
+					setNextPlayer(currentPlayer);
+					currentPlayer.getOutOfJail();
+				} catch (ThreeDoublesException e) {
+					try {
+						currentPlayer.subMoney(50);
+					} catch (NotEnoughFundsException e1) {
+						// TODO handelMoney
+						e1.printStackTrace();
+					}
+					setNextPlayer(currentPlayer);
+					currentPlayer.getOutOfJail();
+				}
+				
+				
+			}
 			break;
 		case END_TURN:
+			this.currentPlayerIndex = ((this.currentPlayerIndex + 1) 
+					% this.numPlayers); //update index by 1 and wrap around if over numPlayers
+			this.currentPlayer = this.nextPlayer;
+			this.nextPlayer = this.players[(this.currentPlayerIndex + 1) % this.numPlayers];
+					//1 more than index and wrap around if over numPlayers
+			setCurrentAction(Action.ROLL_DICE);
 			break;
 
 		}
@@ -64,7 +124,8 @@ public class Banker {
 	public static ModelListener getGUI() {return GUI;}
 	public Board getBoard() {return board;}
 	public Player getPlayer(int num){return players[num];}
-	public Player getCurrentPlayer() {return current;}
+	public Player getCurrentPlayer() {return currentPlayer;}
+
 
 
 }

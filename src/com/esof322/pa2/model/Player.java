@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esof322.pa2.exceptions.DiceDoublesException;
-import com.esof322.pa2.exceptions.GoToJailException;
+import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.HousesOnPropertiesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
@@ -66,21 +66,16 @@ public class Player {
 			name = "Howitzer";
 		}
 	}
-
-
-	public void resetTurnsInJail() {
-		turnsInJail = 0;
-	}
-
-	public void addTurnInJail() {
-		turnsInJail++;
+	
+	public void doSpaceAction() {
+		currentSpace.takeAction(this);
 	}
 
 	public void addMoney(int amount) {
 		this.balance += amount;
 	}
 
-	private void subMoney(int amount) throws NotEnoughFundsException {
+	public void subMoney(int amount) throws NotEnoughFundsException {
 		if((this.balance - amount) < 0) {
 			throw new NotEnoughFundsException(this);
 		}else {
@@ -108,13 +103,14 @@ public class Player {
 			//Add money for passing Go Here, and reset position to int below 40.
 			this.balance += 200;
 		}
+		this.currentSpace = banker.getBoard().getSpace(this.position);
 	}
 
 	public void toJail() {
 		this.position = 10;
 		this.jailed = true; 
 	}
-	public void removeJailedStatus() {
+	public void getOutOfJail() {
 		this.jailed = false; 
 	}
 
@@ -136,44 +132,16 @@ public class Player {
 	}
 	
 	//this method adds to the doubles counter, and throws exception if a 3rd is thrown (and resets)
-	private void addDoublesCounter() throws GoToJailException {
+	protected void addDoublesCounter() throws ThreeDoublesException {
 		this.doublesCounter += 1;
 		if(this.doublesCounter>=3) { //after 3 doubles you go to jail
 			this.doublesCounter = 0;
-			throw new GoToJailException();
+			throw new ThreeDoublesException();
 		}
 	}
 
 
-	//this method rolls the dice, and handles doubles appropriately
-	protected void rollDice() {
-		try {
-			banker.rollDice();
-		} catch (DiceDoublesException e) {
-			try {
-				addDoublesCounter();
-				//TODO make sure player gets another play
-			} catch (GoToJailException e1) {
-				toJail();
-			}
-		}
-	}
 
-
-	public void takeTurn() {
-		rollDice();
-		if(!jailed) {
-			movePlayer(banker.getDiceValue());
-			currentSpace = banker.getBoard().getSpace(position);//updates position
-		}else {
-			//option to try and roll for doubles. If rolls doubles, turn still ends.
-			//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
-			//On third turn, if the player fails their roll, they must pay $50, but do get to roll.
-		}
-
-		currentSpace.takeAction(this);//do what ever that space does
-
-	}
 
 
 	
@@ -189,7 +157,7 @@ public class Player {
 	public int getTurnsInJail() {return turnsInJail;}
 	public int getPosition() {return position;}
 	public int getBalance() {return this.balance;}
-	public boolean getJailed() {return jailed;}
+	public boolean isJailed() {return jailed;}
 	public String getColor() {return this.color;}
 	
 	/***********
@@ -300,6 +268,27 @@ public class Player {
 //			this.ownedPropertySpaces.get(i).getMortgageValue();
 //
 //    	}*/
+//	}
+	
+//	public void takeTurn(){
+//		if(!jailed) {
+//			try {
+//				banker.rollDice();
+//			} catch (DiceDoublesException e) {
+//				try {
+//					addDoublesCounter();
+//					banker.setNextPlayer(this);
+//				} catch (GoToJailException e1) {
+//					toJail();
+//				}
+//			}
+//			movePlayer(banker.getDiceValue());
+//		}else {
+//			banker.rollDice();
+//			
+//		}
+//
+//		currentSpace.takeAction(this);//do what ever that space does
 //	}
 
 

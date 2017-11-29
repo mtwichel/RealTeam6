@@ -17,7 +17,7 @@ public class JailSpace extends Space {
 
 	@Override
 	public void takeAction(Player callingPlayer) {
-		if (callingPlayer.getJailed() == true) {
+		if (callingPlayer.isJailed() == true) {
 			System.out.println("Choose to roll doubles or pay $50"); //Eventually change this to prompt with buttons 		
 			//option to try and roll for doubles. If rolls doubles, turn still ends.
 			//Pays $50 bail BEFORE attempting to roll (only an option for first 2 rounds in jail.
