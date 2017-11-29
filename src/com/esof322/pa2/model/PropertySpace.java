@@ -23,9 +23,8 @@ public class PropertySpace extends Space {
 	private Banker banker;
 
 	public PropertySpace(Banker banker, String name, PropertyGroup propertyGroup, 
-			int purchaseAmout, int upgradeAmount,int[] rentRates) {
+		int purchaseAmout, int upgradeAmount,int[] rentRates) {
 		super(name);
-		this.setName(name);
 		this.banker = banker;
 		this.rentRates = rentRates;
 		this.upgradeAmount = upgradeAmount;
