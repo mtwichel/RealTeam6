@@ -4,15 +4,11 @@ public class BlankSpace extends Space {
     
 	public BlankSpace(String name) {
 		super(name);
-		setName(name);
 	}
+	
 	@Override
 	public void takeAction(Player callingPlayer) {
-		
-	}
-    
-	public String getNameSpace() {
-		return getName();
+		//Literally do nothing
 	}
     
 }
