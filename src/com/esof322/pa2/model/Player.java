@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.GoToJailException;
+import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.HousesOnPropertiesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
@@ -23,7 +24,6 @@ public class Player {
 	private boolean jailed;
 	private boolean hasMonopoly;
 	private int turnsInJail;
-	private int netWorth;//Represents balance + non-mortgaged properties if mortgaged, and houses/hotels
 	private String color;
 
 
@@ -42,7 +42,6 @@ public class Player {
 		jailed = false;
 		hasMonopoly = false;
 		turnsInJail = 0;
-		netWorth = 1500;
 		balance = 1500;
 		doublesCounter = 0;
 		position = 0;
@@ -79,72 +78,26 @@ public class Player {
 	}
 
 	public void addMoney(int amount) {
-		this.netWorth += amount;
 		this.balance += amount;
 	}
 
-	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
-		if(ownedPropertySpaces.isEmpty()) {
-			//GameOver for player, remove them from list of players
-			return true;
-		}
-		if(amount < this.netWorth) {
-
-			return false; //Still need to sell some stuff though
-		}else {
-			return true;//You just lose. All your stuff goes to the person who you owed.
-		}
-
-	}
-
-	//Allows the player to mortgage properties from a selection/sell houses/hotels
-	public void avoidBankruptcy(int amount) {
-		//Organise Properties based on their net Value (Mortgage price + total houses price if sold)?
-		//OR give the player the option to sell their houses if they have a /mortgage properties
-		/*for(int i = 0; i < ownedPropertySpaces.size();i++) {
-    		if(this.ownedPropertySpaces.get(i).checkIsMonopoly()) {
-    			//check if houses cover debt
-    			this.ownedPropertySpaces.get(i).
-
-    		}
-			this.ownedPropertySpaces.get(i).getMortgageValue();
-
-    	}*/
-	}
-
-
-
-
-
-
 	private void subMoney(int amount) throws NotEnoughFundsException {
-		this.balance -= amount;
-		this.netWorth -= amount;
 		if((this.balance - amount) < 0) {
 			throw new NotEnoughFundsException(this);
+		}else {
+			this.balance -= amount;
 		}
 	}
 
-	public void mortgage(PropertySpace space) throws HousesOnPropertiesException {
-		if(space.setMortgaged()) {
-			addMoney(space.getMortgageValue());
-			this.netWorth -= space.getMortgageValue();
-		}else {
-			throw new HousesOnPropertiesException(space);//Will need to try to mortgage again
-		}
-
+	public void mortgage(PropertySpace space) throws GroupUpgradedException {
+		space.setMortgaged();
+		addMoney(space.getMortgageValue());
 	}
 
 
 	public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
-		try {
-			subMoney(space.getUnmortgageValue());
-		} catch (NotEnoughFundsException e) {
-			throw new NotEnoughFundsException(this);
-		}
-		this.netWorth += space.getMortgageValue();
+		subMoney(space.getUnmortgageValue());
 		space.setUnmortgaged();
-
 	}
 
 
@@ -155,7 +108,6 @@ public class Player {
 			this.position -= 40;
 			//Add money for passing Go Here, and reset position to int below 40.
 			this.balance += 200;
-			this.netWorth += 200;
 		}
 	}
 
@@ -168,27 +120,19 @@ public class Player {
 	}
 
 	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
+		subMoney(space.getUpgradeAmount());
 		space.upgrade();	
-		try {
-			subMoney(space.getUpgradeAmount());
-			this.netWorth += space.getUpgradeAmount()/2;//add how much it could be sold for to netWorth
-		} catch (NotEnoughFundsException e) {
-			throw new NotEnoughFundsException(this);
-		}
-
 	}
 
 	public void downgrade(PropertySpace space) throws PropertyMinUpgratedException {
 		space.downgrade();//removes a house/entire hotel(no houses given)
 		this.addMoney(space.getUpgradeAmount()/2);
-		this.netWorth -= space.getUpgradeAmount()/2; //loses the potential to sell
 	}
 
 	//this method makes the player own the space
 	public void purchase(PropertySpace space) throws NotEnoughFundsException {
 		subMoney(space.getPurchaseAmount());
 		this.ownedPropertySpaces.add(space);
-		this.netWorth += space.getMortgageValue();
 		space.setOwner(this);
 	}
 	
@@ -246,7 +190,6 @@ public class Player {
 	public int getTurnsInJail() {return turnsInJail;}
 	public int getPosition() {return position;}
 	public int getBalance() {return this.balance;}
-	public int getNetWorth() {return netWorth;}
 	public boolean getJailed() {return jailed;}
 	public String getColor() {return this.color;}
 	
@@ -330,5 +273,35 @@ public class Player {
 //		}
 //		space.setOwner(this);
 //	}
+	
+//	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
+//		if(ownedPropertySpaces.isEmpty()) {
+//			//GameOver for player, remove them from list of players
+//			return true;
+//		}
+//		if(amount < this.netWorth) {
+//
+//			return false; //Still need to sell some stuff though
+//		}else {
+//			return true;//You just lose. All your stuff goes to the person who you owed.
+//		}
+//
+//	}
+//
+//	//Allows the player to mortgage properties from a selection/sell houses/hotels
+//	public void avoidBankruptcy(int amount) {
+//		//Organise Properties based on their net Value (Mortgage price + total houses price if sold)?
+//		//OR give the player the option to sell their houses if they have a /mortgage properties
+//		/*for(int i = 0; i < ownedPropertySpaces.size();i++) {
+//    		if(this.ownedPropertySpaces.get(i).checkIsMonopoly()) {
+//    			//check if houses cover debt
+//    			this.ownedPropertySpaces.get(i).
+//
+//    		}
+//			this.ownedPropertySpaces.get(i).getMortgageValue();
+//
+//    	}*/
+//	}
+
 
 }
