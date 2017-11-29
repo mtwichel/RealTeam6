@@ -6,8 +6,8 @@ package com.esof322.pa2.model;
 */
 public class JailSpace extends Space {
     
-	public JailSpace(String name) {
-		super(name);
+	public JailSpace(Banker banker, String name) {
+		super(banker, name);
     	setName(name);
     }
 	

@@ -2,8 +2,8 @@ package com.esof322.pa2.model;
 
 public class BlankSpace extends Space {
     
-	public BlankSpace(String name) {
-		super(name);
+	public BlankSpace(Banker banker, String name) {
+		super(banker, name);
 	}
 	
 	@Override

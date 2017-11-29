@@ -2,8 +2,8 @@ package com.esof322.pa2.model;
 
 public class Utility extends Space {
     
-	public Utility(String name, int[] i) {
-    	super(name);
+	public Utility(Banker banker, String name, int[] i) {
+    	super(banker, name);
     }
     
 	public String getNameSpace() {

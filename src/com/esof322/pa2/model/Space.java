@@ -6,11 +6,13 @@ public class Space {
  
     private String name;
     private String color;
+    protected Banker banker;
     private List<Player> occupyingPlayers;
     
     
-    public Space(String name) {
+    public Space(Banker banker, String name) {
 		this.name = name;
+		this.banker = banker;
 	}
 
 
