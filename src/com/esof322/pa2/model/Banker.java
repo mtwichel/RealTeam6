@@ -15,7 +15,7 @@ public class Banker {
 	private Action currentAction;
 
 	public Banker(MainWindow gui) {
-		board = new Board();
+		board = new Board(this);
 		this.GUI = gui;
 
 		//create dice
@@ -35,8 +35,6 @@ public class Banker {
 
 	public void setUpPlayers(int numberOfPlayers) {
 		players = new Player[numberOfPlayers];
-		//Roll off per player, highest roll gets highest position
-
 	}
 
 	public void rollDice() throws DiceDoublesException {
@@ -47,24 +45,8 @@ public class Banker {
 		}
 	}
 
-	public static ModelListener getGUI() {
-		return GUI;
-	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public Player getPlayer(int num){
-		return players[num];
-	}
-
-	public Player getCurrentPlayer() {
-		return current;
-	}
-
 	public void takeAction() {
-		//		 TODO add functionality as it comes in
+		//TODO add functionality as it comes in
 		switch(currentAction) {
 		case ROLL_DICE:
 			getCurrentPlayer().rollDice();
@@ -79,5 +61,10 @@ public class Banker {
 	}
 
 	public int getDiceValue() {return dice[0].getValue() + dice[1].getValue();}
+	public static ModelListener getGUI() {return GUI;}
+	public Board getBoard() {return board;}
+	public Player getPlayer(int num){return players[num];}
+	public Player getCurrentPlayer() {return current;}
+
 
 }

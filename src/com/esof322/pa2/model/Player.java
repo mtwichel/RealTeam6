@@ -15,8 +15,7 @@ public class Player {
 	
 	private Banker banker;
 
-
-	private int piece = -1;//default, players will pick at beginning of game    
+	private int piece;
 	private String name;
 	private int balance;  
 	private int position;
