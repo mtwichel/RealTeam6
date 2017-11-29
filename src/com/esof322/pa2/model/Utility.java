@@ -14,6 +14,12 @@ public class Utility extends Space {
 		return 0;
         //TODO
     }
+
+	@Override
+	public void takeAction(Player callingPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

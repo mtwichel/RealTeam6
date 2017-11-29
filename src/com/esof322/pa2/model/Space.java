@@ -2,10 +2,9 @@ package com.esof322.pa2.model;
 
 import java.util.List;
 
-public class Space {
+public abstract class Space {
  
     private String name;
-    private String color;
     protected Banker banker;
     private List<Player> occupyingPlayers;
     
@@ -34,9 +33,7 @@ public class Space {
     }
         
    
-    public void takeAction(Player callingPlayer) {
-    	
-    }
+    public abstract void takeAction(Player callingPlayer);
     
     
 }
