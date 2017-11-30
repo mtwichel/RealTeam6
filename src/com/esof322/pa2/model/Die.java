@@ -10,7 +10,8 @@ class Die {
 	
 	//like actually rolling of dice
 	public void rollDie() {
-		this.currentValue = (int)(Math.random()*6)+1;
+		int range = (6 - 1) + 1;     
+		 this.currentValue = (int)(Math.random() * range) + 1;
 	}
 	
 	//returns whatever the last value was

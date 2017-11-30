@@ -23,7 +23,7 @@ public class PropertySpaceGui extends SpaceGUI {
 		
 		
 		colorPane = new Pane();
-		colorPane.setPrefSize(100,15);
+		colorPane.setPrefSize(this.getWidth(),15);
 		colorPane.setStyle("-fx-background-color: #" + this.groupColor);
 		layout.getChildren().add(0, colorPane);
 		

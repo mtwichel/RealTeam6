@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
@@ -31,8 +32,7 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application implements ModelListener, EventHandler<ActionEvent>{
 	
-	Banker banker;
-	
+	Banker banker;	
 	Label currentPlayerLabel, currentPlayerMoney;
 	
 	Button currentAction;
@@ -40,6 +40,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	VBox propertyList;
 	HBox currentPlayerHeading;
 	HBox actionBar;
+	DiceGui dice0;
+	DiceGui dice1;
+	VBox diceBar;
 	GridPane board;
 	
 	SpaceGUI[] spacesGUIs;
@@ -48,6 +51,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	public void start(Stage primaryStage) throws Exception {
 		banker = new Banker(this, 4);
 		
+		//generate current player header
 		currentPlayerLabel = new Label();
 		currentPlayerMoney = new Label();
 		currentPlayerHeading = new HBox(14);
@@ -56,11 +60,12 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");;
 		
-		
+		//generate property list sidebar
 		propertyList = new VBox(2);
 		propertyList.getChildren().add(new Label("Properties Owned: "));
 		propertyList.setStyle("-fx-border-color: black");
 		
+		//generate action bar
 		actionBar = new HBox();
 		actionBar.setAlignment(Pos.CENTER_RIGHT);
 		currentAction = new Button();
@@ -68,24 +73,33 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentAction.setStyle("-fx-padding: 20");
 		actionBar.getChildren().add(currentAction);
 		
+		//generate dice
+		dice0 = new DiceGui();
+		dice1 = new DiceGui();
+		diceBar = new VBox(3);
+		diceBar.getChildren().add(dice0);
+		diceBar.getChildren().add(dice1);
+		
+		
+		//generate board
 		board = new GridPane();
 		int i =0;
 		spacesGUIs = new SpaceGUI[40];
 		fillOutGUIs();
 		for(int y=0; y<10; y++) { //fist row
-			board.add(spacesGUIs[i], y, 0);;
+			board.add(spacesGUIs[i], y, 0);
 			i++;
 		}
 		for(int x=0; x<10; x++) {
-			board.add(spacesGUIs[i], 10, x);;
+			board.add(spacesGUIs[i], 10, x);
 			i++;
 		}
 		for(int y=10; y>=0; y--) {
-			board.add(spacesGUIs[i], y, 10);;
+			board.add(spacesGUIs[i], y, 10);
 			i++;
 		}
 		for(int x=9; x>0; x--) {
-			board.add(spacesGUIs[i], 0, x);;
+			board.add(spacesGUIs[i], 0, x);
 			i++;
 		}
 		
@@ -93,9 +107,10 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(propertyList);
+		mainLayout.setRight(diceBar);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 1200, 800);
+		Scene scene = new Scene(mainLayout, 1350, 800);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
@@ -178,6 +193,14 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	public void handle(ActionEvent event) {
 		//this is the controller for the entire normal game play
 		banker.takeAction();
+	}
+
+
+	@Override
+	public void updateDice() {
+		System.out.println(banker.getDiceValue(0) + " " + banker.getDiceValue(1));
+		this.dice0.drawCanvas(banker.getDiceValue(0));
+		this.dice1.drawCanvas(banker.getDiceValue(1));
 	}
 
 }

@@ -76,6 +76,7 @@ public class Banker {
 		if(dice[0].getValue() == dice[1].getValue()) {
 			throw new DiceDoublesException();
 		}
+		GUI.updateDice();
 	}
 
 	public void takeAction() {
@@ -138,6 +139,7 @@ public class Banker {
 	public Player getPlayer(int num){return players[num];}
 	public Player getCurrentPlayer() {return currentPlayer;}
 	public String getCurrentActionString() {return Action.getActionString(currentAction);}
+	public int getDiceValue(int i) {return dice[i].getValue();}
 
 
 
