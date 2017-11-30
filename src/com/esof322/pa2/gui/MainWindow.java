@@ -6,6 +6,7 @@ import org.hamcrest.core.IsInstanceOf;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
+import com.esof322.pa2.model.Player;
 import com.esof322.pa2.model.PropertySpace;
 
 import javafx.application.Application;
@@ -32,7 +33,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	
 	Banker banker;
 	
-	Label currentPlayer, currentPlayerMoney;
+	Label currentPlayerLabel, currentPlayerMoney;
 	
 	Button currentAction;
 	
@@ -45,13 +46,13 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker(this);
+		banker = new Banker(this, 4);
 		
-		currentPlayer = new Label();
+		currentPlayerLabel = new Label();
 		currentPlayerMoney = new Label();
 		currentPlayerHeading = new HBox(14);
 		currentPlayerHeading.setAlignment(Pos.CENTER);
-		currentPlayerHeading.getChildren().add(currentPlayer);
+		currentPlayerHeading.getChildren().add(currentPlayerLabel);
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");;
 		
@@ -99,6 +100,8 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		banker.setUpBoard();
 	}
 	
 	
@@ -124,8 +127,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void updateCurrentPlayer() {
-		currentPlayer.setText(banker.getCurrentPlayer().getName());
-		
+		Player temp = banker.getCurrentPlayer();
+		String temp1= temp.getName();
+		currentPlayerLabel.setText(temp1);
 	}
 
 
@@ -152,7 +156,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void updateActionButton() {
-		// TODO Auto-generated method stub
+		currentAction.setText(banker.getCurrentActionString());
 		
 	}
 

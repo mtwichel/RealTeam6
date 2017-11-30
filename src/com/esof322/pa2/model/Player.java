@@ -31,11 +31,12 @@ public class Player {
 
 
 	//constructor sets up a default player, with a piece and a color specified
-	public Player(Banker banker, int piece, String color) {
+	public Player(Banker banker, String name, int piece, String color) {
 		//set up parameters
 		this.color = color;
 		this.banker = banker;
 		this.piece = piece;
+		this.name = name;
 		
 		//create default instance variables
 		jailed = false;

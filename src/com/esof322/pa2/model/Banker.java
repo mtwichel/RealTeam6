@@ -1,5 +1,7 @@
 package com.esof322.pa2.model;
 
+import java.rmi.activation.ActivationInstantiator;
+
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
@@ -28,24 +30,35 @@ public class Banker {
 		this.dice = new Die[2]; //2 dice
 		this.dice[0] = new Die();
 		this.dice[1] = new Die();
+	}
+
+	public void setUpBoard() {
+		setUpPlayers();
 		
-		setUpPlayers(numPlayers);
+		setCurrentAction(Action.ROLL_DICE);
+		
 	}
 
 	public void tranferFunds() {
 		//TODO
 	}
 
-	public void setUpPlayers(int numberOfPlayers) {
-		players = new Player[numberOfPlayers];
-		for(Player p : players) {
+	public void setUpPlayers() {
+		players = new Player[this.numPlayers];
+		String[] names = {"George", "Arjan", "Taylor", "Marcus"}; //temp for testing
+		for(int i=0; i<players.length; i++) {
 			//TODO initialize players
-			p = new Player(this, 0, "FFFFFF");
+			players[i] = new Player(this, names[i], i, "FFFFFF");
 		}
 		
 		this.currentPlayerIndex = 0;
-		this.currentPlayer = players[currentPlayerIndex];
-		this.nextPlayer = players[currentPlayerIndex +1];
+		setCurrentPlayer(players[currentPlayerIndex]);
+		setNextPlayer(players[currentPlayerIndex +1]);
+	}
+	
+	public void setCurrentPlayer(Player player) {
+		this.currentPlayer = player;
+		GUI.updateCurrentPlayer();
 	}
 	
 	public void setNextPlayer(Player player) {
@@ -109,9 +122,8 @@ public class Banker {
 		case END_TURN:
 			this.currentPlayerIndex = ((this.currentPlayerIndex + 1) 
 					% this.numPlayers); //update index by 1 and wrap around if over numPlayers
-			this.currentPlayer = this.nextPlayer;
-			this.nextPlayer = this.players[(this.currentPlayerIndex + 1) % this.numPlayers];
-					//1 more than index and wrap around if over numPlayers
+			setCurrentPlayer(this.nextPlayer);
+			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			setCurrentAction(Action.ROLL_DICE);
 			break;
 
@@ -125,6 +137,7 @@ public class Banker {
 	public Board getBoard() {return board;}
 	public Player getPlayer(int num){return players[num];}
 	public Player getCurrentPlayer() {return currentPlayer;}
+	public String getCurrentActionString() {return Action.getActionString(currentAction);}
 
 
 
