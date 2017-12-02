@@ -45,6 +45,9 @@ public class Player {
 		balance = 1500;
 		doublesCounter = 0;
 		position = 0;
+		this.currentSpace = banker.getBoard().getSpace(0);
+		this.currentSpace.addPlayer(this);
+		
 		
 		switch (piece) {
 		case 1:
@@ -97,7 +100,9 @@ public class Player {
 
 
 	//this position moves the player the specified spaces, and awards money if let go
-	protected void movePlayer(int move) {
+	public void movePlayer(int move) {
+		this.currentSpace.removePlayer(this);
+		
 		this.position += move;
 		if(this.position >= 40) {
 			this.position -= 40;
@@ -105,6 +110,10 @@ public class Player {
 			this.balance += 200;
 		}
 		this.currentSpace = banker.getBoard().getSpace(this.position);
+		
+		this.currentSpace.addPlayer(this);
+		
+		banker.getGUI().updatePlayerPositions();
 	}
 
 	public void toJail() {

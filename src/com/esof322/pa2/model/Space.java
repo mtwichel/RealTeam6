@@ -1,5 +1,6 @@
 package com.esof322.pa2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Space {
@@ -12,12 +13,17 @@ public abstract class Space {
     public Space(Banker banker, String name) {
 		this.name = name;
 		this.banker = banker;
+		this.occupyingPlayers = new ArrayList<Player>();
 	}
 
 
 	public String getName() {
         return this.name;
     }
+	
+	public List<Player> getOccupyingPlayer(){
+		return this.occupyingPlayers;
+	}
     
 
     protected void setName(String name) {

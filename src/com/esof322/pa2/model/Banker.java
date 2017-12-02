@@ -54,6 +54,7 @@ public class Banker {
 		this.currentPlayerIndex = 0;
 		setCurrentPlayer(players[currentPlayerIndex]);
 		setNextPlayer(players[currentPlayerIndex +1]);
+		GUI.updatePlayerPositions();
 	}
 	
 	public void setCurrentPlayer(Player player) {

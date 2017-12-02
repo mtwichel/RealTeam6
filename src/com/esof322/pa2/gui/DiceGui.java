@@ -24,7 +24,6 @@ public class DiceGui extends Canvas {
 
 		switch (faceValue) {
 		case 1:
-
 			context.fillOval(40, 40, 15, 15);
 			break;
 		case 2:

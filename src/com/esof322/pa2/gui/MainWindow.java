@@ -178,7 +178,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void updatePlayerPositions() {
-		// TODO Auto-generated method stub
+		for(int i=0; i<spacesGUIs.length; i++) {
+			spacesGUIs[i].setPieces(banker.getBoard().getSpace(i).getOccupyingPlayer());
+		}
 		
 	}
 
