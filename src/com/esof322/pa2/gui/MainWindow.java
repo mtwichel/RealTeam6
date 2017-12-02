@@ -6,6 +6,7 @@ import org.hamcrest.core.IsInstanceOf;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
+import com.esof322.pa2.model.Player;
 import com.esof322.pa2.model.PropertySpace;
 
 import javafx.application.Application;
@@ -14,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
@@ -30,36 +32,40 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application implements ModelListener, EventHandler<ActionEvent>{
 	
-	Banker banker;
-	
-	Label currentPlayer, currentPlayerMoney;
+	Banker banker;	
+	Label currentPlayerLabel, currentPlayerMoney;
 	
 	Button currentAction;
 	
 	VBox propertyList;
 	HBox currentPlayerHeading;
 	HBox actionBar;
+	DiceGui dice0;
+	DiceGui dice1;
+	VBox diceBar;
 	GridPane board;
 	
-	PropertySpaceGui[] spacesGUIs;
+	SpaceGUI[] spacesGUIs;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker(this);
+		banker = new Banker(this, 4);
 		
-		currentPlayer = new Label();
+		//generate current player header
+		currentPlayerLabel = new Label();
 		currentPlayerMoney = new Label();
 		currentPlayerHeading = new HBox(14);
 		currentPlayerHeading.setAlignment(Pos.CENTER);
-		currentPlayerHeading.getChildren().add(currentPlayer);
+		currentPlayerHeading.getChildren().add(currentPlayerLabel);
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");;
 		
-		
+		//generate property list sidebar
 		propertyList = new VBox(2);
 		propertyList.getChildren().add(new Label("Properties Owned: "));
 		propertyList.setStyle("-fx-border-color: black");
 		
+		//generate action bar
 		actionBar = new HBox();
 		actionBar.setAlignment(Pos.CENTER_RIGHT);
 		currentAction = new Button();
@@ -67,24 +73,33 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentAction.setStyle("-fx-padding: 20");
 		actionBar.getChildren().add(currentAction);
 		
+		//generate dice
+		dice0 = new DiceGui();
+		dice1 = new DiceGui();
+		diceBar = new VBox(3);
+		diceBar.getChildren().add(dice0);
+		diceBar.getChildren().add(dice1);
+		
+		
+		//generate board
 		board = new GridPane();
 		int i =0;
-		spacesGUIs = new PropertySpaceGui[40];
+		spacesGUIs = new SpaceGUI[40];
 		fillOutGUIs();
 		for(int y=0; y<10; y++) { //fist row
-			board.add(spacesGUIs[i], y, 0);;
+			board.add(spacesGUIs[i], y, 0);
 			i++;
 		}
 		for(int x=0; x<10; x++) {
-			board.add(spacesGUIs[i], 10, x);;
+			board.add(spacesGUIs[i], 10, x);
 			i++;
 		}
 		for(int y=10; y>=0; y--) {
-			board.add(spacesGUIs[i], y, 10);;
+			board.add(spacesGUIs[i], y, 10);
 			i++;
 		}
 		for(int x=9; x>0; x--) {
-			board.add(spacesGUIs[i], 0, x);;
+			board.add(spacesGUIs[i], 0, x);
 			i++;
 		}
 		
@@ -92,21 +107,29 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(propertyList);
+		mainLayout.setRight(diceBar);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 800, 600);
+		Scene scene = new Scene(mainLayout, 1350, 800);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		banker.setUpBoard();
 	}
 	
 	
 	private void fillOutGUIs() {
-		// TODO Auto-generated method stub
 		for(int i=0; i<40; i++) {
-			spacesGUIs[i] = new PropertySpaceGui("395840", "#" + i);
-			spacesGUIs[i].setStyle("-fx-border-color: black");
+			if(banker.getBoard().getSpace(i) instanceof PropertySpace) {
+				spacesGUIs[i] = new PropertySpaceGui(
+						((PropertySpace) banker.getBoard().getSpace(i)).getColor(),
+						banker.getBoard().getSpace(i).getName());
+//				spacesGUIs[i].setStyle("-fx-border-color: black");
+			}else {
+				spacesGUIs[i] = new SpaceGUI(banker.getBoard().getSpace(i).getName());
+			}
 		}
 		
 	}
@@ -119,8 +142,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void updateCurrentPlayer() {
-		currentPlayer.setText(banker.getCurrentPlayer().getName());
-		
+		Player temp = banker.getCurrentPlayer();
+		String temp1= temp.getName();
+		currentPlayerLabel.setText(temp1);
 	}
 
 
@@ -147,14 +171,16 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void updateActionButton() {
-		// TODO Auto-generated method stub
+		currentAction.setText(banker.getCurrentActionString());
 		
 	}
 
 
 	@Override
 	public void updatePlayerPositions() {
-		// TODO Auto-generated method stub
+		for(int i=0; i<spacesGUIs.length; i++) {
+			spacesGUIs[i].setPieces(banker.getBoard().getSpace(i).getOccupyingPlayer());
+		}
 		
 	}
 
@@ -169,6 +195,14 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	public void handle(ActionEvent event) {
 		//this is the controller for the entire normal game play
 		banker.takeAction();
+	}
+
+
+	@Override
+	public void updateDice() {
+		System.out.println(banker.getDiceValue(0) + " " + banker.getDiceValue(1));
+		this.dice0.drawCanvas(banker.getDiceValue(0));
+		this.dice1.drawCanvas(banker.getDiceValue(1));
 	}
 
 }

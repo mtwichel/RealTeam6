@@ -18,12 +18,12 @@ public class TestJail {
 		p1.toJail();
 		//Assurance of variables
 		System.out.println(p1.getName()+" is in "+jail.getNameSpace()+" and has "+ p1.getBalance()+".");
-		System.out.println("It is "+ p1.getJailed() + " that "+p1.getName()+" is in jail");
+		System.out.println("It is "+ p1.isJailed() + " that "+p1.getName()+" is in jail");
 		//make choice with GUI later, and put it in a loop.
 		jail.takeAction(p1);
-		assertTrue("Did not get out of Jail", p1.getJailed());;
+		assertTrue("Did not get out of Jail", p1.isJailed());;
 		System.out.println(p1.getName()+" is in "+jail.getNameSpace()+" and has "+ p1.getBalance()+".");
-		System.out.println("It is "+ p1.getJailed() + " that "+p1.getName()+" is in jail");
+		System.out.println("It is "+ p1.isJailed() + " that "+p1.getName()+" is in jail");
 	}
 
 }

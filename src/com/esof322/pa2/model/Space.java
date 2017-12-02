@@ -1,22 +1,29 @@
 package com.esof322.pa2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Space {
+public abstract class Space {
  
     private String name;
-    private String color;
+    protected Banker banker;
     private List<Player> occupyingPlayers;
     
     
-    public Space(String name) {
+    public Space(Banker banker, String name) {
 		this.name = name;
+		this.banker = banker;
+		this.occupyingPlayers = new ArrayList<Player>();
 	}
 
 
-	protected String getName() {
+	public String getName() {
         return this.name;
     }
+	
+	public List<Player> getOccupyingPlayer(){
+		return this.occupyingPlayers;
+	}
     
 
     protected void setName(String name) {
@@ -32,9 +39,7 @@ public class Space {
     }
         
    
-    public void takeAction(Player callingPlayer) {
-    	
-    }
+    public abstract void takeAction(Player callingPlayer);
     
     
 }

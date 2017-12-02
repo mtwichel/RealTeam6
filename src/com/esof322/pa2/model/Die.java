@@ -1,25 +1,20 @@
 package com.esof322.pa2.model;
 
+class Die {
 
-/**
-* @generated
-*/
-public class Die {
-
-	//Holds last Roll
 	private int currentValue;
 	
-	//Instantiates Die
 	public Die() {
 		
 	}
 	
-	public int rollDie() {
-		currentValue = (int)(Math.random()*6)+1;
-		return currentValue;
+	//like actually rolling of dice
+	public void rollDie() {
+		int range = (6 - 1) + 1;     
+		 this.currentValue = (int)(Math.random() * range) + 1;
 	}
 	
-	//returns the last Roll from this die for comparisons [may need to replace with safer method]
+	//returns whatever the last value was
 	public int getValue() {
 		return currentValue;
 	}

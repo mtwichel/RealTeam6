@@ -5,8 +5,8 @@ public class TaxSpace extends Space {
 	private String name;
 	private boolean taxType;
 	
-	public TaxSpace(String name,boolean b) {
-		super(name);
+	public TaxSpace(Banker banker, String name,boolean b) {
+		super(banker, name);
     	setName(name);
     	taxType = b;
     }

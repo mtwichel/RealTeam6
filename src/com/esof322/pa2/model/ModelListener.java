@@ -7,4 +7,5 @@ public interface ModelListener {
 	public void updateActionButton();
 	public void updatePlayerPositions();
 	public void updateCurrentPlayerMoney();
+	public void updateDice();
 }

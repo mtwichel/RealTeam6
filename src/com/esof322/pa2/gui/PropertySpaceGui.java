@@ -10,27 +10,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class PropertySpaceGui extends Pane {
+public class PropertySpaceGui extends SpaceGUI {
 	
 	private String groupColor;
 	private String ownerColor;
 	
-	private Label label;
-	private VBox layout;
 	private Pane colorPane;
 	
 	public PropertySpaceGui(String groupColor, String title) {
+		super(title);
 		this.groupColor = groupColor;
-		this.label = new Label(title);
 		
-		layout = new VBox(5);
-		layout.setAlignment(Pos.CENTER);
+		
 		colorPane = new Pane();
-		colorPane.setPrefSize(55,15);
+		colorPane.setPrefSize(this.getWidth(),15);
 		colorPane.setStyle("-fx-background-color: #" + this.groupColor);
-		layout.getChildren().add(colorPane);
-		layout.getChildren().add(label);
-		this.getChildren().add(layout);
+		layout.getChildren().add(0, colorPane);
 		
 	}
 	
