@@ -1,5 +1,7 @@
 package com.esof322.pa2.model;
 
+import com.esof322.pa2.exceptions.NotEnoughFundsException;
+
 public class TaxSpace extends Space {
     
 	private String name;
@@ -16,14 +18,30 @@ public class TaxSpace extends Space {
 	}
 	
 	@Override
-	public void takeAction(Player callingPlayer) {
+	public void takeAction(Player callingPlayer){
 		
 		if(taxType) { //true is luxury tax//
-			callingPlayer.charge(null,75);
+			try {
+				callingPlayer.subMoney(75);
+			} catch (NotEnoughFundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
 		}else if(callingPlayer.getBalance() < 2000) {//false is income tax
-			callingPlayer.charge(null,(int)(callingPlayer.getBalance()*.1));
-		}else {
-			callingPlayer.charge(null,200);
+			try {
+				callingPlayer.subMoney((int) (callingPlayer.getBalance()*.1));
+			} catch (NotEnoughFundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+		else {
+			try {
+				callingPlayer.subMoney(200);
+			} catch (NotEnoughFundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
