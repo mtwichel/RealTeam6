@@ -35,9 +35,10 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	Banker banker;	
 	Label currentPlayerLabel, currentPlayerMoney;
 	
+	PlayerPanel playerPanel;
+	
 	Button currentAction;
 	
-	VBox propertyList;
 	HBox currentPlayerHeading;
 	HBox actionBar;
 	DiceGui dice0;
@@ -61,9 +62,8 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentPlayerHeading.setStyle("-fx-border-color: black");;
 		
 		//generate property list sidebar
-		propertyList = new VBox(2);
-		propertyList.getChildren().add(new Label("Properties Owned: "));
-		propertyList.setStyle("-fx-border-color: black");
+		playerPanel = new PlayerPanel();
+		playerPanel.getPlayerPanel().setStyle("-fx-border-color: black");
 		
 		//generate action bar
 		actionBar = new HBox();
@@ -106,7 +106,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
-		mainLayout.setLeft(propertyList);
+		mainLayout.setLeft(playerPanel.getPlayerPanel());
 		mainLayout.setRight(diceBar);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
