@@ -36,6 +36,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	Label currentPlayerLabel, currentPlayerMoney;
 	
 	PlayerPanel playerPanel;
+	Console console;
 	
 	Button currentAction;
 	
@@ -43,7 +44,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	HBox actionBar;
 	DiceGui dice0;
 	DiceGui dice1;
-	VBox diceBar;
+	HBox diceBar;
 	GridPane board;
 	
 	SpaceGUI[] spacesGUIs;
@@ -59,26 +60,32 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentPlayerHeading.setAlignment(Pos.CENTER);
 		currentPlayerHeading.getChildren().add(currentPlayerLabel);
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
-		currentPlayerHeading.setStyle("-fx-border-color: black");;
+		currentPlayerHeading.setStyle("-fx-border-color: black");
 		
 		//generate property list sidebar
 		playerPanel = new PlayerPanel();
 		playerPanel.getPlayerPanel().setStyle("-fx-border-color: black");
 		
-		//generate action bar
-		actionBar = new HBox();
-		actionBar.setAlignment(Pos.CENTER_RIGHT);
-		currentAction = new Button();
-		currentAction.setOnAction(this);
-		currentAction.setStyle("-fx-padding: 20");
-		actionBar.getChildren().add(currentAction);
-		
 		//generate dice
 		dice0 = new DiceGui();
 		dice1 = new DiceGui();
-		diceBar = new VBox(3);
+		diceBar = new HBox(3);
 		diceBar.getChildren().add(dice0);
 		diceBar.getChildren().add(dice1);
+		diceBar.setAlignment(Pos.BOTTOM_LEFT);
+				
+		//Add console output to GUI on bottom bar
+		console = new Console();
+		
+		//generate action bar
+		actionBar = new HBox();
+		actionBar.setAlignment(Pos.CENTER);
+		currentAction = new Button();
+		currentAction.setOnAction(this);
+		currentAction.setStyle("-fx-padding: 20");
+		currentAction.setAlignment(Pos.BOTTOM_RIGHT);
+		actionBar.getChildren().addAll(diceBar, console.getTextArea(), currentAction);
+		
 		
 		
 		//generate board
@@ -107,7 +114,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(playerPanel.getPlayerPanel());
-		mainLayout.setRight(diceBar);
+		//mainLayout.setRight(diceBar);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
 		Scene scene = new Scene(mainLayout, 1350, 800);

@@ -26,8 +26,6 @@ public class PlayerPanel {
 		
 		properties.getChildren().add(propertyList.getPropertyCardList());
 		
-		
-		
 		playerPanel = new VBox();
 		//Use below to place things in panels?
 		//playerPanel.positionInArea(child, areaX, areaY, areaWidth, areaHeight, areaBaselineOffset, margin, halignment, valignment, isSnapToPixel);/////////////////////
@@ -36,6 +34,7 @@ public class PlayerPanel {
 		
 		listView = new ListView<>();
 		
+		//These are just here to populate the list to show off for now. will be removed at a later date.
 		populateProperties("Mediterranean Avenue", 60,1,0);
 		populateProperties("Baltic Avenue", 60,1,1);
 		populateProperties("Oriental Ave.", 100,2,0);
@@ -45,7 +44,7 @@ public class PlayerPanel {
 		populateProperties("B. & O. Railroad",200,0,0);
 		populateProperties("Indiana Ave.", 220,5,0);
 		populateProperties("St. Charles Place", 140,3,0);
-		listView.setPrefSize(200, 400);
+		listView.setPrefSize(250, 400);
 		
 		Button tempButton = new Button("Remove Property");
 		/*tempButton.onActionProperty(e -> {
