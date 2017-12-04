@@ -208,7 +208,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	
 	@Override
 	public void updateDice() {
-		Console.println(banker.getCurrentPlayer() + " " + banker.getDiceValue(0) + " " + banker.getDiceValue(1));
+		Console.println(banker.getCurrentPlayer().getName() + " " + banker.getDiceValue(0) + " " + banker.getDiceValue(1));
 		this.dice0.drawCanvas(banker.getDiceValue(0));
 		this.dice1.drawCanvas(banker.getDiceValue(1));
 	}
