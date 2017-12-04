@@ -23,4 +23,12 @@ public class OtherPlayersPanel extends VBox{
 		
 		this.setStyle("-fx-border-color: black");
 	}
+	//private PlayerPreview[] players;
+	/*public void init() {
+		//pop up window asks how many players will there be on setup window
+		for(int i = 1;i<5;i++) {
+			PlayerPreview player = new PlayerPreview("Player"+i, 1500);
+			players[i-1] = player;
+		}
+	}*/
 }

@@ -56,6 +56,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		
 		//generate current player header
 		currentPlayerLabel = new Label();
+		currentPlayerLabel.setStyle("-fx-font: 20 arial");
 		currentPlayerMoney = new Label();
 		currentPlayerHeading = new HBox(14);
 		currentPlayerHeading.setAlignment(Pos.CENTER);
@@ -151,7 +152,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	@Override
 	public void updateCurrentPlayer() {
 		Player temp = banker.getCurrentPlayer();
-		String temp1= temp.getName();
+		String temp1= "It is " + temp.getName() + "'s turn!";
 		currentPlayerLabel.setText(temp1);
 	}
 
