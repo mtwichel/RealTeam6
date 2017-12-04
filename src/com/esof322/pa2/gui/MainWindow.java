@@ -52,8 +52,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		banker = new Banker(this, 4);
-		
+		Facade.initFacade(this);
+		banker = Facade.getBanker();
+
 		//generate current player header
 		currentPlayerLabel = new Label();
 		currentPlayerLabel.setStyle("-fx-font: 20 arial");
@@ -63,10 +64,6 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentPlayerHeading.getChildren().add(currentPlayerLabel);
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");
-		
-		//generate property list side bar
-		playerPanel = new PlayerPanel();
-		playerPanel.getPlayerPanel().setStyle("-fx-border-color: black");
 		
 		//generate dice
 		dice0 = new DiceGui();
@@ -87,8 +84,6 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentAction.setStyle("-fx-padding: 20");
 		currentAction.setAlignment(Pos.BOTTOM_RIGHT);
 		actionBar.getChildren().addAll(diceBar, console.getTextArea(), currentAction);
-		
-		otherView = new OtherPlayersPanel();
 		
 		//generate board
 		board = new GridPane();
@@ -112,7 +107,14 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 			i++;
 		}
 		
+		banker.setUpBoard();
 		
+		//generate property list side bar
+		playerPanel = new PlayerPanel();
+		playerPanel.setStyle("-fx-border-color: black");
+		
+		otherView = new OtherPlayersPanel();
+
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
 		mainLayout.setLeft(playerPanel);
@@ -125,7 +127,6 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		banker.setUpBoard();
 	}
 	
 	
@@ -212,6 +213,12 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		Console.println(banker.getCurrentPlayer().getName() + " " + banker.getDiceValue(0) + " " + banker.getDiceValue(1));
 		this.dice0.drawCanvas(banker.getDiceValue(0));
 		this.dice1.drawCanvas(banker.getDiceValue(1));
+	}
+
+
+	@Override
+	public void updateOtherPlayersPanel() {
+		otherView = new OtherPlayersPanel();
 	}
 
 }

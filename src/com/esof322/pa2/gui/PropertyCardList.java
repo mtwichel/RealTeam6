@@ -2,6 +2,10 @@ package com.esof322.pa2.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.esof322.pa2.model.Player;
+import com.esof322.pa2.model.PropertySpace;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,44 +28,53 @@ public class PropertyCardList extends BorderPane{
 
 
 	private List<PropertyCard> list;
+	private ListView<PropertyCard> listView;
 	
-	public PropertyCardList() {
-
+	public PropertyCardList(Player p) {
 
 		list = new ArrayList<>();
+		if(!p.getOwnedProperties().isEmpty()) {
+			toPropertyCardList(p);
+		}
 
 		//Actual list
-		ListView<PropertyCard> listView = new ListView<PropertyCard>();
+		listView = new ListView<PropertyCard>();
 		ObservableList<PropertyCard> myObservableList = FXCollections.observableList(list);
 		listView.setItems(myObservableList);
 
 		this.setCenter(listView);
 	}
 	
-	public BorderPane getPropertyCardList() {
-		return this;
+	private void toPropertyCardList(Player p){
+		List<PropertySpace> temp = p.getOwnedProperties();
+		for(PropertySpace x: temp) {
+			addPropertyCard(x);
+		}
 	}
 	
-	//Implement removal method that searches by string and deletes the card
-	public void addPropertyCard(String name, int val,int color,int pos) {
-		list.add(new PropertyCard(name, val,color,pos));
+	public void addPropertyCard(PropertySpace ps) {
+		list.add(new PropertyCard(ps));
+		updateList();
 	}
 	
 	public void addPropertyCard(PropertyCard p) {
 		if(!p.equals(null))
 			list.add(p);
+		updateList();
 	}
 
 	public void removePropertyCard(PropertyCard p) {
 		if(!p.equals(null))
 			list.remove(p);
+		updateList();
 	}
 	
-	public void removePropertyCard(int i) {
+	/*public void removePropertyCard(int i) {
 			list.remove(this.findPropertyCard(i));
-	}
+			updateList();
+	}*/
 
-	public PropertyCard findPropertyCard(int pos) {//finds PropertyCard by position #
+	/*public PropertyCard findPropertyCard(int pos) {//finds PropertyCard by position #
 
 		for(PropertyCard p: list) {
 			if(p.getPos()==pos) {
@@ -70,6 +83,12 @@ public class PropertyCardList extends BorderPane{
 		}
 		System.out.println("PropertyCard Not Found.");
 		return null;
+	}*/
+	
+	public void updateList() {
+		listView = new ListView<PropertyCard>();
+		ObservableList<PropertyCard> myObservableList = FXCollections.observableList(list);
+		listView.setItems(myObservableList);
 	}
 
 }

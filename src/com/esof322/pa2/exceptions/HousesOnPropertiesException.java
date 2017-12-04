@@ -8,6 +8,8 @@ public class HousesOnPropertiesException extends Exception{
 
 	public HousesOnPropertiesException(PropertySpace ps) {
 		this.property = property;
+		new PopUpWarning("I Can't Let you Do that, Starfox.", "You do not have all propertys for this group,\n"
+				+"Therefore, you cannot upgrade your Property.");
 	}
 
 	public PropertySpace getCallingPlayer() {

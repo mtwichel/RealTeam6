@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 public class Console {
 	
 	private static final TextArea textArea = new TextArea();
+	private static int lines = 0;
 	
 	public Console() {
 		textArea.setDisable(true);
@@ -17,7 +18,18 @@ public class Console {
 		return textArea;
 	}
 	
+	//Makes the console move lines up when no room is left
+	public static void updateConsole() {
+		String temp = textArea.getText();
+		int endOfLine = temp.indexOf("\n");
+		textArea.setText(temp.substring(endOfLine+1));
+	}
+	
 	public static void println(String s){
+		lines++;
+		if(lines > 4) {
+			updateConsole();
+		}
 	    Platform.runLater(new Runnable() {
 	        @Override
 	        public void run() {

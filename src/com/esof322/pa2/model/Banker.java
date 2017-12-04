@@ -5,6 +5,7 @@ import java.rmi.activation.ActivationInstantiator;
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.gui.Facade;
 import com.esof322.pa2.gui.MainWindow;
 
 public class Banker {
@@ -14,9 +15,10 @@ public class Banker {
 	private int currentPlayerIndex;
 	private Player currentPlayer;
 	private Player nextPlayer;
-	private Board board;  
+	private static Board board;  
 	private Die[] dice;
 	private Player[] players;
+	private Player currentPlayerOrder[];
 
 
 	private Action currentAction;
@@ -127,6 +129,7 @@ public class Banker {
 			setCurrentPlayer(this.nextPlayer);
 			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			setCurrentAction(Action.ROLL_DICE);
+			GUI.updateOtherPlayersPanel();
 			break;
 
 		}
@@ -134,10 +137,25 @@ public class Banker {
 
 	}
 
+	public Player[] updateCurrentPlayerOrder() {
+		Player[] p = new Player[players.length];
+		int beginning = currentPlayerIndex; 
+		
+		for(int i = 0; i < players.length;i++) {
+			if(beginning > players.length-1) {
+				beginning = 0;
+			}
+			p[i] = players[beginning++];
+		}
+		return p;
+	}
+
 	public int getDiceValue() {return dice[0].getValue() + dice[1].getValue();}
 	public static ModelListener getGUI() {return GUI;}
-	public Board getBoard() {return board;}
+	public static Board getBoard() {return board;}
 	public Player getPlayer(int num){return players[num];}
+	public Player[] getPlayerList() {return players;}
+	public Player[] getCurrentPlayerNum() {return updateCurrentPlayerOrder();}
 	public Player getCurrentPlayer() {return currentPlayer;}
 	public String getCurrentActionString() {return Action.getActionString(currentAction);}
 	public int getDiceValue(int i) {return dice[i].getValue();}

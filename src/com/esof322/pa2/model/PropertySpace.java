@@ -108,6 +108,7 @@ public class PropertySpace extends Space {
 	public Boolean getIsMonopoly() {return this.isInMonopoly;}
 	public int getUpgradeAmount() {return this.upgradeAmount;}
 	public int getDowngradeAmount() {return this.upgradeAmount/2;}
+	public int[] getRates() {return this.rentRates;}
 
 
 }

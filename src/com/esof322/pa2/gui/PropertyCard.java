@@ -1,60 +1,58 @@
 package com.esof322.pa2.gui;
 
+import com.esof322.pa2.model.Banker;
+import com.esof322.pa2.model.Board;
+import com.esof322.pa2.model.PropertySpace;
+
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class PropertyCard extends HBox{
+public class PropertyCard extends VBox{
 
-	private VBox property;
+	private GridPane property;
 	private Rectangle rect = new Rectangle(20,20,210,30);
-	private int position;
+	private PropertySpace ps;
 
 	//add another for color?
-	public PropertyCard(String labelText, int value, int color, int pos) {
+	public PropertyCard(PropertySpace sp) {
 		super();
-
-		position = pos;
-		
+		ps = sp;
 		//Sets up organization structure of card
-		property = new VBox();
-		HBox hBox = new HBox();
-		VBox card = new VBox();
-
-		Label propertyName = new Label(labelText);
-		Label propertyValue = new Label("Value: " + value);
-
-		card.getChildren().addAll(propertyName,propertyValue);
-
-		VBox buttons = new VBox();
+		property = new GridPane();
+		property.setPadding(new Insets(10, 100, 10, 0));
+		property.setVgap(8);
+		property.setHgap(100);
+		
+		Label propertyName = new Label(""+ps.getName());
+		Label propertyValue = new Label("Value: " + ps.getPurchaseAmount());
+		//property.setConstraints(propertyName, 0, 0);
+		property.setConstraints(propertyValue, 0, 0);
 
 		Button info = new Button("Info");
-		Button options = new Button("Options");
 		info.setMaxSize(75,30);
-		options.setMaxSize(75,30);
+		info.setOnAction(e -> openPropertyInfo());
 
-		buttons.getChildren().addAll(info,options);
-		hBox.getChildren().addAll(card,buttons);
-
-		//Replace padding with definitive position on the card.
-		card.setPadding(new Insets(10, 50, 0, 0));
-
-		//Temporary control for the properties color   
-		setColor(color);
-
-		property.getChildren().addAll(rect,hBox);
-		this.getChildren().addAll(property);
+		property.setConstraints(info, 1, 0);
+  
+		setColor(colorToInt(ps.getColor()));
+		property.getChildren().addAll(propertyValue,info);
+		this.getChildren().addAll(rect,propertyName,property);
 	}
 
-	public VBox getProperty() {
-		return property;
+	private void openPropertyInfo() {
+		
+		new PropertyDetailsCard(ps);
+		
 	}
 
 	private final int CLEAR = 0, BROWN = 1,LIGHT_BLUE = 2,PINK = 3, ORANGE = 4, RED = 5, YELLOW = 6, GREEN = 7, DARK_BLUE = 8;
@@ -106,17 +104,25 @@ public class PropertyCard extends HBox{
 		
 	}
 	
-	@Override
-	public boolean equals(Object object) {
-		if(object instanceof PropertyCard) {
-			PropertyCard p = (PropertyCard) object;
-			return this.position==(p.position);
+	private int colorToInt(String s) {
+		if(s.equals("89451B")) {
+			return BROWN;
+		}else if(s.equals("89CEEA")) {
+			return LIGHT_BLUE;
+		}else if(s.equals("983BC9")) {
+			return PINK;
+		}else if(s.equals("FDA429")) {
+			return ORANGE;
+		}else if(s.equals("FC0D1C")) {
+			return RED;
+		}else if(s.equals("FFFD38")) {
+			return YELLOW;
+		}else if(s.equals("0E7E12")) {
+			return GREEN;
+		}else if(s.equals("0B24FB")) {
+			return DARK_BLUE;
 		}
-		return false;
-	}
-
-	public int getPos() {
-		return position;
+		return CLEAR;
 	}
 }
 

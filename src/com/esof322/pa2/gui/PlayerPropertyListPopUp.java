@@ -8,7 +8,10 @@ import javafx.geometry.*;
 
 public class PlayerPropertyListPopUp {
 
-	public static void display(String title) {
+	public PlayerPropertyListPopUp(String s,int playerOrder) {
+		display(s,playerOrder);
+	}
+	public void display(String title, int playerOrder) {
 		Stage window = new Stage();
 		
 		//Can't interact with main window until this one is closed
@@ -22,8 +25,7 @@ public class PlayerPropertyListPopUp {
 		Button closeButton = new Button("Close window");
 		closeButton.setOnAction(e -> window.close());
 
-		PropertyCardList propertyList = new PropertyCardList();
-		//Figure out who's property to load (pass in ID?)
+		PropertyCardList propertyList = new PropertyCardList(Facade.getPlayerList()[playerOrder]);
 		
 		VBox layout = new VBox(10);
 		layout.getChildren().addAll(label, propertyList, closeButton);

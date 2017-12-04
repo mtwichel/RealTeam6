@@ -15,53 +15,44 @@ public class PlayerPanel extends VBox{
 	private VBox playerPanel;
 	//private ListView<Property> listView;//Chance Type to Property Later
 	private ListView<String> listView;
-	private PropertyCardList propertyList = new PropertyCardList();;
+	private PropertyCardList propertyList;// = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
 	
 	private final int MAX_VALUE = 100;
 	private VBox properties;
+	
+	private Label playerCash;
+	private Label playerName;
 
 	public PlayerPanel() {
+		Facade.setPlayerPanel(this);
 		properties = new VBox();
 		properties.setAlignment(Pos.CENTER);
-		
-		properties.getChildren().add(propertyList.getPropertyCardList());
+		propertyList = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
+		properties.getChildren().add(propertyList);
 		
 		//Use below to place things in panels?
 		//playerPanel.positionInArea(child, areaX, areaY, areaWidth, areaHeight, areaBaselineOffset, margin, halignment, valignment, isSnapToPixel);/////////////////////
-		Label playerName = new Label("Player1");//Need to input player name here
-		Label playerCash = new Label("Balance: $1500");
+		playerName = new Label(Facade.getBanker().getCurrentPlayer().getName());
+		playerCash = new Label("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
 		
 		listView = new ListView<>();
-		
-		//These are just here to populate the list to show off for now. will be removed at a later date.
-		populateProperties("Mediterranean Avenue", 60,1,0);
-		populateProperties("Baltic Avenue", 60,1,1);
-		populateProperties("Oriental Ave.", 100,2,0);
-		populateProperties("Connecticut Ave.", 120,2,0);
-		populateProperties("Tennessee Ave.", 180,4,0);
-		populateProperties("Water Works",150,0,0);
-		populateProperties("B. & O. Railroad",200,0,0);
-		populateProperties("Indiana Ave.", 220,5,0);
-		populateProperties("St. Charles Place", 140,3,0);
 		listView.setPrefSize(250, 400);
 		
-		Button tempButton = new Button("Remove Property");
-		/*tempButton.onActionProperty(e -> {
-			propertyList.removeProperty(1);
-		});
-		*/
+		
 		this.getChildren().addAll(playerName,properties,playerCash);
 		this.setSpacing(10);
 		this.setPadding(new Insets(20,20,20,20));
 		this.setAlignment(Pos.CENTER);
 	}
-
-	public VBox getPlayerPanel() {
-		return this;
-	}
 	
-	private void populateProperties(String name, int value,int color,int pos) {
+	public void updatePanel() {
+		playerName.setText(Facade.getBanker().getCurrentPlayer().getName());
+		playerCash.setText("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
+		propertyList = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
+	}
+
+	/*private void populateProperties(String name, int value,int color,int pos) {
 		//change to add to list
 		propertyList.addPropertyCard(name, value,color,pos);
-	}
+	}*/
 }

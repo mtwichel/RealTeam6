@@ -1,5 +1,7 @@
 package com.esof322.pa2.gui;
 
+import com.esof322.pa2.model.Player;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -19,14 +21,18 @@ public class PlayerPreview extends VBox{
 	private Label balance;
 	private Button viewProperties;
 	
-	public PlayerPreview(String player,int bal){
-		
+	private int playerOrder;
+	
+	public PlayerPreview(int order){
+		Player p = Facade.getPlayerList()[order];
+		playerOrder = order;
 		//Adds Larger Player name to Custom VBox
-		Label l = new Label(player);
+		Label l = new Label(Facade.getPlayerList()[playerOrder].getName());
+		System.out.println(Facade.getPlayerList()[playerOrder].getName());
         l.setStyle("-fx-font: 20 arial");
         l.setPadding(new Insets(7,0,7,0));
         
-        balance = new Label(""+bal);
+        balance = new Label("$"+Facade.getPlayerList()[playerOrder].getBalance());
         balance.setPadding(new Insets(7,0,7,0));
         
         viewProperties = new Button("View Properties");
@@ -40,6 +46,12 @@ public class PlayerPreview extends VBox{
 	}
 	
 	private void displayProperties() {
-		PlayerPropertyListPopUp.display("Player Inventory");
+		new PlayerPropertyListPopUp("Player Inventory",playerOrder);
+	}
+
+	public void update() {
+		
+		l.setText(Facade.getPlayerList()[playerOrder].getName());
+		balance.setText("$"+Facade.getPlayerList()[playerOrder].getBalance());
 	}
 }
