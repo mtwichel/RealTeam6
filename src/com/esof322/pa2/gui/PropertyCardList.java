@@ -20,13 +20,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
-public class PropertyCardList{
+public class PropertyCardList extends BorderPane{
 
-	private BorderPane layout;
+
 	private List<PropertyCard> list;
 	
 	public PropertyCardList() {
-		layout = new BorderPane();
+
 
 		list = new ArrayList<>();
 
@@ -35,11 +35,11 @@ public class PropertyCardList{
 		ObservableList<PropertyCard> myObservableList = FXCollections.observableList(list);
 		listView.setItems(myObservableList);
 
-		layout.setCenter(listView);
+		this.setCenter(listView);
 	}
 	
 	public BorderPane getPropertyCardList() {
-		return layout;
+		return this;
 	}
 	
 	//Implement removal method that searches by string and deletes the card

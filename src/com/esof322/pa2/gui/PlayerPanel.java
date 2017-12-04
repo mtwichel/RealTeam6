@@ -10,7 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class PlayerPanel {
+public class PlayerPanel extends VBox{
 
 	private VBox playerPanel;
 	//private ListView<Property> listView;//Chance Type to Property Later
@@ -26,7 +26,6 @@ public class PlayerPanel {
 		
 		properties.getChildren().add(propertyList.getPropertyCardList());
 		
-		playerPanel = new VBox();
 		//Use below to place things in panels?
 		//playerPanel.positionInArea(child, areaX, areaY, areaWidth, areaHeight, areaBaselineOffset, margin, halignment, valignment, isSnapToPixel);/////////////////////
 		Label playerName = new Label("Player1");//Need to input player name here
@@ -51,14 +50,14 @@ public class PlayerPanel {
 			propertyList.removeProperty(1);
 		});
 		*/
-		playerPanel.getChildren().addAll(playerName,properties,playerCash);
-		playerPanel.setSpacing(10);
-		playerPanel.setPadding(new Insets(20,20,20,20));
-		playerPanel.setAlignment(Pos.CENTER);
+		this.getChildren().addAll(playerName,properties,playerCash);
+		this.setSpacing(10);
+		this.setPadding(new Insets(20,20,20,20));
+		this.setAlignment(Pos.CENTER);
 	}
 
 	public VBox getPlayerPanel() {
-		return playerPanel;
+		return this;
 	}
 	
 	private void populateProperties(String name, int value,int color,int pos) {

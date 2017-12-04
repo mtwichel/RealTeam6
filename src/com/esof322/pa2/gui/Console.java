@@ -9,6 +9,8 @@ public class Console {
 	
 	public Console() {
 		textArea.setDisable(true);
+		textArea.setPrefSize(500, 100);
+		textArea.setMaxSize(500, 100);
 	}
 	
 	public TextArea getTextArea() {

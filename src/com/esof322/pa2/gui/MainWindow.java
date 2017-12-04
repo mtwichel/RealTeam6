@@ -36,8 +36,9 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	Label currentPlayerLabel, currentPlayerMoney;
 	
 	PlayerPanel playerPanel;
-	Console console;
+	OtherPlayersPanel otherView;
 	
+	Console console;
 	Button currentAction;
 	
 	HBox currentPlayerHeading;
@@ -62,7 +63,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentPlayerHeading.getChildren().add(currentPlayerMoney);
 		currentPlayerHeading.setStyle("-fx-border-color: black");
 		
-		//generate property list sidebar
+		//generate property list side bar
 		playerPanel = new PlayerPanel();
 		playerPanel.getPlayerPanel().setStyle("-fx-border-color: black");
 		
@@ -72,7 +73,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		diceBar = new HBox(3);
 		diceBar.getChildren().add(dice0);
 		diceBar.getChildren().add(dice1);
-		diceBar.setAlignment(Pos.BOTTOM_LEFT);
+		diceBar.setAlignment(Pos.TOP_LEFT);
 				
 		//Add console output to GUI on bottom bar
 		console = new Console();
@@ -86,7 +87,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		currentAction.setAlignment(Pos.BOTTOM_RIGHT);
 		actionBar.getChildren().addAll(diceBar, console.getTextArea(), currentAction);
 		
-		
+		otherView = new OtherPlayersPanel();
 		
 		//generate board
 		board = new GridPane();
@@ -113,11 +114,11 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
-		mainLayout.setLeft(playerPanel.getPlayerPanel());
-		//mainLayout.setRight(diceBar);
+		mainLayout.setLeft(playerPanel);
+		mainLayout.setRight(otherView);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 1350, 800);
+		Scene scene = new Scene(mainLayout, 1550, 870);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);
@@ -207,7 +208,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	
 	@Override
 	public void updateDice() {
-		Console.println(banker.getDiceValue(0) + " " + banker.getDiceValue(1));
+		Console.println(banker.getCurrentPlayer() + " " + banker.getDiceValue(0) + " " + banker.getDiceValue(1));
 		this.dice0.drawCanvas(banker.getDiceValue(0));
 		this.dice1.drawCanvas(banker.getDiceValue(1));
 	}
