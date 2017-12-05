@@ -93,12 +93,14 @@ public class Player {
 	public void mortgage(PropertySpace space) throws GroupUpgradedException {
 		space.setMortgaged();
 		addMoney(space.getMortgageValue());
+		banker.getGUI().updatePlayerPanel();
 	}
 
 
 	public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
 		subMoney(space.getUnmortgageValue());
 		space.setUnmortgaged();
+		banker.getGUI().updatePlayerPanel();
 	}
 
 
@@ -146,6 +148,7 @@ public class Player {
 		if(space.checkMonopoly()) {
 			Console.println(name+" now has a Monopoly!");
 		}
+		banker.getGUI().updatePlayerPanel();
 	}
 	
 	//this method adds to the doubles counter, and throws exception if a 3rd is thrown (and resets)

@@ -113,7 +113,7 @@ public class PropertySpace extends Space {
 	public Player getOwner() {return owner;}
 	public String getColor() {return propertyGroup.getColor();}
 	public int getMortgageValue() {return (purchaseAmount/2);}
-	public int getUnmortgageValue() {return (int)((rentRates[0]/2)*1.1);}
+	public int getUnmortgageValue() {return (int)((purchaseAmount/2)*1.1);}
 	public boolean isMortgaged() {return this.isMortgaged;}
 	public int getHouseLevel() {return this.houseLevel;}
 	public int getPurchaseAmount() {return this.purchaseAmount;}

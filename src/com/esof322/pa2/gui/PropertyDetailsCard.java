@@ -16,37 +16,36 @@ import com.esof322.pa2.model.PropertyGroup;
 import com.esof322.pa2.model.PropertySpace;
 import com.esof322.pa2.model.Space;
 
+import javafx.application.Application;
 import javafx.geometry.*;
- 
-public class PropertyDetailsCard {
+
+public class PropertyDetailsCard{
 
 	private Button mortgage;
 	private Button buyHouse;
 	private Button sellHouse;
-	
+
 	private GridPane houses;
-	
+
 	private PropertySpace ps;
 	private Boolean monopoly = false;
+	private Stage window;
+
 	
 	public PropertyDetailsCard(Space sp) {
 		ps = (PropertySpace) sp;
-		Display();
-	}
-	
-	public void Display() {
-		Stage window = new Stage();
-		
+		window = new Stage();
+
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("");
 		window.setMinWidth(350);
-		
+
 		buyHouse = new Button("Buy House");
 		buyHouse.setMaxSize(100, 30);
 		buyHouse.setMinSize(100, 30);
 		initBuyHouse();
-		
-		
+
+
 		sellHouse = new Button("Sell House");
 		sellHouse.setMaxSize(100, 30);
 		buyHouse.setMinSize(100, 30);
@@ -56,13 +55,13 @@ public class PropertyDetailsCard {
 		mortgage = new Button();
 		mortgage.setMaxSize(210, 30);
 		mortgage.setMinSize(210, 30);
-		
+
 		if(!ps.getOwner().equals(Facade.getBanker().getCurrentPlayer())) {
 			buyHouse.setDisable(true);
 			sellHouse.setDisable(true);
 			mortgage.setDisable(true);
 		}
-		
+
 		GridPane pane = new GridPane();
 		pane.setPadding(new Insets(10, 10, 10, 10));
 		pane.setVgap(8);
@@ -71,19 +70,19 @@ public class PropertyDetailsCard {
 		pane.setConstraints(sellHouse, 1, 0);
 		pane.getChildren().addAll(buyHouse,sellHouse);
 		pane.setAlignment(Pos.CENTER);
-		
+
 		houses = new GridPane();
 		houses.setPadding(new Insets(10, 10, 10, 10));
 		houses.setVgap(8);
 		houses.setHgap(10);
-		
+
 		Label h = new Label("Houses:");
 		houses.setConstraints(h, 0, 0);
 		houses.getChildren().add(h);
-		
+
 		initHouses();
-		
-		updateMortgaged();
+
+		initMortgaged();
 		//String name, PropertyGroup pg, int purchaseAmount, int upgradeAmount, int[] rentRates
 		PropertyInfoCard pic = new PropertyInfoCard(ps);
 		
@@ -96,7 +95,7 @@ public class PropertyDetailsCard {
 		window.showAndWait();
 
 	}
-
+	
 	private boolean lastAction;
 
 	private void updateHouses() {
@@ -155,15 +154,16 @@ public class PropertyDetailsCard {
 		}
 	}
 
-	private void updateMortgaged() {
+	private void initMortgaged() {
 		if(ps.isMortgaged()) {
 			mortgage.setText("Un-Mortgage");
 			mortgage.setOnAction(e -> {
 				try {
 					unMortgageCall();
 				} catch (NotEnoughFundsException e1) {
-					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" Doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
+					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
 				}
+			updateMortgaged();
 			});
 		}else {
 			mortgage.setText("Mortgage");
@@ -173,8 +173,33 @@ public class PropertyDetailsCard {
 				} catch (GroupUpgradedException e1) {
 					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" you can't Mortgage a Property with houses/hotels!");
 				}
+			updateMortgaged();
 			});
 		}
+	}
+	private void updateMortgaged() {
+		if(ps.isMortgaged()) {
+			mortgage.setText("Un-Mortgage");
+			mortgage.setOnAction(e -> {
+				try {
+					unMortgageCall();
+				} catch (NotEnoughFundsException e1) {
+					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
+				}
+			updateMortgaged();
+			});
+		}else {
+			mortgage.setText("Mortgage");
+			mortgage.setOnAction(e -> {
+				try {
+					mortgageCall();
+				} catch (GroupUpgradedException e1) {
+					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" you can't Mortgage a Property with houses/hotels!");
+				}
+				updateMortgaged();
+			});
+		}
+		//update window here
 	}
 	
 	private void mortgageCall() throws GroupUpgradedException {
@@ -224,8 +249,6 @@ public class PropertyDetailsCard {
 			try {
 				sellHouse();
 			} catch (PropertyMinUpgratedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 		});
 	}
