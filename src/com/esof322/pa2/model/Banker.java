@@ -57,6 +57,7 @@ public class Banker {
 		setCurrentPlayer(players[currentPlayerIndex]);
 		setNextPlayer(players[currentPlayerIndex +1]);
 		GUI.updatePlayerPositions();
+		
 	}
 	
 	public void setCurrentPlayer(Player player) {
@@ -129,14 +130,15 @@ public class Banker {
 			setCurrentPlayer(this.nextPlayer);
 			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			setCurrentAction(Action.ROLL_DICE);
-			GUI.updateOtherPlayersPanel();
+			GUI.updatePlayerPanel();
+			GUI.updateOtherPlayerPanel();
 			break;
 
 		}
 
 
 	}
-
+	
 	public Player[] updateCurrentPlayerOrder() {
 		Player[] p = new Player[players.length];
 		int beginning = currentPlayerIndex; 
@@ -147,6 +149,7 @@ public class Banker {
 			}
 			p[i] = players[beginning++];
 		}
+		
 		return p;
 	}
 

@@ -69,26 +69,12 @@ public class PropertyCardList extends BorderPane{
 		updateList();
 	}
 	
-	/*public void removePropertyCard(int i) {
-			list.remove(this.findPropertyCard(i));
-			updateList();
-	}*/
-
-	/*public PropertyCard findPropertyCard(int pos) {//finds PropertyCard by position #
-
-		for(PropertyCard p: list) {
-			if(p.getPos()==pos) {
-				return p;
-			}
-		}
-		System.out.println("PropertyCard Not Found.");
-		return null;
-	}*/
-	
 	public void updateList() {
 		listView = new ListView<PropertyCard>();
 		ObservableList<PropertyCard> myObservableList = FXCollections.observableList(list);
 		listView.setItems(myObservableList);
+		
+		this.setCenter(listView);
 	}
 
 }

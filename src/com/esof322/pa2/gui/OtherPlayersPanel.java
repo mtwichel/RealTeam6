@@ -25,8 +25,8 @@ public class OtherPlayersPanel extends VBox{
 		Facade.setOtherPlayerPanel(this);
 	}
 	
-	public void updatePanel() {
-		this.getChildren().removeAll();
+	public void update() {
+		this.getChildren().clear();
 		player1 = new PlayerPreview(1);
 		player2 = new PlayerPreview(2);
 		player3 = new PlayerPreview(3);

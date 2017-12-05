@@ -2,6 +2,8 @@ package com.esof322.pa2.gui;
 
 import java.awt.TextField;
 
+import com.esof322.pa2.model.Banker;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,37 +20,40 @@ public class PlayerPanel extends VBox{
 	private PropertyCardList propertyList;// = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
 	
 	private final int MAX_VALUE = 100;
-	private VBox properties;
 	
 	private Label playerCash;
 	private Label playerName;
 
 	public PlayerPanel() {
 		Facade.setPlayerPanel(this);
-		properties = new VBox();
-		properties.setAlignment(Pos.CENTER);
 		propertyList = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
-		properties.getChildren().add(propertyList);
 		
 		//Use below to place things in panels?
 		//playerPanel.positionInArea(child, areaX, areaY, areaWidth, areaHeight, areaBaselineOffset, margin, halignment, valignment, isSnapToPixel);/////////////////////
 		playerName = new Label(Facade.getBanker().getCurrentPlayer().getName());
+		playerName.setStyle("-fx-font: 20 arial");
 		playerCash = new Label("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
+		playerCash.setStyle("-fx-font: 20 arial");
 		
 		listView = new ListView<>();
 		listView.setPrefSize(250, 400);
 		
 		
-		this.getChildren().addAll(playerName,properties,playerCash);
+		this.getChildren().addAll(playerName,propertyList,playerCash);
 		this.setSpacing(10);
 		this.setPadding(new Insets(20,20,20,20));
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	public void updatePanel() {
+	public void update() {
+		//playerName.setText(Facade.getBanker().getCurrentPlayer().getName());
+		//playerCash.setText("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
+		//propertyList.updateList();
+		this.getChildren().clear();;
+		PropertyCardList temp = new PropertyCardList(Facade.getPlayerList()[0]);
 		playerName.setText(Facade.getBanker().getCurrentPlayer().getName());
 		playerCash.setText("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
-		propertyList = new PropertyCardList(Facade.getBanker().getCurrentPlayer());
+		this.getChildren().addAll(playerName,temp,playerCash);
 	}
 
 	/*private void populateProperties(String name, int value,int color,int pos) {

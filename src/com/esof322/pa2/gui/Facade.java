@@ -23,8 +23,9 @@ public class Facade {
 	}
 	
 	public static void updatePlayerPanels() {
-		otherPlayersPanel.updatePanel();
-		playerPanel.updatePanel();
+		otherPlayersPanel.update();
+		playerPanel.update();
+		
 	}
 	
 	public static void setPlayerPanel(PlayerPanel p) {playerPanel = p;}

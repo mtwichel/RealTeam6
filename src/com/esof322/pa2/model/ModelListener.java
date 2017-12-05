@@ -8,5 +8,6 @@ public interface ModelListener {
 	public void updatePlayerPositions();
 	public void updateCurrentPlayerMoney();
 	public void updateDice();
-	public void updateOtherPlayersPanel();
+	public void updatePlayerPanel();
+	public void updateOtherPlayerPanel();
 }

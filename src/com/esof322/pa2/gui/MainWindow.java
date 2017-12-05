@@ -114,6 +114,10 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		playerPanel.setStyle("-fx-border-color: black");
 		
 		otherView = new OtherPlayersPanel();
+		/*Player player1 = new PlayerPreview(1);
+		Player player2 = new PlayerPreview(2);
+		Player player3 = new PlayerPreview(3);
+		otherView.getChildren().add(player1, player2,player3);*/
 
 		BorderPane mainLayout = new BorderPane();
 		mainLayout.setTop(currentPlayerHeading);
@@ -217,8 +221,13 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 
 
 	@Override
-	public void updateOtherPlayersPanel() {
-		otherView = new OtherPlayersPanel();
+	public void updatePlayerPanel() {
+		playerPanel.update();
+	}
+	
+	@Override
+	public void updateOtherPlayerPanel() {
+		otherView.update();
 	}
 
 }

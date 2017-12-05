@@ -2,6 +2,7 @@ package com.esof322.pa2.gui;
 
 import com.esof322.pa2.model.Player;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -28,7 +29,6 @@ public class PlayerPreview extends VBox{
 		playerOrder = order;
 		//Adds Larger Player name to Custom VBox
 		Label l = new Label(Facade.getPlayerList()[playerOrder].getName());
-		System.out.println(Facade.getPlayerList()[playerOrder].getName());
         l.setStyle("-fx-font: 20 arial");
         l.setPadding(new Insets(7,0,7,0));
         
@@ -47,11 +47,5 @@ public class PlayerPreview extends VBox{
 	
 	private void displayProperties() {
 		new PlayerPropertyListPopUp("Player Inventory",playerOrder);
-	}
-
-	public void update() {
-		
-		l.setText(Facade.getPlayerList()[playerOrder].getName());
-		balance.setText("$"+Facade.getPlayerList()[playerOrder].getBalance());
 	}
 }
