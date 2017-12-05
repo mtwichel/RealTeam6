@@ -9,6 +9,7 @@ public class IsNotAMonopolyException extends Exception{
 
 	public IsNotAMonopolyException(PropertySpace ps) {
 		this.property = property;
+		new PopUpWarning("Gotta Catch Em' All","You need a Monopoly of this Property type to do that.");
 	}
 	
 	public PropertySpace getCallingPlayer() {

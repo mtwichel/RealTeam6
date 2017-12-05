@@ -6,7 +6,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
 
 import com.esof322.pa2.exceptions.GroupUpgradedException;
+import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PropertyIsMortgagedException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 import com.esof322.pa2.model.Banker;
@@ -184,15 +186,13 @@ public class PropertyDetailsCard {
 	}
 	
 	private void initBuyHouse() {
-		if(ps.getHouseLevel()==5) {
+		if(ps.getHouseLevel()==5||(ps.isMortgaged()||!ps.getIsMonopoly())) {
 			buyHouse.setDisable(true);
 		}
 		buyHouse.setOnAction(e -> {
 			try {
 				buyHouse();
-			} catch (PropertyMaxUpgratedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (PropertyMaxUpgratedException | PropertyIsMortgagedException | IsNotAMonopolyException e1) {
 			}
 		});
 	}
@@ -204,9 +204,10 @@ public class PropertyDetailsCard {
 		}else {
 			buyHouse.setDisable(false);
 		}
+		Facade.getBanker().getGUI().updatePlayerPanel();
 	}
 	
-	private void buyHouse() throws PropertyMaxUpgratedException {
+	private void buyHouse() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
 		ps.upgrade();
 		lastAction = true; //bought a house last
 		updateBuyHouse();
@@ -235,6 +236,7 @@ public class PropertyDetailsCard {
 		}else {
 			sellHouse.setDisable(false);
 		}
+		Facade.getBanker().getGUI().updatePlayerPanel();
 	}
 	private void sellHouse() throws PropertyMinUpgratedException {
 		ps.downgrade();

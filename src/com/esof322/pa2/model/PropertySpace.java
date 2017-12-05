@@ -2,9 +2,12 @@ package com.esof322.pa2.model;
 
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.IsAMonopolyException;
+import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PropertyIsMortgagedException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
+import com.esof322.pa2.gui.Console;
 
 public class PropertySpace extends Space {
 
@@ -37,11 +40,15 @@ public class PropertySpace extends Space {
 
 
 	//this method add a house if possible
-	public void upgrade() throws PropertyMaxUpgratedException {
-		if((this.houseLevel + 1) > 5) {
+	public void upgrade() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
+		if((this.houseLevel) >= 5) {
 			throw new PropertyMaxUpgratedException();
+		}else if(isMortgaged) {
+			throw new PropertyIsMortgagedException();
+		}else if(!isInMonopoly) {
+			throw new IsNotAMonopolyException(this);
 		}
-		this.houseLevel += 1;
+		this.houseLevel++;
 		calculateRent();
 	}
 
@@ -80,8 +87,7 @@ public class PropertySpace extends Space {
 			try {
 				callingPlayer.purchase(this);
 			} catch (NotEnoughFundsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
 			//if response:no, end turn.
 		}else {
@@ -90,6 +96,12 @@ public class PropertySpace extends Space {
 			//if they do go bankrupt, give them the option to mortgage a propety/sell a house/hotel
 			//if they own any, or are able to own a mortgagable property
 		}
+	}
+	
+	public boolean checkMonopoly() {
+		boolean check = propertyGroup.checkMonopoly();
+		isInMonopoly = check;
+		return check;
 	}
 
 	public int calculateRent() {
@@ -100,7 +112,7 @@ public class PropertySpace extends Space {
 	public int getRentAmount() {return rentAmount;}
 	public Player getOwner() {return owner;}
 	public String getColor() {return propertyGroup.getColor();}
-	public int getMortgageValue() {return (rentRates[0]/2);}
+	public int getMortgageValue() {return (purchaseAmount/2);}
 	public int getUnmortgageValue() {return (int)((rentRates[0]/2)*1.1);}
 	public boolean isMortgaged() {return this.isMortgaged;}
 	public int getHouseLevel() {return this.houseLevel;}
@@ -109,7 +121,6 @@ public class PropertySpace extends Space {
 	public int getUpgradeAmount() {return this.upgradeAmount;}
 	public int getDowngradeAmount() {return this.upgradeAmount/2;}
 	public int[] getRates() {return this.rentRates;}
-
 
 }
 

@@ -5,9 +5,12 @@ import java.util.List;
 
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
+import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.HousesOnPropertiesException;
+import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PropertyIsMortgagedException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 
@@ -124,7 +127,7 @@ public class Player {
 		this.jailed = false; 
 	}
 
-	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException {
+	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
 		subMoney(space.getUpgradeAmount());
 		space.upgrade();	
 	}
@@ -139,6 +142,10 @@ public class Player {
 		subMoney(space.getPurchaseAmount());
 		this.ownedPropertySpaces.add(space);
 		space.setOwner(this);
+		Console.println(name+" has purchased "+space.getName());
+		if(space.checkMonopoly()) {
+			Console.println(name+" now has a Monopoly!");
+		}
 	}
 	
 	//this method adds to the doubles counter, and throws exception if a 3rd is thrown (and resets)
