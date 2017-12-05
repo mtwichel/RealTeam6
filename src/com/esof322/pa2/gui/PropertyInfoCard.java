@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.PropertyGroup;
+import com.esof322.pa2.model.PropertySpace;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,41 +40,84 @@ public class PropertyInfoCard extends VBox{
 	private Rectangle rect;
 	//(Banker banker, String name, PropertyGroup propertyGroup, 
 	//int purchaseAmout, int upgradeAmount,int[] rentRates
-	public PropertyInfoCard(String name, int color, int purchaseAmount, int upgradeAmount, int[] rentRates) {
+	public PropertyInfoCard(PropertySpace ps) {
+		this.setMaxWidth(300);
+		
 		Label title = new Label("TITLE DEED");
-		title.setStyle("-fx-font: 5 arial");
-		rect = new Rectangle(20,20,210,30);
-		setColor(color);
+		title.setStyle("-fx-font: 10 arial");
+		propertyName = new Label(ps.getName());
+		propertyName.setStyle("-fx-font: 20 arial");
+		
+		VBox header = new VBox();
+		header.getChildren().addAll(title, propertyName);
+		header.setAlignment(Pos.CENTER);
+		
+		rect = new Rectangle(20,20,300,50);
+		setColor(colorToInt(ps.getColor()));
 		
 		StackPane sp1 = new StackPane();
-		sp1.getChildren().addAll(rect,title);
+		sp1.getChildren().addAll(rect,header);
 		
-		propertyName = new Label(name);
-		propertyName.setStyle("-fx-font: 13 arial");
+		rent = new Label("RENT $"+ps.getRates()[0]);
+		//put this block in a VBox for spaceing if time is left for formatting
+		house1 = new Label("WITH 1 HOUSE\t\t$"+ps.getRates()[1]);
+		house2 = new Label("WITH 2 HOUSES\t\t$"+ps.getRates()[2]);
+		house3 = new Label("WITH 3 HOUSES\t\t$"+ps.getRates()[3]);
+		house4 = new Label("WITH 4 HOUSES\t\t$"+ps.getRates()[4]);
 		
-		StackPane sp2 = new StackPane();
-		sp2.getChildren().addAll(rect,propertyName);
+		hotel = new Label("WITH HOTEL $"+ps.getRates()[5]);
 		
-		rent = new Label("RENT $"+rentRates[0]);
-		house1 = new Label("WITH 1 HOUSE\t$"+rentRates[1]);
-		house2 = new Label("WITH 2 HOUSES\t$"+rentRates[2]);
-		house3 = new Label("WITH 3 HOUSES\t$"+rentRates[3]);
-		house4 = new Label("WITH 4 HOUSES\t$"+rentRates[4]);
-		hotel = new Label("WITH HOTEL $"+rentRates[5]);
+		VBox rentRates = new VBox();
+		rentRates.getChildren().addAll(rent,house1,house2,house3,house4,hotel);
+		rentRates.setAlignment(Pos.CENTER);
+		rentRates.setPadding(new Insets(10, 0, 15, 0));
 		
-		hotel = new Label("MORTGAGE VALUE $"+purchaseAmount/2);
-		houseCost = new Label("HOUSE COST $"+upgradeAmount+". EACH HOTELS, $"+upgradeAmount+". PLUS 4 HOUSES");
-		houseCost.setWrapText(true);
+		mortgageValue = new Label("MORTGAGE VALUE $"+ps.getPurchaseAmount()/2);
+		houseCost = new Label("HOUSE COST $"+ps.getUpgradeAmount()+". EACH");
+		Label houseCost2 = new Label("HOTELS, $"+ps.getUpgradeAmount()+". PLUS 4 HOUSES");
 		
-		//FORMAT
-		Label monopolyEffect = new Label("IF A PLAYER OWNS ALL THE LOTS OF ANY COLOR-GROUP, THE RENT IS DOUBLED ON UNIMPROVED LOTS IN THAT GROUP.");
-		monopolyEffect.setWrapText(true);
-		monopolyEffect.setStyle("-fx-font: 5 arial");
+		VBox mort = new VBox();
+		mort.setMaxWidth(200);
+		mort.getChildren().addAll(mortgageValue,houseCost,houseCost2);
+		mort.setAlignment(Pos.CENTER);
+		mort.setPadding(new Insets(0, 0, 20, 0));
 		
-		this.getChildren().addAll(sp1,sp2);
+		
+		Label monopolyEffect = new Label("IF A PLAYER OWNS ALL THE LOTS OF ANY COLOR-GROUP, THE");
+		Label monopolyEffect2 = new Label("RENT IS DOUBLED ON UNIMPROVED LOTS IN THAT GROUP.");
+		monopolyEffect.setStyle("-fx-font: 9 arial");
+		monopolyEffect2.setStyle("-fx-font: 9 arial");
+		
+		VBox effect = new VBox();
+		effect.setAlignment(Pos.CENTER);
+		effect.getChildren().addAll(monopolyEffect,monopolyEffect2);
+		
+		this.getChildren().addAll(sp1,rentRates,mort,effect);
+		this.setAlignment(Pos.CENTER);
 	}
 
 	private final int CLEAR = 0, BROWN = 1,LIGHT_BLUE = 2,PINK = 3, ORANGE = 4, RED = 5, YELLOW = 6, GREEN = 7, DARK_BLUE = 8;
+	
+	private int colorToInt(String s) {
+		if(s.equals("89451B")) {
+			return BROWN;
+		}else if(s.equals("89CEEA")) {
+			return LIGHT_BLUE;
+		}else if(s.equals("983BC9")) {
+			return PINK;
+		}else if(s.equals("FDA429")) {
+			return ORANGE;
+		}else if(s.equals("FC0D1C")) {
+			return RED;
+		}else if(s.equals("FFFD38")) {
+			return YELLOW;
+		}else if(s.equals("0E7E12")) {
+			return GREEN;
+		}else if(s.equals("0B24FB")) {
+			return DARK_BLUE;
+		}
+		return CLEAR;
+	}
 	
 	public void setColor(int i) {
 		switch (i) {

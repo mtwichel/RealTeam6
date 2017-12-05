@@ -9,6 +9,7 @@ import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
+import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.PropertyGroup;
 import com.esof322.pa2.model.PropertySpace;
 import com.esof322.pa2.model.Space;
@@ -48,6 +49,17 @@ public class PropertyDetailsCard {
 		sellHouse.setMaxSize(100, 30);
 		buyHouse.setMinSize(100, 30);
 		initSellHouse();
+
+		//Change Button text to Un-Mortgage when property is mortgaged.
+		mortgage = new Button();
+		mortgage.setMaxSize(210, 30);
+		mortgage.setMinSize(210, 30);
+		
+		if(!ps.getOwner().equals(Facade.getBanker().getCurrentPlayer())) {
+			buyHouse.setDisable(true);
+			sellHouse.setDisable(true);
+			mortgage.setDisable(true);
+		}
 		
 		GridPane pane = new GridPane();
 		pane.setPadding(new Insets(10, 10, 10, 10));
@@ -56,6 +68,7 @@ public class PropertyDetailsCard {
 		pane.setConstraints(buyHouse, 0, 0);
 		pane.setConstraints(sellHouse, 1, 0);
 		pane.getChildren().addAll(buyHouse,sellHouse);
+		pane.setAlignment(Pos.CENTER);
 		
 		houses = new GridPane();
 		houses.setPadding(new Insets(10, 10, 10, 10));
@@ -68,16 +81,12 @@ public class PropertyDetailsCard {
 		
 		initHouses();
 		
-		//Change Button text to Un-Mortgage when property is mortgaged.
-		mortgage = new Button();
-		mortgage.setMaxSize(210, 30);
-		mortgage.setMinSize(210, 30);
 		updateMortgaged();
 		//String name, PropertyGroup pg, int purchaseAmount, int upgradeAmount, int[] rentRates
-		PropertyInfoCard pic = new PropertyInfoCard(ps.getName(),colorToInt(ps.getColor()),ps.getPurchaseAmount(),ps.getUpgradeAmount(),ps.getRates());
+		PropertyInfoCard pic = new PropertyInfoCard(ps);
 		
 		VBox layout = new VBox(10);
-		layout.getChildren().addAll(houses,pane,mortgage);
+		layout.getChildren().addAll(pic,houses,pane,mortgage);
 		layout.setAlignment(Pos.CENTER);
 		
 		Scene scene = new Scene(layout);
@@ -135,8 +144,9 @@ public class PropertyDetailsCard {
 			houses.setConstraints(rect, 1, 0);
 			houses.getChildren().add(rect);
 		}else {
-			Rectangle rect = new Rectangle(20,20,20,30);
+			Rectangle rect;
 			for(int i = 1; i<=ps.getHouseLevel();i++) {
+				rect = new Rectangle(20,20,20,30);
 				houses.setConstraints(rect, i, 0);
 				houses.getChildren().add(rect);
 			}
@@ -150,8 +160,7 @@ public class PropertyDetailsCard {
 				try {
 					unMortgageCall();
 				} catch (NotEnoughFundsException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" Doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
 				}
 			});
 		}else {
@@ -160,8 +169,7 @@ public class PropertyDetailsCard {
 				try {
 					mortgageCall();
 				} catch (GroupUpgradedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" you can't Mortgage a Property with houses/hotels!");
 				}
 			});
 		}

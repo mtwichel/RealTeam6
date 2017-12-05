@@ -17,7 +17,8 @@ public class PlayerPropertyListPopUp {
 		//Can't interact with main window until this one is closed
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
-		window.setMinWidth(350);
+		window.setMinWidth(250);
+		window.setMaxWidth(250);
 
 		Label label = new Label();
 		label.setText("Player's Properties:");

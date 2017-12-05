@@ -31,7 +31,7 @@ public class PropertyCardList extends BorderPane{
 	private ListView<PropertyCard> listView;
 	
 	public PropertyCardList(Player p) {
-
+		
 		list = new ArrayList<>();
 		if(!p.getOwnedProperties().isEmpty()) {
 			toPropertyCardList(p);
