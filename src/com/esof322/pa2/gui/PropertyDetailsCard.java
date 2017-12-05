@@ -82,7 +82,7 @@ public class PropertyDetailsCard{
 
 		initHouses();
 
-		initMortgaged();
+		updateMortgaged();
 		//String name, PropertyGroup pg, int purchaseAmount, int upgradeAmount, int[] rentRates
 		PropertyInfoCard pic = new PropertyInfoCard(ps);
 		
@@ -154,29 +154,6 @@ public class PropertyDetailsCard{
 		}
 	}
 
-	private void initMortgaged() {
-		if(ps.isMortgaged()) {
-			mortgage.setText("Un-Mortgage");
-			mortgage.setOnAction(e -> {
-				try {
-					unMortgageCall();
-				} catch (NotEnoughFundsException e1) {
-					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
-				}
-			updateMortgaged();
-			});
-		}else {
-			mortgage.setText("Mortgage");
-			mortgage.setOnAction(e -> {
-				try {
-					mortgageCall();
-				} catch (GroupUpgradedException e1) {
-					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" you can't Mortgage a Property with houses/hotels!");
-				}
-			updateMortgaged();
-			});
-		}
-	}
 	private void updateMortgaged() {
 		if(ps.isMortgaged()) {
 			mortgage.setText("Un-Mortgage");
@@ -196,11 +173,11 @@ public class PropertyDetailsCard{
 				} catch (GroupUpgradedException e1) {
 					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" you can't Mortgage a Property with houses/hotels!");
 				}
-				updateMortgaged();
+			updateMortgaged();
 			});
 		}
-		//update window here
 	}
+	
 	
 	private void mortgageCall() throws GroupUpgradedException {
 		ps.getOwner().mortgage(ps);

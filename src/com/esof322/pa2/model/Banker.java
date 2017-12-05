@@ -5,6 +5,7 @@ import java.rmi.activation.ActivationInstantiator;
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.gui.Facade;
 import com.esof322.pa2.gui.MainWindow;
 
@@ -83,8 +84,10 @@ public class Banker {
 		GUI.updateDice();
 	}
 
+	private boolean changeAction = true;
+	
 	public void takeAction() {
-		//TODO add functionality as it comes in
+		changeAction = true;
 		switch(currentAction) {
 		case ROLL_DICE:
 			if(!currentPlayer.isJailed()) {
@@ -93,35 +96,46 @@ public class Banker {
 					rollDice();
 				} catch (DiceDoublesException e) {
 					try {
+						Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
+						Console.println("Doubles! Roll again!");
 						currentPlayer.addDoublesCounter();
-						setNextPlayer(currentPlayer);
+						//setNextPlayer(currentPlayer);		//Causes Graphic Glitch
+						changeAction = false;		//Skip changing turn order instead. KEEP CURRENT ACTION ROLLDICE
 					} catch (ThreeDoublesException e1) {
+						//Don't skip changing turn order
+						Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
+						Console.println(currentPlayer.getName()+" has rolled 3 doubles! They must be Punished with Jail time!");
 						currentPlayer.toJail();
 					}
+
+					//handleDoubleRoll(1);
 				}
 				currentPlayer.movePlayer(getDiceValue());
 				currentPlayer.doSpaceAction();
 				
-				setCurrentAction(Action.END_TURN);
+				if(changeAction) {
+					setCurrentAction(Action.END_TURN);
+				}
 			}else {
 				try {
 					rollDice();
 					currentPlayer.addDoublesCounter();
 				} catch (DiceDoublesException e) {
-					setNextPlayer(currentPlayer);
+					//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
 					currentPlayer.getOutOfJail();
+					currentPlayer.movePlayer(getDiceValue());
 				} catch (ThreeDoublesException e) {
+					currentPlayer.getOutOfJail();
 					try {
 						currentPlayer.subMoney(50);
 					} catch (NotEnoughFundsException e1) {
 						// TODO handelMoney
-						e1.printStackTrace();
+						e1.printStackTrace();		//BANKRUPT
 					}
-					setNextPlayer(currentPlayer);
-					currentPlayer.getOutOfJail();
+					//setNextPlayer(currentPlayer); They do not get to roll again right away.
 				}
 				
-				
+				setCurrentAction(Action.END_TURN);
 			}
 			break;
 		case END_TURN:
@@ -138,6 +152,30 @@ public class Banker {
 
 
 	}
+	
+	/*public void handleDoubleRoll(int doublesDone) {
+		currentPlayer.movePlayer(getDiceValue());
+		currentPlayer.doSpaceAction();
+		
+		GUI.updateDice();
+		updateCurrentPlayerOrder();
+		GUI.updateOtherPlayerPanel();
+		GUI.updatePlayerPositions();
+		
+		if(doublesDone >= 3) {
+			doublesDone = 0;
+			currentPlayer.toJail();
+			Console.println(currentPlayer.getName()+" has rolled 3 doubles! They must be Punished with Jail time!");
+		}else {
+			Console.println(" + "" Doubles! Roll again "+currentPlayer.getName()+"!");
+			//But what about rest of turn?
+			try {
+				rollDice();
+			} catch (DiceDoublesException e) {
+				handleDoubleRoll(++doublesDone);
+			}
+		}
+	}*/
 	
 	public Player[] updateCurrentPlayerOrder() {
 		Player[] p = new Player[players.length];
