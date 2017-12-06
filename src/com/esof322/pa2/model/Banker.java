@@ -42,6 +42,25 @@ public class Banker {
 		setCurrentAction(Action.ROLL_DICE);
 		
 	}
+
+	/*public void removePlayer(Player p) {
+		Player[] newPlayers = new Player[players.length-1];
+		int iter = 0;
+		for(int i = 0;i < players.length-1;i++) {
+			if(players[i]!=null) {
+				newPlayers[iter] = players[i];
+				iter++;
+			}
+		}
+		
+		players = newPlayers;
+		updateCurrentPlayerOrder();
+		GUI.updateCurrentPlayer();
+		GUI.updateCurrentPlayerMoney();
+		GUI.updateOtherPlayerPanel();
+		GUI.updatePlayerPanel();
+		checkWinner();
+	}*/
 	
 	public void checkWinner() {
 		playing--;
@@ -138,16 +157,17 @@ public class Banker {
 			}
 			break;
 		case END_TURN:
-			this.currentPlayerIndex = ((this.currentPlayerIndex + 1) 
-					% this.numPlayers); //update index by 1 and wrap around if over numPlayers
+			this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers); //update index by 1 and wrap around if over numPlayers
+			
 			setCurrentPlayer(this.nextPlayer);
 			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			do { 
+			do {
+				this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers);
 				setCurrentPlayer(this.nextPlayer);
 				setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			}while(!this.currentPlayer.isPlaying());
-				
-			
+			}while(!this.nextPlayer.isPlaying());
+			//setCurrentPlayer(this.nextPlayer);
+			//setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			setCurrentAction(Action.ROLL_DICE);
 			GUI.updatePlayerPanel();
 			GUI.updateOtherPlayerPanel();
