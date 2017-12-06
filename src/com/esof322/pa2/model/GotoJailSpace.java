@@ -1,6 +1,8 @@
 package com.esof322.pa2.model;
 
+import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
+import com.esof322.pa2.gui.Facade;
 
 /**
 * @generated
@@ -21,6 +23,5 @@ public class GotoJailSpace extends Space {
 		callingPlayer.toJail();	
 		Console.println(callingPlayer.getName()+" has been sent to jail!");
 	}
-    
     
 }

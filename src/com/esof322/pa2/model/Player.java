@@ -5,11 +5,15 @@ import java.util.List;
 
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
+import com.esof322.pa2.gui.Confirmation;
 import com.esof322.pa2.gui.Console;
+import com.esof322.pa2.gui.Facade;
+
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.HousesOnPropertiesException;
 import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.exceptions.PropertyIsMortgagedException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
@@ -122,9 +126,11 @@ public class Player {
 	public void toJail() {
 		this.position = 10;
 		this.jailed = true; 
+		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has been sent to Jail!");
 	}
 	public void getOutOfJail() {
 		this.jailed = false; 
+		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has freed from Jail!");
 	}
 
 	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
@@ -139,15 +145,18 @@ public class Player {
 
 	//this method makes the player own the space
 	public void purchase(PropertySpace space) throws NotEnoughFundsException {
-		subMoney(space.getPurchaseAmount());
-		this.ownedPropertySpaces.add(space);
-		space.setOwner(this);
-		Console.println(name+" has purchased "+space.getName());
-		if(space.checkMonopoly()) {
-			Console.println(name+" now has a Monopoly!");
+		if(new Confirmation().display("Property Purchase", "Would you like to purchase "+space.getName()+"?")) {
+			subMoney(space.getPurchaseAmount());
+			this.ownedPropertySpaces.add(space);
+			space.setOwner(this);
+			Console.println(name+" has purchased "+space.getName());
+			if(space.checkMonopoly()) {
+				Console.println(name+" now has a Monopoly!");
+			}
+			banker.getGUI().updatePlayerPanel();
+			banker.getGUI().updateOtherPlayerPanel();
 		}
-		banker.getGUI().updatePlayerPanel();
-		banker.getGUI().updateOtherPlayerPanel();
+		
 	}
 	
 	//this method adds to the doubles counter, and throws exception if a 3rd is thrown (and resets)

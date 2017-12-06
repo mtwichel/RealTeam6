@@ -120,16 +120,19 @@ public class Banker {
 				try {
 					rollDice();
 					currentPlayer.addDoublesCounter();
+					Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
 				} catch (DiceDoublesException e) {
 					//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
 					currentPlayer.getOutOfJail();
+					Console.println(currentPlayer.getName()+" rolled doubles and escaped Jail");
 					currentPlayer.movePlayer(getDiceValue());
 				} catch (ThreeDoublesException e) {
 					currentPlayer.getOutOfJail();
 					try {
 						currentPlayer.subMoney(50);
+						Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");
 					} catch (NotEnoughFundsException e1) {
-						// TODO handelMoney
+						Console.println("Oh no! "+currentPlayer.getName()+" can't afford prison fines!");
 						e1.printStackTrace();		//BANKRUPT
 					}
 					//setNextPlayer(currentPlayer); They do not get to roll again right away.
