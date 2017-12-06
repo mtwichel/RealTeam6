@@ -4,10 +4,12 @@ import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.IsAMonopolyException;
 import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.exceptions.PropertyIsMortgagedException;
 import com.esof322.pa2.exceptions.PropertyMaxUpgratedException;
 import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 import com.esof322.pa2.gui.Console;
+import com.esof322.pa2.gui.Facade;
 
 public class PropertySpace extends Space {
 
@@ -96,6 +98,15 @@ public class PropertySpace extends Space {
 			//in subtracting the rent, check if the player goes bankrupt, or is about to go bankrupt
 			//if they do go bankrupt, give them the option to mortgage a propety/sell a house/hotel
 			//if they own any, or are able to own a mortgagable property
+			Player owner = this.getOwner();
+			int roll = Facade.getBanker().getDiceValue();
+			int rentDue = calculateRent(); //get the rent due
+			callingPlayer.subMoney(rentDue);
+			owner.addMoney(rentDue);
+			banker.getGUI().updatePlayerPanel();
+			banker.getGUI().updateOtherPlayerPanel();
+			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
+			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
 		}
 	}
 	
