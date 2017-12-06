@@ -5,6 +5,7 @@ import java.rmi.activation.ActivationInstantiator;
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.gui.Facade;
 import com.esof322.pa2.gui.MainWindow;
@@ -20,7 +21,7 @@ public class Banker {
 	private Die[] dice;
 	private Player[] players;
 	private Player currentPlayerOrder[];
-
+	private int playing;
 
 	private Action currentAction;
 
@@ -37,20 +38,22 @@ public class Banker {
 
 	public void setUpBoard() {
 		setUpPlayers();
-		
+		playing = players.length;
 		setCurrentAction(Action.ROLL_DICE);
 		
 	}
-
-	public void tranferFunds() {
-		//TODO
+	
+	public void checkWinner() {
+		playing--;
+		if(playing==1) {
+			new PopUpWarning("WINNER WINNER CHICKEN DINENR", "Congratulations "+currentPlayer.getName()+" you've won!");
+		}
 	}
-
+	
 	public void setUpPlayers() {
 		players = new Player[this.numPlayers];
 		String[] names = {"George", "Arjan", "Taylor", "Marcus"}; //temp for testing
 		for(int i=0; i<players.length; i++) {
-			//TODO initialize players
 			players[i] = new Player(this, names[i], i, "FFFFFF");
 		}
 		
@@ -120,7 +123,6 @@ public class Banker {
 				try {
 					rollDice();
 					currentPlayer.addDoublesCounter();
-					Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
 				} catch (DiceDoublesException e) {
 					//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
 					currentPlayer.getOutOfJail();
@@ -128,14 +130,8 @@ public class Banker {
 					currentPlayer.movePlayer(getDiceValue());
 				} catch (ThreeDoublesException e) {
 					currentPlayer.getOutOfJail();
-					try {
-						currentPlayer.subMoney(50);
-						Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");
-					} catch (NotEnoughFundsException e1) {
-						Console.println("Oh no! "+currentPlayer.getName()+" can't afford prison fines!");
-						e1.printStackTrace();		//BANKRUPT
-					}
-					//setNextPlayer(currentPlayer); They do not get to roll again right away.
+					currentPlayer.subMoney(50);
+					Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");
 				}
 				
 				setCurrentAction(Action.END_TURN);
@@ -146,6 +142,12 @@ public class Banker {
 					% this.numPlayers); //update index by 1 and wrap around if over numPlayers
 			setCurrentPlayer(this.nextPlayer);
 			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+			do { 
+				setCurrentPlayer(this.nextPlayer);
+				setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+			}while(!this.currentPlayer.isPlaying());
+				
+			
 			setCurrentAction(Action.ROLL_DICE);
 			GUI.updatePlayerPanel();
 			GUI.updateOtherPlayerPanel();

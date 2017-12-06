@@ -8,6 +8,7 @@ public class NotEnoughFundsException extends Exception {
 
 	public NotEnoughFundsException(Player callingPlayer) {
 		this.callingPlayer = callingPlayer;
+		new PopUpWarning("Money Problems","You need more money to do that.");
 	}
 	
 	public Player getCallingPlayer() {

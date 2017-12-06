@@ -109,6 +109,10 @@ public class PropertySpace extends Space {
 		
 	}
 	
+	public void resetHouseLevel() {
+		houseLevel = 0;
+	}
+	
 	public int getRentAmount() {return rentAmount;}
 	public Player getOwner() {return owner;}
 	public String getColor() {return propertyGroup.getColor();}

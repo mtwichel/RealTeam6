@@ -21,7 +21,7 @@ import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 public class Player {
 	
 	private Banker banker;
-
+	private boolean isPlaying = true;
 	private int piece;
 	private String name;
 	private int balance;  
@@ -86,9 +86,9 @@ public class Player {
 		this.balance += amount;
 	}
 
-	public void subMoney(int amount) throws NotEnoughFundsException {
+	public void subMoney(int amount) {
 		if((this.balance - amount) < 0) {
-			throw new NotEnoughFundsException(this);
+			bankrupt();
 		}else {
 			this.balance -= amount;
 		}
@@ -170,10 +170,48 @@ public class Player {
 
 
 
-
-
+	public void bankrupt() {
+		Console.println(name+" has declared bankruptcy!");
+		for(int i = 0; i < ownedPropertySpaces.size();i++) {
+			this.ownedPropertySpaces.get(i).setOwner(null);//makes it so other players can buy the property now
+			this.ownedPropertySpaces.get(i).setIsMonopoly(false);
+			this.ownedPropertySpaces.get(i).setUnmortgaged();
+			this.ownedPropertySpaces.get(i).resetHouseLevel();
+		}
+		while(!this.ownedPropertySpaces.isEmpty()) {
+			this.ownedPropertySpaces.remove(0);
+		}
+		isPlaying = false;
+		banker.checkWinner();
+	}
 	
 	
+	public void payPlayer(Player p, int amount) {
+		
+		if(!p.equals(null)) {
+			p.addMoney(amount);
+		}
+	}
+
+	public void aquireProperty(PropertySpace space) {
+		this.ownedPropertySpaces.add(space);
+		space.setOwner(this);
+	}
+
+	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
+		if(ownedPropertySpaces.isEmpty()) {
+			//GameOver for player, remove them from list of players
+			return true;
+		}
+		if(amount < this.balance) {
+
+			return false; //Maybe implement thing that allows them to sell stuff
+		}else {
+			return true;//You just lose. All your stuff goes to the person who you owed.
+		}
+
+	}
+
 	/***********
 	 * 
 	 * The GETTER BLOCK
@@ -187,47 +225,14 @@ public class Player {
 	public int getBalance() {return this.balance;}
 	public boolean isJailed() {return jailed;}
 	public String getColor() {return this.color;}
+	public boolean isPlaying() {return isPlaying;}
 	
 	/***********
 	 * 
 	 * The Graveyard
 	 * 
 	 ************/
-	
-//	public void handOverProperties(Player p) {
-//	if(p.equals(null)) {
-//		resetProperties();
-//	}else {
-//		for(int i = 0; i < ownedPropertySpaces.size();i++) {
-//			//hand over money and properties
-//			p.aquireProperty(this.ownedPropertySpaces.get(i));
-//			this.ownedPropertySpaces.remove(i);
-//			if(balance > 0) {
-//				this.payPlayer(p, balance);
-//			}
-//		}
-//	}
-//}
 
-//public void resetProperties() {
-//	for(int i = 0; i < ownedPropertySpaces.size();i++) {
-//		Player empty = new Player(0, "649394");
-//		this.ownedPropertySpaces.get(i).setOwner(empty);//makes it so other players can buy the property now
-//		this.ownedPropertySpaces.get(i).setIsMonopoly(false);
-//		this.ownedPropertySpaces.get(i).resetHouseLevel();
-//	}
-	
-//	public void Bankrupt(Player p) {//Player p is the player they go bankrupt to, null if to bank.
-//	if(p.equals(null)) {
-//		resetProperties();
-//		//return properties to unowned.
-//		//return houses/hotels to pool.***
-//	}else {
-//		this.handOverProperties(p);
-//	}
-//	//Delete Player from list in bank (once Arjan adds it)
-//}
-//}
 	
 //	public void setHasMonopoly(boolean b) {
 //		hasMonopoly = b;
@@ -254,34 +259,8 @@ public class Player {
 //		}
 //	}
 	
-//	public void payPlayer(Player p, int amount) {
-//		
-//		if(!p.equals(null)) {
-//			p.addMoney(amount);
-//		}
-//	}
-	
-//	public void aquireProperty(PropertySpace space) {
-//		this.ownedPropertySpaces.add(space);
-//		if(!space.isMortgaged()) {
-//			this.netWorth += space.getMortgageValue();
-//		}
-//		space.setOwner(this);
-//	}
-	
-//	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
-//		if(ownedPropertySpaces.isEmpty()) {
-//			//GameOver for player, remove them from list of players
-//			return true;
-//		}
-//		if(amount < this.netWorth) {
 //
-//			return false; //Still need to sell some stuff though
-//		}else {
-//			return true;//You just lose. All your stuff goes to the person who you owed.
-//		}
-//
-//	}
+
 //
 //	//Allows the player to mortgage properties from a selection/sell houses/hotels
 //	public void avoidBankruptcy(int amount) {
