@@ -106,8 +106,14 @@ public class PropertySpace extends Space {
 	}
 
 	public int calculateRent() {
+		if(isInMonopoly) {
+			if(houseLevel>0) {
+				return rentRates[houseLevel];
+			}else {
+				return rentRates[houseLevel]*2;
+			}
+		}
 		return rentRates[houseLevel];
-		
 	}
 	
 	public void resetHouseLevel() {

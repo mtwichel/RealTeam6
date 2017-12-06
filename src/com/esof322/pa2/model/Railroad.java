@@ -22,12 +22,6 @@ public class Railroad extends PropertySpace {
 	}
     
     public int calculateRent(Player callingPlayer) {
-    	/*List<PropertySpace> props = callingPlayer.getOwnedProperties();
-    	int numOwned = 0;
-    	List<PropertySpace> result = props.stream()																															//converts props to stream
-    			.filter(line -> "Reading Railroad".equals(line.getName()) || "Reading Railroad".equals(line.getName()) || "Reading Railroad".equals(line.getName()) || "Reading Railroad".equals(line.getName()))	//finds the railroads
-    			.collect(Collectors.toList());																																//collect the output and convert streams to a list
-    	 */
     	int numOwned = pg.checkAmountHeld(this);
  
     	if(numOwned == 1) {

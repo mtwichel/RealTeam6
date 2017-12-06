@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.gui.Facade;
 
 public class Utility extends PropertySpace {
     
+	private PropertyGroup pg;
+	
 	public Utility(Banker banker, String name, PropertyGroup propertyGroup, 
 			int purchaseAmount, int upgradeAmount,int[] rentRates) {
     	super(banker, name, propertyGroup, purchaseAmount, upgradeAmount, rentRates);
+    	pg = propertyGroup;
     }
     
 	public String getNameSpace() {
@@ -23,13 +27,8 @@ public class Utility extends PropertySpace {
 		 * If the Owner has One of the utilities, rent due is  4x the die roll
 		 * If the Owner has Two of the utilities, rent due is 10x the due roll
 		 */
-    	List<PropertySpace> props = callingPlayer.getOwnedProperties();
-    	int numOwned = 0;
-    	List<PropertySpace> result = props.stream()												//converts props to stream
-    			.filter(line -> "Electric Company".equals(line) || "Water Works".equals(line))	//finds the two utilities
-    			.collect(Collectors.toList());													//collect the output and convert streams to a list
+    	int numOwned = pg.checkAmountHeld(this);//finds out how many utilitys are owned
     	
-    	numOwned = result.size();
     	if(numOwned == 1) {
     		return 4 * roll;
     	}else if (numOwned == 2) {
@@ -57,7 +56,8 @@ public class Utility extends PropertySpace {
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();
-			Console.println(callingPlayer.getName()+" has paid" + owner.getName() + rentDue +"!");
+			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
+			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
 		}
 		
 		
