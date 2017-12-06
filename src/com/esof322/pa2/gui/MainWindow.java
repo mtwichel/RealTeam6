@@ -125,7 +125,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		mainLayout.setRight(otherView);
 		mainLayout.setCenter(board);
 		mainLayout.setBottom(actionBar);
-		Scene scene = new Scene(mainLayout, 1550, 870);
+		Scene scene = new Scene(mainLayout, 1550, 970);
 		
 		primaryStage.setTitle("Monopoly");
 		primaryStage.setScene(scene);

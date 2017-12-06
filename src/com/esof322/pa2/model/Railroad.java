@@ -2,7 +2,7 @@ package com.esof322.pa2.model;
 
 public class Railroad extends Space {
     
-    public Railroad(Banker banker, String name, int[] i) {
+    public Railroad(Banker banker, String name) {
     	super(banker, name);
     }
   

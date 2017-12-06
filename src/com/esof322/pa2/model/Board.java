@@ -68,7 +68,7 @@ public class Board {
 		spaces[4] = new TaxSpace(banker, "Income Tax",true);
 		
 		tempReplaceRR(200,25,50,100,200);
-		spaces[5] = new Railroad(banker, "Reading Railroad", temp);
+		spaces[5] = new Railroad(banker, "Reading Railroad");
 		
 		rates = new int[] {6,30,90,270,400,550};
 		spaces[6] = new PropertySpace(banker, 
@@ -102,7 +102,7 @@ public class Board {
 				"Virginia Avenue", propertyGroups[2], 160, 50, rates);
 		
 		tempReplaceRR(200,25,50,100,200);
-		spaces[15] = new Railroad(banker, "Pennsylvania Railroad", temp);
+		spaces[15] = new Railroad(banker, "Pennsylvania Railroad");
 		
 		rates = new int[] {14,70,200,550,750,950};
 		spaces[16] = new PropertySpace(banker, 
@@ -135,7 +135,7 @@ public class Board {
 				"Illinois Avenue", propertyGroups[4], 240, 50, rates);
 		
 		tempReplaceRR(200,25,50,100,200);
-		spaces[25] = new Railroad(banker, "B&O Railroad", temp);
+		spaces[25] = new Railroad(banker, "B&O Railroad");
 		
 		rates = new int[] {22,110,330,800,975,1150};
 		spaces[26] = new PropertySpace(banker, 
@@ -169,7 +169,7 @@ public class Board {
 				"Pennsylvania Avenue", propertyGroups[6], 320, 50, rates);
 		
 		tempReplaceRR(200,25,50,100,200);
-		spaces[35] = new Railroad(banker, "Short Line", temp);
+		spaces[35] = new Railroad(banker, "Short Line");
 		
 		spaces[36] = new BlankSpace(banker, "Chance");
 		
