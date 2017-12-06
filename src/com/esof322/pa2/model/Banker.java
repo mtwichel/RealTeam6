@@ -161,11 +161,11 @@ public class Banker {
 			
 			setCurrentPlayer(this.nextPlayer);
 			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			do {
+			/*do {
 				this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers);
 				setCurrentPlayer(this.nextPlayer);
 				setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			}while(!this.nextPlayer.isPlaying());
+			}while(!this.nextPlayer.isPlaying());*/
 			//setCurrentPlayer(this.nextPlayer);
 			//setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			setCurrentAction(Action.ROLL_DICE);

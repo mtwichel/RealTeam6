@@ -22,6 +22,7 @@ public class GotoJailSpace extends Space {
 	public void takeAction(Player callingPlayer) {
 		callingPlayer.toJail();	
 		Console.println(callingPlayer.getName()+" has been sent to jail!");
+		Facade.getBanker().getGUI().updatePlayerPositions();
 	}
     
 }

@@ -97,12 +97,14 @@ public class Player {
 	public void mortgage(PropertySpace space) throws GroupUpgradedException {
 		space.setMortgaged();
 		addMoney(space.getMortgageValue());
+		banker.getGUI().updatePlayerPanel();
 	}
 
 
 	public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
 		subMoney(space.getUnmortgageValue());
 		space.setUnmortgaged();
+		banker.getGUI().updatePlayerPanel();
 	}
 
 
@@ -182,6 +184,7 @@ public class Player {
 			this.ownedPropertySpaces.remove(0);
 		}
 		isPlaying = false;
+		banker.getGUI().updatePlayerPanel();
 		banker.checkWinner();
 	}
 	

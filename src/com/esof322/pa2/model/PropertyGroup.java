@@ -28,12 +28,26 @@ public class PropertyGroup {
 		if(current == null) {
 			return false;
 		}
-		for(int i=1; i<properties.size(); i++) {
-			if(current != properties.get(i).getOwner()) {
+		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
+			if(current.getPiece() != properties.get(i).getOwner().getPiece()) {
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public int checkAmountHeld(PropertySpace ps) {
+		int amount = 0;
+		Player current = ps.getOwner();
+		if(current == null) {
+			return 0;
+		}
+		for(int i=0; i<properties.size(); i++) {
+			if(current.getPiece() == properties.get(i).getOwner().getPiece()) {	//need to change player comparison to player piece comparison?
+				amount++;
+			}
+		}
+		return amount;
 	}
 
 //TODO add this functionality some where else I think

@@ -12,7 +12,7 @@ public class Board {
 	public Board(Banker banker) {
 		this.banker = banker;
 		this.spaces = new Space[40]; //40 spaces
-		this.propertyGroups = new PropertyGroup[9]; //8 property groups
+		this.propertyGroups = new PropertyGroup[10]; //10 property groups
 		init();
 	}
 
@@ -49,7 +49,8 @@ public class Board {
 		propertyGroups[5] = new PropertyGroup("FFFD38");
 		propertyGroups[6] = new PropertyGroup("0E7E12");
 		propertyGroups[7] = new PropertyGroup("0B24FB");
-		propertyGroups[8] = new PropertyGroup("000000");
+		propertyGroups[8] = new PropertyGroup("000000"); //RailRoads
+		propertyGroups[9] = new PropertyGroup("000000"); //Utilities
 
 	}
 
@@ -92,7 +93,7 @@ public class Board {
 				"St. Charles Place", propertyGroups[2], 140, 50, rates);
 		
 		tempReplaceU(150);
-		spaces[12] = new Utility(banker, "Electric Company", propertyGroups[8], 150, 0, rates);
+		spaces[12] = new Utility(banker, "Electric Company", propertyGroups[9], 150, 0, rates);
 		
 		rates = new int[] {10,50,150,450,625,750};
 		spaces[13] = new PropertySpace(banker, 
@@ -147,7 +148,7 @@ public class Board {
 				"Ventnor Avenue", propertyGroups[5], 260, 50, rates);
 		
 		tempReplaceU(150);
-		spaces[28] = new Utility(banker, "Water Works", propertyGroups[8], 150, 0, rates);
+		spaces[28] = new Utility(banker, "Water Works", propertyGroups[9], 150, 0, rates);
 		
 		rates = new int[] {24,120,360,850,1025,1200};
 		spaces[29] = new PropertySpace(banker, 

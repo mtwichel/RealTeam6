@@ -76,6 +76,7 @@ public class PropertySpace extends Space {
 		}else {
 			this.isMortgaged = true;
 		}
+		
 	}
 	public void setUnmortgaged() {this.isMortgaged = false;}
 
