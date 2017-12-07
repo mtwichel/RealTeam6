@@ -67,8 +67,10 @@ public class PropertyGroup {
 			return 0;
 		}
 		for(int i=0; i<properties.size(); i++) {
-			if(current.getPiece() == properties.get(i).getOwner().getPiece()) {	//need to change player comparison to player piece comparison?
-				amount++;
+			if(properties.get(i).getOwner() != null) {
+				if(current.getPiece() == properties.get(i).getOwner().getPiece()) {	//need to change player comparison to player piece comparison?
+					amount++;
+				}
 			}
 		}
 		return amount;

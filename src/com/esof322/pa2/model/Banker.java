@@ -100,10 +100,10 @@ public class Banker {
 	public void rollDice() throws DiceDoublesException {
 		dice[0].rollDie();
 		dice[1].rollDie();
+		GUI.updateDice();
 		if(dice[0].getValue() == dice[1].getValue()) {
 			throw new DiceDoublesException();
 		}
-		GUI.updateDice();
 	}
 
 	private boolean changeAction = true;
@@ -118,7 +118,7 @@ public class Banker {
 					rollDice();
 				} catch (DiceDoublesException e) {
 					try {
-						Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
+						//Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
 						Console.println("Doubles! Roll again!");
 						currentPlayer.addDoublesCounter();
 						//setNextPlayer(currentPlayer);		//Causes Graphic Glitch
@@ -170,6 +170,7 @@ public class Banker {
 			}while(!this.nextPlayer.isPlaying());*/
 			//setCurrentPlayer(this.nextPlayer);
 			//setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+			currentPlayer.resetDoublesCounter();
 			setCurrentAction(Action.ROLL_DICE);
 			GUI.updatePlayerPanel();
 			GUI.updateOtherPlayerPanel();

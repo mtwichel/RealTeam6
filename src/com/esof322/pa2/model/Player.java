@@ -81,6 +81,10 @@ public class Player {
 	public void doSpaceAction() {
 		currentSpace.takeAction(this);
 	}
+	
+	public void resetDoublesCounter() {
+		doublesCounter = 0;
+	}
 
 	public void addMoney(int amount) {
 		this.balance += amount;
