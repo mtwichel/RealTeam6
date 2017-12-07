@@ -46,7 +46,7 @@ public class PropertyGroup {
 		Player current = properties.get(0).getOwner();
 		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
 			
-			properties.get(0).setIsMonopoly(true);
+			properties.get(i).setIsMonopoly(true);
 			
 		}
 	}
@@ -55,7 +55,7 @@ public class PropertyGroup {
 		Player current = properties.get(0).getOwner();
 		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
 			
-			properties.get(0).setIsMonopoly(false);
+			properties.get(i).setIsMonopoly(false);
 			
 		}
 	}

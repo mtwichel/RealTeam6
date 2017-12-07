@@ -134,7 +134,7 @@ public class Player {
 	public void toJail() {
 		this.position = 10;
 		this.jailed = true; 
-		banker.getCurrentPlayer().movePlayer(banker.getDiceValue());
+		banker.getCurrentPlayer().movePlayer(0);
 		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has been sent to Jail!");
 		banker.getGUI().updatePlayerPositions();
 	}
@@ -155,7 +155,7 @@ public class Player {
 
 	//this method makes the player own the space
 	public void purchase(PropertySpace space) throws NotEnoughFundsException, BankruptcyException {
-		if(new Confirmation().display("Property Purchase", "Would you like to purchase "+space.getName()+"?")) {
+		if(new Confirmation().display("Property Purchase", "Would you like to purchase "+space.getName()+" for $"+space.getPurchaseAmount()+"?")) {
 			subMoney(space.getPurchaseAmount());
 			this.ownedPropertySpaces.add(space);
 			space.setOwner(this);

@@ -31,7 +31,10 @@ public class GameEnd {
 		label.setStyle("-fx-font: 35 arial");
 		
 		Button closeButton = new Button("END GAME");
-		closeButton.setOnAction(e -> window.close());
+		closeButton.setOnAction(e -> {
+		    System.out.println("Game ending...");
+		    MainWindow.endGame();
+		});
 		
 		VBox layout = new VBox(10);
 		layout.getChildren().addAll(label, closeButton);
