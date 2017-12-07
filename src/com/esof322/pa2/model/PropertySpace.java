@@ -105,14 +105,12 @@ public class PropertySpace extends Space {
 			try {
 				callingPlayer.subMoney(rentDue);
 			} catch (BankruptcyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();
 			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
-			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
+			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " $"+rentDue +"!");
 		}
 	}
 	

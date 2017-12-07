@@ -59,7 +59,7 @@ public class Utility extends PropertySpace {
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();
-			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
+			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " $"+rentDue +"!");
 			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
 		}
 		
