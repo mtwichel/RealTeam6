@@ -11,6 +11,7 @@ import com.esof322.pa2.gui.Facade;
 
 public class Utility extends PropertySpace {
     
+	private final int type = 1;
 	private PropertyGroup pg;
 	
 	public Utility(Banker banker, String name, PropertyGroup propertyGroup, 
@@ -22,6 +23,8 @@ public class Utility extends PropertySpace {
 	public String getNameSpace() {
 		return getName();
 	}
+	
+	public int getType() {return type;}
 	
     public int calculateRent(Player callingPlayer, int roll) {
 		/*Utility rent is calculated based on two factors: the roll of the player landing there, and the number of Utilities the owner owns

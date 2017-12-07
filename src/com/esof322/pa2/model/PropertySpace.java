@@ -26,6 +26,7 @@ public class PropertySpace extends Space {
 	private int[] rentRates;
 	private int upgradeAmount;
 	private int rentAmount;
+	private final int type = 0;
 
 	public PropertySpace(Banker banker, String name, PropertyGroup propertyGroup, 
 		int purchaseAmout, int upgradeAmount,int[] rentRates) {
@@ -146,6 +147,8 @@ public class PropertySpace extends Space {
 	public int getUpgradeAmount() {return this.upgradeAmount;}
 	public int getDowngradeAmount() {return this.upgradeAmount/2;}
 	public int[] getRates() {return this.rentRates;}
+	public PropertyGroup getPG() {return this.propertyGroup;}
+	public int getType() {return type;}
 
 }
 

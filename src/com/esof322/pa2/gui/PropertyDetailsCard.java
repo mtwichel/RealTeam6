@@ -42,6 +42,23 @@ public class PropertyDetailsCard{
 		window.setMinWidth(360);
 		window.setResizable(false);
 		
+		VBox layout;
+		
+		if(ps.getType() == 0) {
+			layout = setUpPropertySpace();
+		}else if(ps.getType() == 2){
+			layout = setUpRaidRoad();
+		}else {
+			layout = setUpUtil();
+		}
+		
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+
+	}
+	
+	private VBox setUpPropertySpace() {
 		buyHouse = new Button("Buy House");
 		buyHouse.setMaxSize(100, 30);
 		buyHouse.setMinSize(100, 30);
@@ -92,10 +109,75 @@ public class PropertyDetailsCard{
 		layout.getChildren().addAll(pic,houses,pane,mortgage);
 		layout.setAlignment(Pos.CENTER);
 		
-		Scene scene = new Scene(layout);
-		window.setScene(scene);
-		window.showAndWait();
+		return layout;
+	}
+	
+	private VBox setUpRaidRoad() {
 
+		//Change Button text to Un-Mortgage when property is mortgaged.
+		mortgage = new Button();
+		mortgage.setMaxSize(210, 30);
+		mortgage.setMinSize(210, 30);
+
+		if(!ps.getOwner().equals(Facade.getBanker().getCurrentPlayer())) {
+			mortgage.setDisable(true);
+		}
+
+		//houses in this case being properties owned.
+		houses = new GridPane();
+		houses.setPadding(new Insets(10, 10, 10, 10));
+		houses.setVgap(8);
+		houses.setHgap(10);
+
+		Label r = new Label("RailRoads Owned:");
+		houses.setConstraints(r, 0, 0);
+		houses.getChildren().add(r);
+
+		initRailRoads();
+
+		updateMortgaged();
+		//String name, PropertyGroup pg, int purchaseAmount, int upgradeAmount, int[] rentRates
+		PropertyInfoCard pic = new PropertyInfoCard(ps);
+		
+		VBox layout = new VBox(10);
+		layout.getChildren().addAll(pic,houses,mortgage);
+		layout.setAlignment(Pos.CENTER);
+		
+		return layout;
+	}
+	
+	private VBox setUpUtil() {
+
+		//Change Button text to Un-Mortgage when property is mortgaged.
+		mortgage = new Button();
+		mortgage.setMaxSize(210, 30);
+		mortgage.setMinSize(210, 30);
+
+		if(!ps.getOwner().equals(Facade.getBanker().getCurrentPlayer())) {
+			mortgage.setDisable(true);
+		}
+
+		//houses in this case being properties owned.
+		houses = new GridPane();
+		houses.setPadding(new Insets(10, 10, 10, 10));
+		houses.setVgap(8);
+		houses.setHgap(10);
+
+		Label u = new Label("Utilities Owned:");
+		houses.setConstraints(u, 0, 0);
+		houses.getChildren().add(u);
+
+		initUtils();
+
+		updateMortgaged();
+		//String name, PropertyGroup pg, int purchaseAmount, int upgradeAmount, int[] rentRates
+		PropertyInfoCard pic = new PropertyInfoCard(ps);
+		
+		VBox layout = new VBox(10);
+		layout.getChildren().addAll(pic,houses,mortgage);
+		layout.setAlignment(Pos.CENTER);
+		
+		return layout;
 	}
 	
 	private boolean lastAction;
@@ -154,6 +236,28 @@ public class PropertyDetailsCard{
 				houses.getChildren().add(rect);
 			}
 		}
+	}
+
+	private void initRailRoads() {
+
+		Rectangle rect;
+		for(int i = 1; i<=ps.getPG().checkAmountHeld(ps);i++) {
+			rect = new Rectangle(20,30,20,30);
+			houses.setConstraints(rect, i, 0);
+			houses.getChildren().add(rect);
+		}
+
+	}
+
+	private void initUtils() {
+
+		Rectangle rect;
+		for(int i = 1; i<=ps.getPG().checkAmountHeld(ps);i++) {
+			rect = new Rectangle(100,20,20,30);
+			houses.setConstraints(rect, i, 0);
+			houses.getChildren().add(rect);
+		}
+
 	}
 
 	private void updateMortgaged() {

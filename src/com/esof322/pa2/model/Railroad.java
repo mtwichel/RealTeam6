@@ -10,6 +10,7 @@ import com.esof322.pa2.gui.Console;
 
 public class Railroad extends PropertySpace {
     
+	private final int type = 2;
 	private PropertyGroup pg;
 	
     public Railroad(Banker banker, String name, PropertyGroup propertyGroup, 
@@ -18,6 +19,8 @@ public class Railroad extends PropertySpace {
     	pg = propertyGroup;
     }
   
+    public int getType() {return type;}
+    
     public String getNameSpace() {
 		return getName();
 	}
@@ -60,6 +63,7 @@ public class Railroad extends PropertySpace {
 			Console.println(callingPlayer.getName()+" has paid " + owner.getName() + " "+rentDue +"!");
 			new PopUpWarning("Pay up!", callingPlayer.getName()+" has paid " + owner.getName() + " $"+rentDue +"!");
 		}		
+		
 	}
 }
 

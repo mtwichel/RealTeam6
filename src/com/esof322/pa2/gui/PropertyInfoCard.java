@@ -38,16 +38,85 @@ public class PropertyInfoCard extends VBox{
 	private Label houseCost;
 	
 	private Rectangle rect;
+	private VBox effect;
+	private PropertySpace ps;
 	//(Banker banker, String name, PropertyGroup propertyGroup, 
 	//int purchaseAmout, int upgradeAmount,int[] rentRates
 	public PropertyInfoCard(PropertySpace ps) {
 		this.setMaxWidth(300);
-		
-		Label title = new Label("TITLE DEED");
+		this.ps = ps;
+		title = new Label("TITLE DEED");
 		title.setStyle("-fx-font: 10 arial");
 		propertyName = new Label(ps.getName());
 		propertyName.setStyle("-fx-font: 20 arial");
 		
+		if(ps.getType() == 0) {
+			setUpPropertySpace();
+		}else if(ps.getType() == 2){
+			setUpRaidRoad();
+		}else {
+			setUpUtil();
+		}
+		
+	}
+
+	private void setUpUtil() {
+		VBox header = new VBox();
+		header.getChildren().addAll(title, propertyName);
+		header.setAlignment(Pos.CENTER);
+		
+		rect = new Rectangle(20,20,300,50);
+		setColor(colorToInt(ps.getColor()));
+		
+		StackPane sp1 = new StackPane();
+		sp1.getChildren().addAll(rect,header);
+		
+		//put this block in a VBox for spaceing if time is left for formatting
+		house1 = new Label("If one \"Utility\" is owned rent is 4 times amount on dice.");
+		house2 = new Label("If both \"Utilities\" are owned rent is 10 times amount on dice.");
+		house1.setWrapText(true);
+		house2.setWrapText(true);
+		
+		hotel = new Label("MORTGAGE VALUE\t\t$75");
+		
+		VBox rentRates = new VBox();
+		rentRates.getChildren().addAll(house1,house2);
+		rentRates.setAlignment(Pos.CENTER);
+		rentRates.setPadding(new Insets(10, 0, 15, 0));
+		
+		this.getChildren().addAll(sp1,rentRates);
+		this.setAlignment(Pos.CENTER);
+	}
+
+	private void setUpRaidRoad() {
+		VBox header = new VBox();
+		header.getChildren().addAll(title, propertyName);
+		header.setAlignment(Pos.CENTER);
+		
+		rect = new Rectangle(20,20,300,50);
+		setColor(colorToInt(ps.getColor()));
+		
+		StackPane sp1 = new StackPane();
+		sp1.getChildren().addAll(rect,header);
+		
+		//put this block in a VBox for spaceing if time is left for formatting
+		house1 = new Label("RENT\t\t$"+ps.getRates()[1]);
+		house2 = new Label("IF 2 R.R.'s ARE OWNED\t\t$"+ps.getRates()[2]);
+		house3 = new Label("IF 3 R.R.'s ARE OWNED\t\t$"+ps.getRates()[3]);
+		house4 = new Label("IF 4 R.R.'s ARE OWNED\t\t$"+ps.getRates()[4]);
+		
+		hotel = new Label("MORTGAGE VALUE\t\t$100");
+		
+		VBox rentRates = new VBox();
+		rentRates.getChildren().addAll(house1,house2,house3,house4,hotel);
+		rentRates.setAlignment(Pos.CENTER);
+		rentRates.setPadding(new Insets(10, 0, 15, 0));
+		
+		this.getChildren().addAll(sp1,rentRates);
+		this.setAlignment(Pos.CENTER);
+	}
+
+	private void setUpPropertySpace() {
 		VBox header = new VBox();
 		header.getChildren().addAll(title, propertyName);
 		header.setAlignment(Pos.CENTER);
@@ -88,7 +157,7 @@ public class PropertyInfoCard extends VBox{
 		monopolyEffect.setStyle("-fx-font: 9 arial");
 		monopolyEffect2.setStyle("-fx-font: 9 arial");
 		
-		VBox effect = new VBox();
+		effect = new VBox();
 		effect.setAlignment(Pos.CENTER);
 		effect.getChildren().addAll(monopolyEffect,monopolyEffect2);
 		
