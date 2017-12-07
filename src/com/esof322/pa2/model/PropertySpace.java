@@ -93,7 +93,7 @@ public class PropertySpace extends Space {
 				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
 			//if response:no, end turn.
-		}else {
+		}else if(!callingPlayer.equals(this.getOwner())){
 			//subtract Rent amount from player, and add it to other player (Call player pay method)
 			//in subtracting the rent, check if the player goes bankrupt, or is about to go bankrupt
 			//if they do go bankrupt, give them the option to mortgage a propety/sell a house/hotel
@@ -112,7 +112,6 @@ public class PropertySpace extends Space {
 	
 	public boolean checkMonopoly() {
 		boolean check = propertyGroup.checkMonopoly();
-		isInMonopoly = check;
 		return check;
 	}
 

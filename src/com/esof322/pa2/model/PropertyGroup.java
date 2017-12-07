@@ -29,11 +29,35 @@ public class PropertyGroup {
 			return false;
 		}
 		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
-			if(current.getPiece() != properties.get(i).getOwner().getPiece()) {
+			if(properties.get(i).getOwner() != null) {
+				if(current.getPiece() != properties.get(i).getOwner().getPiece()) {
+					removeGroupMonopoly();
+					return false;
+				}
+			}else {
 				return false;
 			}
 		}
+		makeGroupMonopoly();
 		return true;
+	}
+	
+	public void makeGroupMonopoly(){
+		Player current = properties.get(0).getOwner();
+		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
+			
+			properties.get(0).setIsMonopoly(true);
+			
+		}
+	}
+
+	public void removeGroupMonopoly(){
+		Player current = properties.get(0).getOwner();
+		for(int i=0; i<properties.size(); i++) {	//need to change player comparison to player piece comparison?
+			
+			properties.get(0).setIsMonopoly(false);
+			
+		}
 	}
 	
 	public int checkAmountHeld(PropertySpace ps) {

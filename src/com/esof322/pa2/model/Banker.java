@@ -132,7 +132,9 @@ public class Banker {
 
 					//handleDoubleRoll(1);
 				}
-				currentPlayer.movePlayer(getDiceValue());
+				if(!currentPlayer.isJailed()) {
+					currentPlayer.movePlayer(getDiceValue());
+				}
 				currentPlayer.doSpaceAction();
 				
 				if(changeAction) {

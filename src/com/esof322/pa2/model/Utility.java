@@ -48,7 +48,7 @@ public class Utility extends PropertySpace {
 			} catch (NotEnoughFundsException e) {
 				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
-		}else { //else there is an owner and we need to pay them rent
+		}else if(!callingPlayer.equals(this.getOwner())){ //else there is an owner and we need to pay them rent
 			Player owner = this.getOwner();
 			int roll = Facade.getBanker().getDiceValue();
 			int rentDue = calculateRent(owner, roll); //get the rent due

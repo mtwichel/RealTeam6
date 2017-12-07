@@ -38,7 +38,7 @@ public class PropertyDetailsCard{
 
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("");
-		window.setMinWidth(350);
+		window.setMinWidth(360);
 
 		buyHouse = new Button("Buy House");
 		buyHouse.setMaxSize(100, 30);
@@ -180,11 +180,17 @@ public class PropertyDetailsCard{
 	
 	
 	private void mortgageCall() throws GroupUpgradedException {
+		
 		ps.getOwner().mortgage(ps);
+		
 	}
 
 	private void unMortgageCall() throws NotEnoughFundsException {
-		ps.getOwner().unMortgage(ps);
+		if(ps.getOwner().getBalance()-ps.getUnmortgageValue()>0) {
+			ps.getOwner().unMortgage(ps);
+		}else {
+			new NotEnoughFundsException(ps.getOwner());
+		}
 	}
 	
 	private void initBuyHouse() {
@@ -194,7 +200,7 @@ public class PropertyDetailsCard{
 		buyHouse.setOnAction(e -> {
 			try {
 				buyHouse();
-			} catch (PropertyMaxUpgratedException | PropertyIsMortgagedException | IsNotAMonopolyException e1) {
+			} catch (PropertyMaxUpgratedException | PropertyIsMortgagedException | IsNotAMonopolyException|NotEnoughFundsException e1) {
 			}
 		});
 	}
@@ -209,8 +215,8 @@ public class PropertyDetailsCard{
 		Facade.getBanker().getGUI().updatePlayerPanel();
 	}
 	
-	private void buyHouse() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
-		ps.upgrade();
+	private void buyHouse() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException, NotEnoughFundsException {
+		ps.getOwner().upgrade(ps);
 		lastAction = true; //bought a house last
 		updateBuyHouse();
 		updateSellHouse();
@@ -239,7 +245,7 @@ public class PropertyDetailsCard{
 		Facade.getBanker().getGUI().updatePlayerPanel();
 	}
 	private void sellHouse() throws PropertyMinUpgratedException {
-		ps.downgrade();
+		ps.getOwner().downgrade(ps);
 		lastAction = false;//sold a house last
 		updateSellHouse();
 		updateBuyHouse();
