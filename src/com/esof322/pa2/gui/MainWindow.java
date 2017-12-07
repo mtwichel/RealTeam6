@@ -3,6 +3,7 @@ package com.esof322.pa2.gui;
 
 import org.hamcrest.core.IsInstanceOf;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
@@ -32,27 +33,29 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application implements ModelListener, EventHandler<ActionEvent>{
 	
-	Banker banker;	
-	Label currentPlayerLabel, currentPlayerMoney;
+	private Banker banker;	
+	private Label currentPlayerLabel, currentPlayerMoney;
 	
-	PlayerPanel playerPanel;
-	OtherPlayersPanel otherView;
+	private PlayerPanel playerPanel;
+	private OtherPlayersPanel otherView;
 	
-	Console console;
-	Button currentAction;
+	private Console console;
+	private Button currentAction;
 	
-	HBox currentPlayerHeading;
-	HBox actionBar;
-	DiceGui dice0;
-	DiceGui dice1;
-	HBox diceBar;
-	GridPane board;
+	private HBox currentPlayerHeading;
+	private HBox actionBar;
+	private DiceGui dice0;
+	private DiceGui dice1;
+	private HBox diceBar;
+	private GridPane board;
 	
-	SpaceGUI[] spacesGUIs;
+	private SpaceGUI[] spacesGUIs;
+	private static Stage stage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Facade.initFacade(this);
+		stage = primaryStage;
 		banker = Facade.getBanker();
 
 		//generate current player header
@@ -208,7 +211,10 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 	@Override
 	public void handle(ActionEvent event) {
 		//this is the controller for the entire normal game play
-		banker.takeAction();
+		try {
+			banker.takeAction();
+		} catch (BankruptcyException e) {
+		}
 	}
 
 	
@@ -230,4 +236,7 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		otherView.update();
 	}
 
+	public static void endGame() {
+		 stage.close();
+	}
 }

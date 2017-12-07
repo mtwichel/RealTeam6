@@ -2,13 +2,17 @@ package com.esof322.pa2.model;
 
 import java.rmi.activation.ActivationInstantiator;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.DiceDoublesException;
+import com.esof322.pa2.exceptions.GameEnd;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.gui.Facade;
 import com.esof322.pa2.gui.MainWindow;
+
+import javafx.stage.Stage;
 
 public class Banker {
 
@@ -21,7 +25,6 @@ public class Banker {
 	private Die[] dice;
 	private Player[] players;
 	private Player currentPlayerOrder[];
-	private int playing;
 
 	private Action currentAction;
 
@@ -38,34 +41,23 @@ public class Banker {
 
 	public void setUpBoard() {
 		setUpPlayers();
-		playing = players.length;
 		setCurrentAction(Action.ROLL_DICE);
 		
 	}
 
-	/*public void removePlayer(Player p) {
-		Player[] newPlayers = new Player[players.length-1];
-		int iter = 0;
-		for(int i = 0;i < players.length-1;i++) {
-			if(players[i]!=null) {
-				newPlayers[iter] = players[i];
-				iter++;
+	public void checkWinner() {
+
+		Player winner = players[0];
+		int activePlayers = 0;
+		
+		for(int i = 0; i<players.length;i++) {
+			if(!players[i].isBankrupt()){
+				winner = players[i];
+				activePlayers++;
 			}
 		}
-		
-		players = newPlayers;
-		updateCurrentPlayerOrder();
-		GUI.updateCurrentPlayer();
-		GUI.updateCurrentPlayerMoney();
-		GUI.updateOtherPlayerPanel();
-		GUI.updatePlayerPanel();
-		checkWinner();
-	}*/
-	
-	public void checkWinner() {
-		playing--;
-		if(playing==1) {
-			new PopUpWarning("WINNER WINNER CHICKEN DINENR", "Congratulations "+currentPlayer.getName()+" you've won!");
+		if(activePlayers < 2) {
+			new GameEnd("WINNER WINNER CHICKEN DINENR", "Congratulations "+winner.getName()+" you've won!");
 		}
 	}
 	
@@ -107,80 +99,97 @@ public class Banker {
 	}
 
 	private boolean changeAction = true;
-	
-	public void takeAction() {
+
+	public void takeAction() throws BankruptcyException {
 		changeAction = true;
-		switch(currentAction) {
-		case ROLL_DICE:
-			if(!currentPlayer.isJailed()) {
-				//current player can play
-				try {
-					rollDice();
-				} catch (DiceDoublesException e) {
+		
+			switch(currentAction) {
+			case ROLL_DICE:
+				if(!currentPlayer.isJailed()) {
+					//current player can play
 					try {
-						//Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
-						Console.println("Doubles! Roll again!");
+						rollDice();
+					} catch (DiceDoublesException e) {
+						try {
+							//Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
+							Console.println("Doubles! Roll again!");
+							currentPlayer.addDoublesCounter();
+							//setNextPlayer(currentPlayer);		//Causes Graphic Glitch
+							changeAction = false;		//Skip changing turn order instead. KEEP CURRENT ACTION ROLLDICE
+						} catch (ThreeDoublesException e1) {
+							//Don't skip changing turn order
+							Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
+							Console.println(currentPlayer.getName()+" has rolled 3 doubles! They must be Punished with Jail time!");
+							currentPlayer.toJail();
+						}
+
+						//handleDoubleRoll(1);
+					}
+					if(!currentPlayer.isJailed()) {
+						currentPlayer.movePlayer(getDiceValue());
+					}
+					currentPlayer.doSpaceAction();
+
+					if(changeAction||currentPlayer.isBankrupt()) {
+						setCurrentAction(Action.END_TURN);
+					}
+				}else {
+					try {
+						rollDice();
 						currentPlayer.addDoublesCounter();
-						//setNextPlayer(currentPlayer);		//Causes Graphic Glitch
-						changeAction = false;		//Skip changing turn order instead. KEEP CURRENT ACTION ROLLDICE
-					} catch (ThreeDoublesException e1) {
-						//Don't skip changing turn order
-						Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
-						Console.println(currentPlayer.getName()+" has rolled 3 doubles! They must be Punished with Jail time!");
-						currentPlayer.toJail();
+					} catch (DiceDoublesException e) {
+						//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
+						currentPlayer.getOutOfJail();
+						Console.println(currentPlayer.getName()+" rolled doubles and escaped Jail");
+						currentPlayer.movePlayer(getDiceValue());
+					} catch (ThreeDoublesException e) {
+						currentPlayer.getOutOfJail();
+						currentPlayer.subMoney(50);
+						Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");
 					}
 
-					//handleDoubleRoll(1);
-				}
-				if(!currentPlayer.isJailed()) {
-					currentPlayer.movePlayer(getDiceValue());
-				}
-				currentPlayer.doSpaceAction();
-				
-				if(changeAction) {
 					setCurrentAction(Action.END_TURN);
 				}
-			}else {
-				try {
-					rollDice();
-					currentPlayer.addDoublesCounter();
-				} catch (DiceDoublesException e) {
-					//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
-					currentPlayer.getOutOfJail();
-					Console.println(currentPlayer.getName()+" rolled doubles and escaped Jail");
-					currentPlayer.movePlayer(getDiceValue());
-				} catch (ThreeDoublesException e) {
-					currentPlayer.getOutOfJail();
-					currentPlayer.subMoney(50);
-					Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");
-				}
-				
-				setCurrentAction(Action.END_TURN);
-			}
-			break;
-		case END_TURN:
-			this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers); //update index by 1 and wrap around if over numPlayers
-			
-			setCurrentPlayer(this.nextPlayer);
-			setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			/*do {
+				break;
+			case END_TURN:
+				this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers); //update index by 1 and wrap around if over numPlayers
+
+				setCurrentPlayer(this.nextPlayer);
+				setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+				/*do {
 				this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers);
 				setCurrentPlayer(this.nextPlayer);
 				setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
 			}while(!this.nextPlayer.isPlaying());*/
-			//setCurrentPlayer(this.nextPlayer);
-			//setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
-			currentPlayer.resetDoublesCounter();
-			setCurrentAction(Action.ROLL_DICE);
-			GUI.updatePlayerPanel();
-			GUI.updateOtherPlayerPanel();
-			break;
+				//setCurrentPlayer(this.nextPlayer);
+				//setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+				
+				while(currentPlayer.isBankrupt()){//While the current player is not in the game, choose another player.
+					this.currentPlayerIndex = ((this.currentPlayerIndex + 1) % this.numPlayers); //update index by 1 and wrap around if over numPlayers
 
-		}
+					setCurrentPlayer(this.nextPlayer);
+					setNextPlayer(this.players[(this.currentPlayerIndex + 1) % this.numPlayers]);
+					
+					if(!currentPlayer.isJailed()) {
+						currentPlayer.resetDoublesCounter();
+					}
+					setCurrentAction(Action.ROLL_DICE);
+					GUI.updatePlayerPanel();
+					GUI.updateOtherPlayerPanel();
+				}
+				
+				if(!currentPlayer.isJailed()) {
+					currentPlayer.resetDoublesCounter();
+				}
+				setCurrentAction(Action.ROLL_DICE);
+				GUI.updatePlayerPanel();
+				GUI.updateOtherPlayerPanel();
+				break;
 
+			}
 
 	}
-	
+
 	/*public void handleDoubleRoll(int doublesDone) {
 		currentPlayer.movePlayer(getDiceValue());
 		currentPlayer.doSpaceAction();

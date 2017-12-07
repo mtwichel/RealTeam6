@@ -3,6 +3,7 @@ package com.esof322.pa2.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
@@ -35,24 +36,26 @@ public class Utility extends PropertySpace {
     		return 10 * roll;
     	}
     	return 0; //This method should never return 0; It should only be called if someone owns the Utility, thus having rent due
-        //TODO
     }
 
 	@Override
 	public void takeAction(Player callingPlayer) {
-		// TODO Auto-generated method stub
 		//Check to see if the space has an owner
 		if(this.getOwner() == null) {
 			try {
 				callingPlayer.purchase(this);
-			} catch (NotEnoughFundsException e) {
+			} catch (NotEnoughFundsException | BankruptcyException e) {
 				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
 		}else if(!callingPlayer.equals(this.getOwner())){ //else there is an owner and we need to pay them rent
 			Player owner = this.getOwner();
 			int roll = Facade.getBanker().getDiceValue();
 			int rentDue = calculateRent(owner, roll); //get the rent due
-			callingPlayer.subMoney(rentDue);
+			try {
+				callingPlayer.subMoney(rentDue);
+			} catch (BankruptcyException e) {
+
+			}
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();

@@ -1,5 +1,6 @@
 package com.esof322.pa2.model;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.IsAMonopolyException;
 import com.esof322.pa2.exceptions.IsNotAMonopolyException;
@@ -89,7 +90,7 @@ public class PropertySpace extends Space {
 			//if response:yes, make new owner and subtract purchaseAmount
 			try {
 				callingPlayer.purchase(this);
-			} catch (NotEnoughFundsException e) {
+			} catch (NotEnoughFundsException | BankruptcyException e) {
 				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
 			//if response:no, end turn.
@@ -101,7 +102,12 @@ public class PropertySpace extends Space {
 			Player owner = this.getOwner();
 			int roll = Facade.getBanker().getDiceValue();
 			int rentDue = calculateRent(); //get the rent due
-			callingPlayer.subMoney(rentDue);
+			try {
+				callingPlayer.subMoney(rentDue);
+			} catch (BankruptcyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();

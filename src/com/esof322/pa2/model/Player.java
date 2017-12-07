@@ -3,6 +3,7 @@ package com.esof322.pa2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.DiceDoublesException;
 import com.esof322.pa2.exceptions.ThreeDoublesException;
 import com.esof322.pa2.gui.Confirmation;
@@ -21,7 +22,7 @@ import com.esof322.pa2.exceptions.PropertyMinUpgratedException;
 public class Player {
 	
 	private Banker banker;
-	private boolean isPlaying = true;
+	private boolean bankrupt = false;
 	private int piece;
 	private String name;
 	private int balance;  
@@ -90,9 +91,10 @@ public class Player {
 		this.balance += amount;
 	}
 
-	public void subMoney(int amount) {
+	public void subMoney(int amount) throws BankruptcyException {
 		if((this.balance - amount) < 0) {
 			bankrupt();
+			throw new BankruptcyException();
 		}else {
 			this.balance -= amount;
 		}
@@ -105,7 +107,7 @@ public class Player {
 	}
 
 
-	public void unMortgage(PropertySpace space) throws NotEnoughFundsException {
+	public void unMortgage(PropertySpace space) throws NotEnoughFundsException, BankruptcyException {
 		subMoney(space.getUnmortgageValue());
 		space.setUnmortgaged();
 		banker.getGUI().updatePlayerPanel();
@@ -132,14 +134,16 @@ public class Player {
 	public void toJail() {
 		this.position = 10;
 		this.jailed = true; 
+		banker.getCurrentPlayer().movePlayer(banker.getDiceValue());
 		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has been sent to Jail!");
+		banker.getGUI().updatePlayerPositions();
 	}
 	public void getOutOfJail() {
 		this.jailed = false; 
 		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has freed from Jail!");
 	}
 
-	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException {
+	public void upgrade(PropertySpace space) throws NotEnoughFundsException, PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException, BankruptcyException {
 		subMoney(space.getUpgradeAmount());
 		space.upgrade();	
 	}
@@ -150,7 +154,7 @@ public class Player {
 	}
 
 	//this method makes the player own the space
-	public void purchase(PropertySpace space) throws NotEnoughFundsException {
+	public void purchase(PropertySpace space) throws NotEnoughFundsException, BankruptcyException {
 		if(new Confirmation().display("Property Purchase", "Would you like to purchase "+space.getName()+"?")) {
 			subMoney(space.getPurchaseAmount());
 			this.ownedPropertySpaces.add(space);
@@ -178,16 +182,15 @@ public class Player {
 
 	public void bankrupt() {
 		Console.println(name+" has declared bankruptcy!");
-		for(int i = 0; i < ownedPropertySpaces.size();i++) {
-			this.ownedPropertySpaces.get(i).setOwner(null);//makes it so other players can buy the property now
-			this.ownedPropertySpaces.get(i).setIsMonopoly(false);
-			this.ownedPropertySpaces.get(i).setUnmortgaged();
-			this.ownedPropertySpaces.get(i).resetHouseLevel();
-		}
 		while(!this.ownedPropertySpaces.isEmpty()) {
+			this.ownedPropertySpaces.get(0).setOwner(null);//makes it so other players can buy the property now
+			this.ownedPropertySpaces.get(0).setIsMonopoly(false);
+			this.ownedPropertySpaces.get(0).setUnmortgaged();		//These 3 wipe the property's stats.
+			this.ownedPropertySpaces.get(0).resetHouseLevel();
 			this.ownedPropertySpaces.remove(0);
 		}
-		isPlaying = false;
+		
+		bankrupt = true;
 		banker.getGUI().updatePlayerPanel();
 		banker.checkWinner();
 	}
@@ -232,7 +235,7 @@ public class Player {
 	public int getBalance() {return this.balance;}
 	public boolean isJailed() {return jailed;}
 	public String getColor() {return this.color;}
-	public boolean isPlaying() {return isPlaying;}
+	public boolean isBankrupt() {return bankrupt;}
 	
 	/***********
 	 * 

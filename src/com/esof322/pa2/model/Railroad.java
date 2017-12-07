@@ -3,6 +3,7 @@ package com.esof322.pa2.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
@@ -43,13 +44,16 @@ public class Railroad extends PropertySpace {
 		if(this.getOwner() == null) {
 			try {
 				callingPlayer.purchase(this);
-			}catch (NotEnoughFundsException e) {
+			}catch (NotEnoughFundsException | BankruptcyException e) {
 				Console.println(callingPlayer.getName()+" you do not have enough money to do that!");
 			}
 		}else if(!callingPlayer.equals(this.getOwner())){
 			Player owner = this.getOwner();
 			int rentDue = calculateRent(owner);
-			callingPlayer.subMoney(rentDue);
+			try {
+				callingPlayer.subMoney(rentDue);
+			} catch (BankruptcyException e) {
+			}
 			owner.addMoney(rentDue);
 			banker.getGUI().updatePlayerPanel();
 			banker.getGUI().updateOtherPlayerPanel();

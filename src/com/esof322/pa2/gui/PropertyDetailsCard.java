@@ -5,6 +5,7 @@ package com.esof322.pa2.gui;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
 
+import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.GroupUpgradedException;
 import com.esof322.pa2.exceptions.IsNotAMonopolyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
@@ -39,7 +40,8 @@ public class PropertyDetailsCard{
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("");
 		window.setMinWidth(360);
-
+		window.setResizable(false);
+		
 		buyHouse = new Button("Buy House");
 		buyHouse.setMaxSize(100, 30);
 		buyHouse.setMinSize(100, 30);
@@ -160,7 +162,7 @@ public class PropertyDetailsCard{
 			mortgage.setOnAction(e -> {
 				try {
 					unMortgageCall();
-				} catch (NotEnoughFundsException e1) {
+				} catch (NotEnoughFundsException | BankruptcyException e1) {
 					Console.println(Facade.getBanker().getCurrentPlayer().getName()+" doesn't have enough money to Un-Mortgage "+ps.getName()+"!");
 				}
 			updateMortgaged();
@@ -185,7 +187,7 @@ public class PropertyDetailsCard{
 		
 	}
 
-	private void unMortgageCall() throws NotEnoughFundsException {
+	private void unMortgageCall() throws NotEnoughFundsException, BankruptcyException {
 		if(ps.getOwner().getBalance()-ps.getUnmortgageValue()>0) {
 			ps.getOwner().unMortgage(ps);
 		}else {
@@ -200,7 +202,7 @@ public class PropertyDetailsCard{
 		buyHouse.setOnAction(e -> {
 			try {
 				buyHouse();
-			} catch (PropertyMaxUpgratedException | PropertyIsMortgagedException | IsNotAMonopolyException|NotEnoughFundsException e1) {
+			} catch (PropertyMaxUpgratedException | PropertyIsMortgagedException | IsNotAMonopolyException|BankruptcyException|NotEnoughFundsException e1) {
 			}
 		});
 	}
@@ -215,7 +217,7 @@ public class PropertyDetailsCard{
 		Facade.getBanker().getGUI().updatePlayerPanel();
 	}
 	
-	private void buyHouse() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException, NotEnoughFundsException {
+	private void buyHouse() throws PropertyMaxUpgratedException, PropertyIsMortgagedException, IsNotAMonopolyException, NotEnoughFundsException, BankruptcyException {
 		ps.getOwner().upgrade(ps);
 		lastAction = true; //bought a house last
 		updateBuyHouse();

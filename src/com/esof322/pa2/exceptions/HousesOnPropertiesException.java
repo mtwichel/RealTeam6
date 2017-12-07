@@ -9,7 +9,7 @@ public class HousesOnPropertiesException extends Exception{
 	public HousesOnPropertiesException(PropertySpace ps) {
 		this.property = property;
 		new PopUpWarning("I Can't Let you Do that, Starfox.", "You have houses on this property\n"
-				+"Therefore, you cannot Mortgage this Property.");
+				+"\tTherefore, you cannot Mortgage this Property.");
 	}
 
 	public PropertySpace getCallingPlayer() {
