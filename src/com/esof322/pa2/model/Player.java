@@ -212,6 +212,13 @@ public class Player {
 		space.setOwner(this);
 		space.checkMonopoly();
 	}
+	
+	public PropertySpace getProperty(int i) {
+		return ownedPropertySpaces.get(i);
+	}
+	public void removeProperty(int i) {
+		ownedPropertySpaces.remove(i);
+	}
 
 	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker
 		if(ownedPropertySpaces.isEmpty()) {

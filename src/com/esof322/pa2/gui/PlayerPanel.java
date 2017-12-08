@@ -23,6 +23,7 @@ public class PlayerPanel extends VBox{
 	
 	private Label playerCash;
 	private Label playerName;
+	private Button trade;
 
 	public PlayerPanel() {
 		Facade.setPlayerPanel(this);
@@ -38,8 +39,12 @@ public class PlayerPanel extends VBox{
 		listView = new ListView<>();
 		listView.setPrefSize(250, 400);
 		
+		trade = new Button("Trade");
+		trade.setPrefWidth(250);
+		trade.setAlignment(Pos.CENTER);
+		trade.setOnAction(e -> openTradeWindow());
 		
-		this.getChildren().addAll(playerName,propertyList,playerCash);
+		this.getChildren().addAll(playerName,propertyList,playerCash,trade);
 		this.setSpacing(10);
 		this.setPadding(new Insets(20,20,20,20));
 		this.setAlignment(Pos.CENTER);
@@ -49,15 +54,14 @@ public class PlayerPanel extends VBox{
 		//playerName.setText(Facade.getBanker().getCurrentPlayer().getName());
 		//playerCash.setText("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
 		//propertyList.updateList();
-		this.getChildren().clear();;
+		this.getChildren().clear();
 		PropertyCardList temp = new PropertyCardList(Facade.getPlayerList()[0]);
 		playerName.setText(Facade.getBanker().getCurrentPlayer().getName());
 		playerCash.setText("Balance: $"+Facade.getBanker().getCurrentPlayer().getBalance());
-		this.getChildren().addAll(playerName,temp,playerCash);
+		this.getChildren().addAll(playerName,temp,playerCash,trade);
 	}
-
-	/*private void populateProperties(String name, int value,int color,int pos) {
-		//change to add to list
-		propertyList.addPropertyCard(name, value,color,pos);
-	}*/
+	
+	private void openTradeWindow() {
+		new TradeWindow();
+	}
 }

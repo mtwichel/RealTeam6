@@ -1,13 +1,22 @@
 package com.esof322.pa2.gui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.Board;
 import com.esof322.pa2.model.PropertySpace;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -16,12 +25,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Callback;
 
-public class PropertyCard extends VBox{
+public class PropertyCard<T> extends VBox{
 
 	private GridPane property;
 	private Rectangle rect = new Rectangle(20,20,210,30);
 	private PropertySpace ps;
+
 
 	//add another for color?
 	public PropertyCard(PropertySpace sp) {
@@ -53,6 +64,18 @@ public class PropertyCard extends VBox{
 		
 		new PropertyDetailsCard(ps);
 		
+	}
+	
+	public static <PropertyCard> ListView<PropertyCard> list(String tip,
+	        Callback<PropertyCard, ObservableValue<Boolean>> cb) {
+	    ListView lst = new ListView<>();
+
+	    lst.setCellFactory(CheckBoxListCell.forListView(cb));
+
+	    lst.setMinHeight(70);
+	    lst.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+	    return lst;
 	}
 
 	private final int CLEAR = 0, BROWN = 1,LIGHT_BLUE = 2,PINK = 3, ORANGE = 4, RED = 5, YELLOW = 6, GREEN = 7, DARK_BLUE = 8;

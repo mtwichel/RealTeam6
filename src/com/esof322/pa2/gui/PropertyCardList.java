@@ -7,6 +7,7 @@ import com.esof322.pa2.model.Player;
 import com.esof322.pa2.model.PropertySpace;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -22,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 public class PropertyCardList extends BorderPane{
@@ -45,7 +49,11 @@ public class PropertyCardList extends BorderPane{
 		this.setCenter(listView);
 	}
 	
-	private void toPropertyCardList(Player p){
+	public ListView getListView() {
+		return listView;
+	}
+	
+	protected void toPropertyCardList(Player p){
 		List<PropertySpace> temp = p.getOwnedProperties();
 		for(PropertySpace x: temp) {
 			addPropertyCard(x);
