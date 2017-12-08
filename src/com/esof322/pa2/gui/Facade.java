@@ -10,13 +10,23 @@ public class Facade {
 	private static PlayerPanel playerPanel;
 	private static OtherPlayersPanel otherPlayersPanel;
 	private static String[] playerNames;
+	private static int gameMode = 0;
 	
 	public static void initFacade(MainWindow m) {
+		new PlayerSetUpWindow();
 		banker = new Banker(m, 4);
 	}
 	
 	public static void setNames(String[] s) {
 		playerNames = s;
+	}
+	
+	public static void setGameMode(int i) {
+		gameMode = i;
+	}
+	
+	public static int getGameMode() {
+		return gameMode;
 	}
 	
 	public static String[] getNames() {

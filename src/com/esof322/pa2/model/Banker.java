@@ -64,7 +64,7 @@ public class Banker {
 	}
 	
 	public void setUpPlayers() {
-		new PlayerSetUpWindow();
+		board = new Board(this);
 		String[] names = Facade.getNames();
 		numPlayers = names.length;
 		players = new Player[this.numPlayers];
@@ -80,7 +80,7 @@ public class Banker {
 	}
 	
 	public void setUp() {
-		new PlayerSetUpWindow();
+		//new PlayerSetUpWindow();
 		String[] names = Facade.getNames();
 		for(int i=0; i<players.length; i++) {
 			players[i] = new Player(this, names[i], i, "FFFFFF");

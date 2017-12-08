@@ -31,6 +31,7 @@ public class PlayerSetUpWindow extends Application {
     }
 
     private ObservableList<Sequence> sequences;
+    private ObservableList<Sequence> gameModes;
 
 
     class Sequence {
@@ -123,6 +124,37 @@ public class PlayerSetUpWindow extends Application {
         plusMinus.setAlignment(Pos.CENTER);
         plusMinus.setPadding(new Insets(10, 10, 10, 10));
         
+        
+        ComboBox<Sequence> gameMode = new ComboBox();
+        Callback<Sequence, Observable[]> modeChoice = new Callback<Sequence, Observable[]>() {
+            @Override
+            public Observable[] call(Sequence s) {
+                return new Observable[] {s.name};
+            }
+        };
+        gameModes = FXCollections.observableArrayList(modeChoice);
+        gameModes.addAll(
+                new Sequence("Regular Monopoly"),
+                new Sequence("Christmas Monopoly"));
+
+        gameMode = new ComboBox<>();
+        gameMode.setItems(gameModes);
+        gameMode.getSelectionModel().selectFirst();
+        gameMode.setConverter(new StringConverter<PlayerSetUpWindow.Sequence>() {
+            @Override
+            public String toString(Sequence sequence) {
+                return sequence.name.get();
+            }
+
+            @Override
+            public Sequence fromString(String string) {
+                System.out.println("call fromString");
+                return null;
+            }
+        });
+        gameMode.valueProperty().addListener((obs, oldValue, newValue) -> setGameMode(newValue.name.get())); 
+
+        
         Button startGame = new Button();
         startGame.setLayoutX(100);
         startGame.setLayoutY(80);
@@ -144,8 +176,9 @@ public class PlayerSetUpWindow extends Application {
         
         VBox format = new VBox();
         format.setAlignment(Pos.CENTER);;
-        format.getChildren().addAll(root, plusMinus, startGame);
+        format.getChildren().addAll(root, plusMinus,gameMode, startGame);
         root1.getChildren().addAll(format);
+        format.setPadding(new Insets(10,10,10,10));
 
         primaryStage.setScene(scene1);
         primaryStage.showAndWait();
@@ -160,5 +193,13 @@ public class PlayerSetUpWindow extends Application {
     	}
     	
     	return s;
+    }
+    
+    private void setGameMode(String s) {
+    	if(s.equals("Regular Monopoly")) {
+    		Facade.setGameMode(0);
+    	}else {
+    		Facade.setGameMode(1);
+    	}
     }
 }
