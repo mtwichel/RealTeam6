@@ -15,21 +15,59 @@ public class OtherPlayersPanel extends VBox{
 	
 	public OtherPlayersPanel() {
 		
-		player1 = new PlayerPreview(1);
-		player2 = new PlayerPreview(2);
-		player3 = new PlayerPreview(3);
+		switch (Facade.getBanker().getPlayerList().length) {
+		case 2:
+			player1 = new PlayerPreview(1);
+			
+			this.getChildren().addAll(player1);
+			break;
+		case 3:
+			player1 = new PlayerPreview(1);
+			player2 = new PlayerPreview(2);
+			
+			this.getChildren().addAll(player1,player2);
+			break;
+		case 4:
+			player1 = new PlayerPreview(1);
+			player2 = new PlayerPreview(2);
+			player3 = new PlayerPreview(3);
+			
+			this.getChildren().addAll(player1,player2,player3);
+			break;
+
+		default:
+			break;
+		}
 		
-		this.getChildren().addAll(player1,player2,player3);
 		this.setStyle("-fx-border-color: black");
-		
 		Facade.setOtherPlayerPanel(this);
 	}
 	
 	public void update() {
 		this.getChildren().clear();
-		player1 = new PlayerPreview(1);
-		player2 = new PlayerPreview(2);
-		player3 = new PlayerPreview(3);
-		this.getChildren().addAll(player1,player2,player3);
+		switch (Facade.getBanker().getPlayerList().length) {
+		case 2:
+			player1 = new PlayerPreview(1);
+			
+			this.getChildren().addAll(player1);
+			break;
+		case 3:
+			player1 = new PlayerPreview(1);
+			player2 = new PlayerPreview(2);
+			
+			this.getChildren().addAll(player1,player2);
+			break;
+		case 4:
+			player1 = new PlayerPreview(1);
+			player2 = new PlayerPreview(2);
+			player3 = new PlayerPreview(3);
+			
+			this.getChildren().addAll(player1,player2,player3);
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 }

@@ -11,6 +11,7 @@ import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Console;
 import com.esof322.pa2.gui.Facade;
 import com.esof322.pa2.gui.MainWindow;
+import com.esof322.pa2.gui.PlayerSetUpWindow;
 
 import javafx.stage.Stage;
 
@@ -63,8 +64,10 @@ public class Banker {
 	}
 	
 	public void setUpPlayers() {
+		new PlayerSetUpWindow();
+		String[] names = Facade.getNames();
+		numPlayers = names.length;
 		players = new Player[this.numPlayers];
-		String[] names = {"George", "Arjan", "Taylor", "Marcus"}; //temp for testing
 		for(int i=0; i<players.length; i++) {
 			players[i] = new Player(this, names[i], i, "FFFFFF");
 		}
@@ -74,6 +77,18 @@ public class Banker {
 		setNextPlayer(players[currentPlayerIndex +1]);
 		//GUI.updatePlayerPositions();
 		
+	}
+	
+	public void setUp() {
+		new PlayerSetUpWindow();
+		String[] names = Facade.getNames();
+		for(int i=0; i<players.length; i++) {
+			players[i] = new Player(this, names[i], i, "FFFFFF");
+		}
+		
+		this.currentPlayerIndex = 0;
+		setCurrentPlayer(players[currentPlayerIndex]);
+		setNextPlayer(players[currentPlayerIndex +1]);
 	}
 	
 	public void setCurrentPlayer(Player player) {
