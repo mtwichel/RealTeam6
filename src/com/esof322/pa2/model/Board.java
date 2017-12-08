@@ -65,7 +65,7 @@ public class Board {
 		spaces[1] = new PropertySpace(banker, 
 				"Mediterranean Avenue",propertyGroups[0], 60, 50, rates);
 		
-		spaces[2] = new BlankSpace(banker, "Community Chest");
+		spaces[2] = new CommunityChestSpace(banker, "Community Chest");
 		
 		rates = new int[] {4,20,60,180,320,450};
 		spaces[3] = new PropertySpace(banker, 
@@ -80,7 +80,7 @@ public class Board {
 		spaces[6] = new PropertySpace(banker, 
 				"Oriental Avenue", propertyGroups[1], 100, 50, rates);
 		
-		spaces[7] = new BlankSpace(banker, "Chance");
+		spaces[7] = new ChanceSpace(banker, "Chance");
 		
 		rates = new int[] {6,10,90,270,400,550};
 		spaces[8] = new PropertySpace(banker, 
@@ -114,7 +114,7 @@ public class Board {
 		spaces[16] = new PropertySpace(banker, 
 				"St. James Place", propertyGroups[3], 180, 50, rates);
 		
-		spaces[17] = new BlankSpace(banker, "Community Chest");
+		spaces[17] = new CommunityChestSpace(banker, "Community Chest");
 		
 		rates =  new int[] {14,70,200,550,750,950};
 		spaces[18] = new PropertySpace(banker, 
@@ -130,7 +130,7 @@ public class Board {
 		spaces[21] = new PropertySpace(banker, 
 				"Kentucky Avenue", propertyGroups[4], 220, 50, rates);
 		
-		spaces[22] = new BlankSpace(banker, "Chance");
+		spaces[22] = new ChanceSpace(banker, "Chance");
 		
 		rates = new int[] {19,90,250,700,875,1050};	
 		spaces[23] = new PropertySpace(banker, 
@@ -168,7 +168,7 @@ public class Board {
 		spaces[32] = new PropertySpace(banker, 
 				"North Carolina Avenue", propertyGroups[6], 300, 50, rates);
 		
-		spaces[33] = new BlankSpace(banker, "Community Chest");
+		spaces[33] = new CommunityChestSpace(banker, "Community Chest");
 		
 		rates = new int[] {28,150,450,1000,1200,1400};
 		spaces[34] = new PropertySpace(banker, 
@@ -177,7 +177,7 @@ public class Board {
 		rates = new int[] {200,25,50,100,200,0};
 		spaces[35] = new Railroad(banker, "Short Line", propertyGroups[8], 200, 0, rates);
 		
-		spaces[36] = new BlankSpace(banker, "Chance");
+		spaces[36] = new ChanceSpace(banker, "Chance");
 		
 		rates = new int[] {35,175,500,1100,1300,1500};
 		spaces[37] = new PropertySpace(banker, 

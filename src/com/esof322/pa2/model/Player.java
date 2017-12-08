@@ -26,7 +26,7 @@ public class Player {
 	private int piece;
 	private String name;
 	private int balance;  
-	private int position;
+	protected int position; //made visible for ChanceSpace and CommunityChestSpace
 	private int doublesCounter;
 	private boolean jailed;
 	private boolean hasMonopoly;
