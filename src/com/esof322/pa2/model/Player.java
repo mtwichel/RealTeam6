@@ -103,7 +103,7 @@ public class Player {
 	public void mortgage(PropertySpace space) throws GroupUpgradedException {
 		space.setMortgaged();
 		addMoney(space.getMortgageValue());
-		banker.getGUI().updatePlayerPanel();
+		//banker.getGUI().updatePlayerPanel();
 	}
 
 
@@ -128,13 +128,14 @@ public class Player {
 		
 		this.currentSpace.addPlayer(this);
 		
-		banker.getGUI().updatePlayerPositions();
+		//banker.getGUI().updatePlayerPositions();
 	}
 
 	public void toJail() {
 		this.position = 10;
 		this.jailed = true; 
 		banker.getCurrentPlayer().movePlayer(0);
+		banker.getGUI().updatePlayerPositions();
 		new PopUpWarning("JAILED",Facade.getBanker().getCurrentPlayer().getName()+" has been sent to Jail!");
 		banker.getGUI().updatePlayerPositions();
 	}
@@ -189,23 +190,27 @@ public class Player {
 			this.ownedPropertySpaces.get(0).resetHouseLevel();
 			this.ownedPropertySpaces.remove(0);
 		}
-		
-		bankrupt = true;
+		setBankrupt();
 		banker.getGUI().updatePlayerPanel();
 		banker.checkWinner();
 	}
 	
+	public void setBankrupt() {
+		bankrupt = true;
+	}
 	
-	public void payPlayer(Player p, int amount) {
+	public void payPlayer(Player p, int amount) throws BankruptcyException {
 		
 		if(!p.equals(null)) {
 			p.addMoney(amount);
+			subMoney(amount);
 		}
 	}
 
 	public void aquireProperty(PropertySpace space) {
 		this.ownedPropertySpaces.add(space);
 		space.setOwner(this);
+		space.checkMonopoly();
 	}
 
 	public boolean runBankruptcyCheck(Player p, int amount) {//Player p is the player making them run the check. null if banker

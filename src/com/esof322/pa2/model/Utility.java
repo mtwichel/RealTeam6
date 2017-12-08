@@ -31,6 +31,9 @@ public class Utility extends PropertySpace {
 		 * If the Owner has One of the utilities, rent due is  4x the die roll
 		 * If the Owner has Two of the utilities, rent due is 10x the due roll
 		 */
+    	if(isMortgaged()) {
+			return 0;
+		}
     	int numOwned = pg.checkAmountHeld(this);//finds out how many utilitys are owned
     	
     	if(numOwned == 1) {

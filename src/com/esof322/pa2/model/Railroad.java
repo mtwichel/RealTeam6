@@ -27,6 +27,9 @@ public class Railroad extends PropertySpace {
     
     public int calculateRent(Player callingPlayer) {
     	int numOwned = pg.checkAmountHeld(this);
+    	if(isMortgaged()) {
+			return 0;
+		}
  
     	if(numOwned == 1) {
     		return 25;
@@ -38,7 +41,7 @@ public class Railroad extends PropertySpace {
     		return 200;
     	}
     	
-		return 0;
+		return 25;
     }
 
 	@Override

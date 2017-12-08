@@ -10,5 +10,10 @@ public class BlankSpace extends Space {
 	public void takeAction(Player callingPlayer) {
 		//Literally do nothing
 	}
+
+	@Override
+	public PropertySpace getSpace() {
+		return null;	//dosen't return anything
+	}
     
 }

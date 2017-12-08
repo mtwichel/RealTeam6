@@ -5,6 +5,7 @@ import org.hamcrest.core.IsInstanceOf;
 
 import com.esof322.pa2.exceptions.BankruptcyException;
 import com.esof322.pa2.exceptions.NotEnoughFundsException;
+import com.esof322.pa2.model.Action;
 import com.esof322.pa2.model.Banker;
 import com.esof322.pa2.model.ModelListener;
 import com.esof322.pa2.model.Player;
@@ -111,6 +112,8 @@ public class MainWindow extends Application implements ModelListener, EventHandl
 		}
 		
 		banker.setUpBoard();
+		banker.getGUI().updatePlayerPositions();
+		banker.setCurrentAction(Action.ROLL_DICE);
 		
 		//generate property list side bar
 		playerPanel = new PlayerPanel();

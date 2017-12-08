@@ -41,7 +41,8 @@ public class Banker {
 
 	public void setUpBoard() {
 		setUpPlayers();
-		setCurrentAction(Action.ROLL_DICE);
+		//GUI.updatePlayerPositions();
+		//setCurrentAction(Action.ROLL_DICE);
 		
 	}
 
@@ -71,13 +72,13 @@ public class Banker {
 		this.currentPlayerIndex = 0;
 		setCurrentPlayer(players[currentPlayerIndex]);
 		setNextPlayer(players[currentPlayerIndex +1]);
-		GUI.updatePlayerPositions();
+		//GUI.updatePlayerPositions();
 		
 	}
 	
 	public void setCurrentPlayer(Player player) {
 		this.currentPlayer = player;
-		GUI.updateCurrentPlayer();
+		//GUI.updateCurrentPlayer();
 	}
 	
 	public void setNextPlayer(Player player) {
@@ -92,10 +93,15 @@ public class Banker {
 	public void rollDice() throws DiceDoublesException {
 		dice[0].rollDie();
 		dice[1].rollDie();
-		GUI.updateDice();
+		//GUI.updateDice();
 		if(dice[0].getValue() == dice[1].getValue()) {
 			throw new DiceDoublesException();
 		}
+	}
+	
+	public void rigDice(int a, int b) {
+		dice[0].rigDie(a);
+		dice[1].rigDie(b);
 	}
 
 	private boolean changeAction = true;
@@ -109,14 +115,17 @@ public class Banker {
 					//current player can play
 					try {
 						rollDice();
+						GUI.updateDice();
 					} catch (DiceDoublesException e) {
 						try {
+							GUI.updateDice();
 							//Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
 							Console.println("Doubles! Roll again!");
 							currentPlayer.addDoublesCounter();
 							//setNextPlayer(currentPlayer);		//Causes Graphic Glitch
 							changeAction = false;		//Skip changing turn order instead. KEEP CURRENT ACTION ROLLDICE
 						} catch (ThreeDoublesException e1) {
+							GUI.updateDice();
 							//Don't skip changing turn order
 							Console.println(currentPlayer.getName() + " rolled " + dice[0].getValue() + " and " + dice[1].getValue());
 							Console.println(currentPlayer.getName()+" has rolled 3 doubles! They must be Punished with Jail time!");
@@ -127,6 +136,7 @@ public class Banker {
 					}
 					if(!currentPlayer.isJailed()) {
 						currentPlayer.movePlayer(getDiceValue());
+						GUI.updatePlayerPositions();
 					}
 					currentPlayer.doSpaceAction();
 
@@ -136,13 +146,16 @@ public class Banker {
 				}else {
 					try {
 						rollDice();
+						GUI.updateDice();
 						currentPlayer.addDoublesCounter();
 					} catch (DiceDoublesException e) {
+						GUI.updateDice();
 						//setNextPlayer(currentPlayer);	//Causes Graphical Glitch
 						currentPlayer.getOutOfJail();
 						Console.println(currentPlayer.getName()+" rolled doubles and escaped Jail");
 						currentPlayer.movePlayer(getDiceValue());
 					} catch (ThreeDoublesException e) {
+						GUI.updateDice();
 						currentPlayer.getOutOfJail();
 						currentPlayer.subMoney(50);
 						Console.println(currentPlayer.getName()+" paid the fine and was released from prison.");

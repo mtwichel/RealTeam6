@@ -288,6 +288,7 @@ public class PropertyDetailsCard{
 	private void mortgageCall() throws GroupUpgradedException {
 		
 		ps.getOwner().mortgage(ps);
+		Facade.getBanker().getGUI().updatePlayerPanel();
 		
 	}
 

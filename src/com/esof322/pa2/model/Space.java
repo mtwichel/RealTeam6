@@ -21,6 +21,8 @@ public abstract class Space {
         return this.name;
     }
 	
+	public int calculateRent() {return 0;}
+	
 	public List<Player> getOccupyingPlayer(){
 		return this.occupyingPlayers;
 	}
@@ -40,6 +42,7 @@ public abstract class Space {
         
    
     public abstract void takeAction(Player callingPlayer);
+    public abstract PropertySpace getSpace();
     
     
 }

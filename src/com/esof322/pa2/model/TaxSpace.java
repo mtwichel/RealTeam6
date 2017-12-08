@@ -5,13 +5,13 @@ import com.esof322.pa2.exceptions.NotEnoughFundsException;
 import com.esof322.pa2.exceptions.PopUpWarning;
 import com.esof322.pa2.gui.Facade;
 
-public class TaxSpace extends Space {
+public class TaxSpace extends PropertySpace {
     
 	private String name;
 	private boolean taxType;
 	
 	public TaxSpace(Banker banker, String name,boolean b) {
-		super(banker, name);
+		super(banker, name, new PropertyGroup(""), 0, 0, new int[0]);
     	setName(name);
     	taxType = b;
     }
@@ -44,6 +44,11 @@ public class TaxSpace extends Space {
 			new PopUpWarning("IRS",Facade.getBanker().getCurrentPlayer().getName()+" has to pay tax fines of $200");
 		}
 		
+	}
+
+	@Override
+	public PropertySpace getSpace() {
+		return this;
 	}
     
     

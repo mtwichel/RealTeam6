@@ -14,6 +14,10 @@ class Die {
 		 this.currentValue = (int)(Math.random() * range) + 1;
 	}
 	
+	public void rigDie(int i) {
+		currentValue = i;
+	}
+	
 	//returns whatever the last value was
 	public int getValue() {
 		return currentValue;

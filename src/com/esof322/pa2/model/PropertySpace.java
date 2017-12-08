@@ -121,6 +121,9 @@ public class PropertySpace extends Space {
 	}
 
 	public int calculateRent() {
+		if(isMortgaged()) {
+			return 0;
+		}
 		if(isInMonopoly) {
 			if(houseLevel>0) {
 				return rentRates[houseLevel];
@@ -149,6 +152,14 @@ public class PropertySpace extends Space {
 	public int[] getRates() {return this.rentRates;}
 	public PropertyGroup getPG() {return this.propertyGroup;}
 	public int getType() {return type;}
+
+
+
+
+	@Override
+	public PropertySpace getSpace() {
+		return this;
+	}
 
 }
 

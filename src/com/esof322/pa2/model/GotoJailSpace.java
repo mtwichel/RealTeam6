@@ -25,5 +25,10 @@ public class GotoJailSpace extends Space {
 		callingPlayer.resetDoublesCounter();
 		Facade.getBanker().getGUI().updatePlayerPositions();
 	}
+
+	@Override
+	public PropertySpace getSpace() {
+		return null;//return nothing
+	}
     
 }

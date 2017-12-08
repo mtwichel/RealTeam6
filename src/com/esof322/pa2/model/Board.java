@@ -19,6 +19,10 @@ public class Board {
 	public Space getSpace(int pos) {
 		return this.spaces[pos];
 	}
+	
+	public PropertySpace getPropertySpace(int pos) {
+		return (PropertySpace) this.spaces[pos];
+	}
 
 	public PropertyGroup getGroup(int i) {
 		return this.propertyGroups[i];
